@@ -1,0 +1,177 @@
+/* Header Style */
+.ant-layout-header {
+  .box-shadow(0 0 4px fade(@black-color, 28%));
+  .flex-display(flex, row, wrap);
+  .align-items(center);
+  .justify-content(space-between);
+  line-height: 1;
+  padding: @layout-header-padding;
+  height: @layout-header-height;
+  position: relative;
+  z-index: 10;
+  color: @header-text-color;
+
+  @media screen and (max-width: @screen-md-max) {
+    padding: @layout-header-padding-res;
+  }
+}
+
+.@{class-prefix}-nav-header {
+  padding: @layout-header-padding;
+  border-bottom: @border-width-base @border-style-base (fade(@white-color, 50%));
+  background-color: @layout-header-background;
+
+  & .ant-menu-horizontal {
+    margin-bottom: -1px;
+    border-bottom-color: transparent;
+  }
+}
+
+.@{class-prefix}-nav-header-below {
+  .box-shadow(0 1px 2px 1px fade(@black-color, 28%));
+  position: relative;
+  z-index: 999;
+}
+
+.ant-dropdown-menu-item {
+  .flex-display();
+  .align-items(center);
+}
+
+.@{class-prefix}-linebar {
+  font-size: 20px;
+}
+
+.@{class-prefix}-header-notifications {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+  .flex-display(flex, row, wrap);
+  .align-items(center);
+
+  & > li {
+    font-size: 14px;
+
+    &:not(:last-child) {
+      margin-right: 42px;
+
+      .@{class-prefix}-layout-header-horizontal & {
+        margin-right: 20px;
+      }
+
+      @media screen and (max-width: @screen-md-max) {
+        margin-right: 20px;
+      }
+
+      @media screen and (max-width: @screen-sm-max) {
+        margin-right: 16px;
+      }
+    }
+
+    &.@{class-prefix}-notify {
+      margin-right: 22px;
+
+      .@{class-prefix}-layout-header-horizontal & {
+        margin-right: 20px;
+      }
+
+      @media screen and (max-width: @screen-md-max) {
+        margin-right: 16px;
+      }
+    }
+
+    &.@{class-prefix}-language {
+
+      & .@{class-prefix}-language-name {
+        @media screen and (max-width: @screen-xs-max) {
+          display: none;
+        }
+      }
+    }
+
+    &.@{class-prefix}-notify-search {
+      @media screen and (max-width: @screen-xs-max) {
+        display: none !important;
+      }
+    }
+  }
+}
+
+.@{class-prefix}-popover-scroll {
+  height: 280px !important;
+  width: 300px !important;
+  margin: 0 -16px;
+
+  @media screen and (max-width: @screen-xs-max) {
+    height: 210px !important;
+    width: 200px !important;
+  }
+}
+
+.@{class-prefix}-popover-lang-scroll {
+  height: 220px !important;
+  width: 160px !important;
+  margin: 0 -16px;
+}
+
+.ant-popover-placement-bottomRight {
+  & > .ant-popover-content {
+    & > .ant-popover-arrow {
+      right: 10px;
+    }
+  }
+}
+
+.@{class-prefix}-popover-header {
+  .flex-display(flex, row, wrap);
+  .align-items(center);
+  .justify-content(space-between);
+  border-bottom: @border-style-base @border-width-base @border-color;
+  margin: 0 -16px;
+  padding: 0 16px 12px;
+}
+
+.@{class-prefix}-sub-popover {
+  list-style: none;
+  margin: 0 16px;
+  padding-left: 0;
+
+  & li {
+    padding: 20px 0 14px;
+
+    .@{class-prefix}-popover-lang-scroll & {
+      padding: 5px 0;
+    }
+
+    &:not(:last-child) {
+      border-bottom: @border-style-base @border-width-base @border-color;
+    }
+  }
+}
+
+.@{class-prefix}-user-nav {
+  & .ant-avatar.@{class-prefix}-size-50 {
+    @media screen and (max-width: @screen-md-max) {
+      height: @size-40 !important;
+      width: @size-40 !important;
+      line-height: @size-40 !important;
+    }
+  }
+}
+
+.@{class-prefix}-user-popover {
+  margin: -12px -16px;
+  padding: 7px 0;
+  list-style: none;
+
+  & li {
+    cursor: pointer;
+    padding: 3px 15px;
+    width: 150px;
+
+    &:hover,
+    &:focus {
+      background-color: @grey-2;
+    }
+  }
+}

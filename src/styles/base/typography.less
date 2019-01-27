@@ -1,0 +1,205 @@
+/*Typography Styles*/
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  color: @heading-color;
+  font-weight: @headings-font-weight;
+  line-height: @headings-line-height;
+}
+
+h1, .h1 {
+  font-size: @h1-font-size;
+
+  .framed-layout & {
+    font-size: @h2-font-size;
+
+    @media screen and (max-width: @screen-sm-max) {
+      font-size: @h3-font-size;
+    }
+  }
+
+  .boxed-layout & {
+    font-size: @h3-font-size;
+
+    @media screen and (max-width: @screen-sm-max) {
+      font-size: @h4-font-size;
+    }
+  }
+
+  @media screen and (max-width: @screen-sm-max) {
+    font-size: @h3-font-size;
+  }
+
+  @media screen and (max-width: @screen-xl-max) {
+    font-size: @h2-font-size;
+  }
+
+  @media screen and (min-width: @screen-xxl-min) {
+    font-size: @h1-font-size + 6px;
+
+    .boxed-layout & {
+      font-size: @h3-font-size;
+    }
+  }
+}
+
+h2, .h2 {
+  font-size: @h2-font-size;
+
+  @media screen and (max-width: @screen-sm-max) {
+    font-size: @h3-font-size;
+  }
+}
+
+h3, .h3 {
+  font-size: @h3-font-size;
+
+  @media screen and (max-width: @screen-sm-max) {
+    font-size: @h4-font-size;
+  }
+}
+
+h4, .h4 {
+  font-size: @h4-font-size;
+}
+
+h5, .h5 {
+  font-size: @h5-font-size;
+}
+
+h6, .h6 {
+  font-size: @h6-font-size;
+}
+
+.@{class-prefix}-h1-lg {
+  font-size: @h1-font-size + 6px;
+}
+
+.@{class-prefix}-text-strikethrough {
+  text-decoration: line-through !important;
+}
+
+/*Font size Classes*/
+.@{class-prefix}-fs-xxs {
+  font-size: @font-size-sm - 4px;
+}
+
+.@{class-prefix}-fs-xs {
+  font-size: @font-size-sm - 2px;
+}
+
+.@{class-prefix}-fs-sm {
+  font-size: @font-size-sm;
+}
+
+.@{class-prefix}-fs-md {
+  font-size: @font-size-base;
+}
+
+.@{class-prefix}-fs-lg {
+  font-size: @font-size-lg;
+}
+
+.@{class-prefix}-fs-xl {
+  font-size: @font-size-lg + 4px;
+}
+
+.@{class-prefix}-fs-xxl {
+  font-size: @font-size-lg + 8px;
+}
+
+// Text Transform class
+.@{class-prefix}-text-lowercase {
+  text-transform: lowercase;
+}
+
+.@{class-prefix}-text-uppercase {
+  text-transform: uppercase;
+}
+
+.@{class-prefix}-text-capitalize {
+  text-transform: capitalize;
+}
+
+// Font Weight class
+.@{class-prefix}-font-weight-thin {
+  font-weight: @font-weight-thin;
+}
+
+.@{class-prefix}-font-weight-extra-light {
+  font-weight: @font-weight-extra-light;
+}
+
+.@{class-prefix}-font-weight-light {
+  font-weight: @font-weight-light;
+}
+
+.@{class-prefix}-font-weight-normal {
+  font-weight: @font-weight-normal;
+}
+
+.@{class-prefix}-font-weight-medium {
+  font-weight: @font-weight-medium;
+}
+
+.@{class-prefix}-font-weight-semi-bold {
+  font-weight: @font-weight-semi-bold;
+}
+
+.@{class-prefix}-font-weight-bold {
+  font-weight: @font-weight-medium;
+}
+
+.@{class-prefix}-font-weight-extra-bold {
+  font-weight: @font-weight-extra-bold;
+}
+
+.@{class-prefix}-font-weight-black {
+  font-weight: @font-weight-black;
+}
+
+// Font Italic class
+.@{class-prefix}-font-italic {
+  font-style: italic;
+}
+
+// Letter Spacing class
+.@{class-prefix}-letter-spacing-base {
+  letter-spacing: @letter-spacing-base;
+}
+
+.@{class-prefix}-letter-spacing-lg {
+  letter-spacing: @letter-spacing-lg;
+}
+
+.@{class-prefix}-letter-spacing-xl {
+  letter-spacing: @letter-spacing-xl;
+}
+
+// Text class
+.@{class-prefix}-text-justify {
+  text-align: justify !important;
+}
+
+.@{class-prefix}-text-nowrap {
+  white-space: nowrap !important;
+}
+
+.@{class-prefix}-text-left {
+  text-align: left !important;
+}
+
+.@{class-prefix}-text-right {
+  text-align: right !important;
+}
+
+.@{class-prefix}-text-center {
+  text-align: center !important;
+}
+
+// class use for extend
+.gx-text-truncate {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

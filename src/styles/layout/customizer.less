@@ -1,0 +1,77 @@
+/* Customizer Style */
+.@{class-prefix}-customizer {
+  height: calc(100vh ~"-" 70px) !important;
+
+  &-item {
+
+    &:not(:last-child) {
+      border-bottom: @border-style-base @border-width-base @border-color;
+      padding-bottom: @gx-customizer-base;
+      margin-bottom: @gx-customizer-base;
+    }
+
+    & .ant-radio-group {
+      & .ant-radio-button {
+        display: none;
+      }
+    }
+  }
+
+  &-option {
+    position: absolute;
+    right: 0;
+    top: 150px;
+    z-index: 99;
+  }
+
+  @media screen and (max-width: @screen-xs-max) {
+    width: @gx-customizer-width - 120px !important;
+  }
+}
+
+.@{class-prefix}-color-option {
+  margin-bottom: 0;
+  max-width: @gx-customizer-width - 30px;
+  padding-left: 0;
+
+  & li {
+    font-size: 36px;
+    line-height: 1;
+
+    & a {
+      width: @size-40;
+      height: @size-40;
+      display: block;
+      position: relative;
+      .border-radius(@border-radius-circle);
+    }
+
+    & a:before {
+      font-family: "gaxon-ant";
+      font-size: 20px;
+      content: "\4b";
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 2;
+      width: @size-40;
+      height: @size-40;
+      line-height: @size-40;
+      text-align: center;
+      display: none;
+      color: @white-color;
+    }
+
+    & a.active:before {
+      display: block;
+    }
+  }
+
+  @media screen and (max-width: @screen-xs-max) {
+    width: @gx-customizer-width - 150px !important;
+  }
+}
+
+.@{class-prefix}-cus-customiz {
+  padding-right: 20px;
+}

@@ -1,0 +1,41 @@
+/* Ant Layout Style */
+.ant-layout {
+  height: 100vh;
+  position: relative;
+  background: none;
+
+  & > .ant-layout-content {
+    overflow-x: hidden;
+    .flex-display(flex, column, nowrap);
+  }
+
+  &.ant-layout-has-sider > .ant-layout {
+    position: relative;
+  }
+  .boxed-layout & {
+    background: @white-color;
+  }
+
+  .framed-layout & {
+    background: @white-color;
+    height: calc(100vh~"-"2 * @framed-layout-base);
+
+    @media screen and (max-width: @screen-md-max) {
+      height: 100vh;
+    }
+  }
+}
+
+.@{class-prefix}-main-content-wrapper {
+  padding: @layout-main-content-padding @layout-main-content-padding 0;
+  flex: 1;
+  //.flex-display(flex, column, nowrap);
+}
+
+.@{class-prefix}-main-content {
+  .flex-display(flex, column, nowrap);
+  flex: 1;
+  height: 100%;
+}
+
+

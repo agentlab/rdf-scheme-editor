@@ -1,0 +1,90 @@
+/* Sidebar Style */
+.@{class-prefix}-app-sidebar {
+  .transition(all 0.2s ease);
+}
+
+.ant-layout-sider {
+  background-color: @sidebar-bg;
+  color: @sidebar-dark-text-color;
+  flex: 0 0 auto !important;
+  max-width: none !important;
+  min-width: 10px !important;
+  width: @sidebar-width !important;
+  overflow: hidden;
+
+  @media screen and (max-width: @screen-md-max) {
+    width: @sidebar-width - 20px !important;
+  }
+
+  &-collapsed {
+    width: @sidebar-mini-drawer-width !important;
+  }
+
+  &.@{class-prefix}-collapsed-sidebar {
+    width: 0 !important;
+    min-width: 0 !important;
+  }
+}
+
+.@{class-prefix}-layout-sider-dark {
+  background-color: @sidebar-dark-bg;
+}
+
+.@{class-prefix}-layout-sider-header {
+  padding: 10px @sidebar-padding-lr 10px (2*@sidebar-padding-lr + 10px);
+  height: @layout-header-height;
+  .box-shadow(0 0 4px fade(@black-color, 28%));
+  position: relative;
+  z-index: 1;
+  .flex-display(flex, row, nowrap);
+  .align-items(center);
+
+  & .@{class-prefix}-site-logo {
+    display: block;
+
+    .ant-layout-sider-collapsed & {
+      display: none;
+    }
+  }
+
+  & .@{class-prefix}-linebar {
+    position: absolute;
+    left: @sidebar-padding-lr - 10px;
+    z-index: 1;
+    top: 15px;
+    .transition(all 0.3s ease-out);
+
+    .ant-layout-sider-collapsed & {
+      left: 20px;
+    }
+  }
+
+  .ant-layout-sider-collapsed & {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .@{class-prefix}-drawer-sidebar & {
+    padding-left: @sidebar-padding-lr;
+  }
+
+  .@{class-prefix}-drawer-sidebar-dark & {
+    background-color: fade(@white-color, 10%);
+  }
+
+  .@{class-prefix}-layout-sider-dark & {
+    background-color: fade(@white-color, 10%);
+  }
+}
+
+.@{class-prefix}-layout-sider-scrollbar {
+  height: calc(100vh ~"-" @layout-header-height) !important;
+
+  .framed-layout & {
+    height: calc(100vh~"-"@layout-header-height + 2 * @framed-layout-base) !important;
+
+    @media screen and (max-width: @screen-md-max) {
+      height: calc(100vh ~"-" @layout-header-height) !important;
+    }
+  }
+}

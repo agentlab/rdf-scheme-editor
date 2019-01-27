@@ -1,0 +1,207 @@
+@font-family: 'Catamaran', sans-serif;
+
+@class-prefix: gx;
+
+// Grey ColorPicker Variables
+@grey-2: #fafafa;
+@grey-3: #f5f5f5;
+@grey-4: #e8e8e8;
+@grey-5: #d9d9d9;
+@grey-6: #bfbfbf;
+@grey-7: #8c8c8c;
+@grey-8: #595959;
+@grey-9: #262626;
+
+@info-color: @blue-6;
+@success-color: @green-6;
+@processing-color: @primary-color;
+@error-color: @red-6;
+@highlight-color: @red-6;
+@warning-color: @orange-6;
+@normal-color: #d9d9d9;
+@danger-color: #f44336;
+@light-color: #e8eaf6;
+@dark-color: @grey-9;
+
+@blue-color: @blue-6;
+@indigo-color: #3c1991;
+@purple-color: @purple-6;
+@pink-color: @pink-6;
+@red-color: @red-6;
+@orange-color: @orange-6;
+@yellow-color: @yellow-6;
+@amber-color: @yellow-color;
+@green-color: @green-6;
+@teal-color: #20c997;
+@cyan-color: @cyan-6;
+@gold-color: @gold-6;
+@lime-color: @lime-6;
+
+// Background color for `<body>`
+@heading-color-dark: fade(#fff, 100%);
+@text-color-dark: fade(#fff, 85%);
+@text-color-secondary-dark: fade(#fff, 65%);
+@font-size-base: 14px;
+@font-size-lg: @font-size-base + 2px;
+@font-size-sm: 12px;
+@line-height-base: 1.5;
+@border-radius-base: 4px;
+@border-radius-sm: 2px;
+@border-radius-lg: 8px;
+@border-radius-xxl: 30px;
+@border-radius-circle: 50%;
+
+// Border color
+@border-color-base: hsv(0, 0, 85%); // base border outline a component
+@border-color-split: hsv(0, 0, 91%); // split border inside a component
+@border-width-base: 1px; // width of the border for a component
+@border-style-base: solid; // style of a components border
+@border-color: @border-color-split;
+
+// LINK
+@link-color: @primary-color;
+@link-hover-color: color(~`colorPalette("@{link-color}", 5)`);
+@link-active-color: color(~`colorPalette("@{link-color}", 7)`);
+
+@h1-font-size: 22px;
+@h2-font-size: 20px;
+@h3-font-size: 18px;
+@h4-font-size: 16px;
+@h5-font-size: 14px;
+@h6-font-size: 12px;
+
+@headings-font-weight: 400;
+@headings-line-height: 1.2;
+
+@font-weight-thin: 100;
+@font-weight-extra-light: 200;
+@font-weight-light: 300;
+@font-weight-normal: 400;
+@font-weight-medium: 500;
+@font-weight-semi-bold: 600;
+@font-weight-bold: 700;
+@font-weight-extra-bold: 800;
+@font-weight-black: 900;
+
+// Sidebar Variables
+@sidebar-width: 280px;
+@sidebar-mini-drawer-width: 80px;
+@sidebar-padding-lr: 30px;
+
+@sidebar-bg-darken: darken(@sidebar-bg, 3%);
+@sidebar-hover-color: @primary-color;
+
+// Dark Sidebar Variables
+@sidebar-dark-bg-darken: lighten(@sidebar-dark-bg, 6%);
+@sidebar-dark-hover-color: @white-color;
+
+// Menu
+// ---
+@menu-inline-toplevel-item-height: 42px;
+@menu-item-height: 42px;
+@menu-collapsed-width: 80px;
+@menu-bg: @component-background;
+@menu-item-color: @text-color;
+@menu-highlight-color: @primary-color;
+@menu-item-active-bg: @item-active-bg;
+@menu-item-group-title-color: #545454;
+@menu-highlight-dot-color: @pink-5;
+
+// dark theme
+@menu-dark-color: @text-color-secondary-dark;
+@menu-dark-arrow-color: @white-color;
+@menu-dark-submenu-bg: @sidebar-dark-bg-darken;
+@menu-dark-highlight-color: @white-color;
+@menu-dark-item-selected-bg: @sidebar-dark-bg-darken;
+
+// Layout
+@layout-body-background: @body-background;
+@layout-header-height: 72px;
+@layout-header-padding: 0 30px;
+@layout-header-padding-res: 0 20px;
+@layout-footer-padding: 14px 30px;
+@layout-sider-background: @sidebar-dark-bg;
+@layout-trigger-height: 30px;
+@layout-trigger-background: #002140;
+@layout-trigger-color: @white-color;
+@layout-zero-trigger-width: 36px;
+@layout-zero-trigger-height: 28px;
+@layout-main-content-padding: 30px;
+
+// Card
+// ---
+@card-head-color: @heading-color;
+@card-head-background: @component-background;
+@card-head-padding: 16px;
+@card-inner-head-padding: 12px;
+@card-padding-base: 24px;
+@card-padding-wider: 24px;
+@card-actions-background: @background-color-light;
+@card-shadow: 0 2px 8px rgba(0, 0, 0, .09);
+
+@gx-card-padding-base: 24px;
+@gx-card-padding-sm: @gx-card-padding-base - 10px;
+@gx-card-shadow: 0 0 2px fade(@black-color, 35%);
+@gx-card-shadow-lg: 0 0 10px 4px fade(@black-color, 35%);
+@gx-card-shadow-md: 0 0 8px 3px fade(@black-color, 20%);
+@gx-card-margin-base: 30px;
+
+// Gutter
+@grid-gutter-width: 30px;
+
+//Sizes Variables
+@size-20: 20px;
+@size-30: 30px;
+@size-40: 40px;
+@size-50: 50px;
+@size-60: 60px;
+@size-80: 80px;
+@size-100: 100px;
+@size-120: 120px;
+
+//latter Spacing variables
+@letter-spacing-base: 3px;
+@letter-spacing-lg: 6px;
+@letter-spacing-xl: 8px;
+
+//CRM Image Location
+@image_path: "../../assets/images";
+
+// Apps Variables
+@app-sidebar-width: 230px;
+@app-chat-sidebar-width: 315px;
+
+// Form
+// ---
+@label-required-color: @highlight-color;
+@label-color: @heading-color;
+@form-item-margin-bottom: 20px;
+@form-item-trailing-colon: true;
+@form-vertical-label-padding: 0 0 8px;
+@form-vertical-label-margin: 0;
+
+// Buttons
+@btn-height-base: 32px;
+@btn-height-lg: 40px;
+@btn-height-sm: 24px;
+@btn-font-size-lg: @font-size-lg;
+@btn-font-size-sm: @font-size-sm;
+@btn-font-size-xs: @font-size-sm - 2px;
+@btn-padding-xs: 0 6px;
+
+// Dragndrop
+@dragndrop-paddding-tb: 24px;
+@dragndrop-paddding-lr: 16px;
+
+//Pricing Table
+@gx-pricing-table-base: 30px;
+
+// Customizer
+@gx-customizer-width: 370px;
+@gx-customizer-base: 20px;
+
+//Framed Layout
+@framed-layout-base: 20px;
+
+
+

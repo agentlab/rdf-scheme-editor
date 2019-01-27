@@ -1,0 +1,85 @@
+/*Slider Styles*/
+.ant-carousel {
+  & h1,
+  & h2,
+  & h3,
+  & h4,
+  & h5,
+  & h6 {
+    line-height: inherit;
+    margin-bottom: 0;
+  }
+}
+
+.@{class-prefix}-vertical-slider {
+  position: relative;
+  .flex-display(flex, row, wrap);
+  margin: 0 -15px;
+}
+
+.@{class-prefix}-vertical-slider-item {
+  width: 33.33%;
+  padding: 0 15px;
+  height: 300px;
+  .flex-display(flex, column, nowrap);
+  .align-items(center);
+
+  @media screen and (max-width: @screen-xs-max ) {
+    width: 50%;
+    margin-bottom: 15px;
+  }
+}
+
+.ant-carousel-vertical .@{class-prefix}-vertical-slide {
+  & .slick-slide {
+    height: 160px;
+  }
+}
+
+.slick-slider {
+  margin-bottom: @gx-card-margin-base;
+
+  & .slick-prev {
+    left: -15px;
+
+    &:before {
+      color: @black-color;
+    }
+  }
+
+  & .slick-next {
+    right: -15px;
+
+    &:before {
+      color: @black-color;
+    }
+  }
+}
+
+.slick-dots {
+  & li {
+    width: 10px !important;
+    height: 10px !important;
+  }
+
+  & li button {
+    width: 10px !important;
+    height: 10px !important;
+
+    &:before {
+      width: 10px !important;
+      height: 10px !important;
+      line-height: 10px !important;
+    }
+  }
+}
+
+.@{class-prefix}-slide-item {
+  margin-left: 15px;
+  margin-right: 15px;
+
+  @media screen and (max-width: (@screen-xs-max - 95px)) {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
