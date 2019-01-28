@@ -4,8 +4,8 @@ import {Card, Input, Tree} from "antd";
 const TreeNode = Tree.TreeNode;
 const Search = Input.Search;
 
-const x = 3;
-const y = 2;
+const x = 6;
+const y = 5;
 const z = 1;
 const gData = [];
 
