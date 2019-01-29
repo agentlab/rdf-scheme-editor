@@ -1,5 +1,7 @@
 import React from "react";
 import {Card, Input, Tree} from "antd";
+import { DefaultSparqlClient } from "../services/DefaultSparqlClient.ts";
+import fetch from 'isomorphic-unfetch';
 
 const TreeNode = Tree.TreeNode;
 const Search = Input.Search;
@@ -31,6 +33,37 @@ const generateData = (_level, _preKey, _tns) => {
   });
 };
 generateData(z);
+
+const testQueryReq = `PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX oslc: <http://open-services.net/ns/core#>
+
+SELECT ?x
+WHERE {
+ ?x a rdfs:Class .
+ ?x rdfs:isDefinedBy oslc:
+}`;
+
+var testQuery = `
+      PREFIX eurovoc: <http://publications.europa.eu/ontology/euvoc#>
+      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+      PREFIX eschema: <http://eurovoc.europa.eu/schema#>
+
+      SELECT ?domain ?domainLabel ?thesaurus ?thesaurusLabel
+      WHERE {
+        ?thesaurus rdf:type eschema:MicroThesaurus .
+        ?thesaurus skos:prefLabel ?thesaurusLabel .
+        ?domain rdf:type eschema:Domain .
+        ?domain skos:prefLabel ?domainLabel .
+        FILTER(langMatches(lang(?domainLabel), "###lang###"))
+        FILTER(langMatches(lang(?thesaurusLabel), "###lang###"))
+        FILTER(strStarts(?domainLabel, substr(?thesaurusLabel, 1, 2)))
+      }
+    `;
+
+const testServerUrlReq = "https://agentlab.ru/rdf4j-workbench/repositories/reqs";
+const testServerUrl = "https://agentlab.ru/rdf4j-server/repositories/23";
 
 const dataList = [];
 const generateList = (data) => {
@@ -66,7 +99,14 @@ class ClassTreeView extends React.Component {
     searchValue: '',
     autoExpandParent: true,
   };
-  onExpand = (expandedKeys) => {
+  onExpand = async (expandedKeys) => {
+    var res = await fetch(testServerUrlReq + '?query=' + encodeURIComponent(testQueryReq), 
+      {
+        Accept: 'application/sparql-results+json'
+      });
+    //console.log(testServerUrl + '?query=' + encodeURIComponent(testQuery));
+    var body = await res.text();
+    console.log(body);
     this.setState({
       expandedKeys,
       autoExpandParent: false,
