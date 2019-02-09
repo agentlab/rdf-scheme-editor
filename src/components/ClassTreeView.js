@@ -1,6 +1,5 @@
 import React from "react";
 import {Card, Input, Tree} from "antd";
-import { DefaultSparqlClient } from "../services/DefaultSparqlClient.ts";
 import fetch from 'isomorphic-unfetch';
 
 const TreeNode = Tree.TreeNode;
