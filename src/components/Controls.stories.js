@@ -68,6 +68,8 @@ const detailsData = [{
   description: 'Риск требования',
 }];
 
+const expandedKeys = [];
+
 // в отдельной функции маппинг изменения одного компонента на изменение состояния другого
 
 const detailsQuery = 
@@ -104,6 +106,8 @@ export function ElementsTreeAndDetailsTableContextProvider(props) {
 
   const [elementsTreeData, setElementsTreeData] = useState([]);
   const [detailsData, setDetailsData] = useState([]);
+  const [expandedKeys, setExpandedKeys] = useState([]);
+  const [searchValue, setSearchValue] = useState([]);
 
   // можно делать интернационализацию, можно узнавать выбранную локаль и выбирать rdf лейблы по локали
   //const { t, i18n } = useTranslation();
@@ -131,8 +135,9 @@ export function ElementsTreeAndDetailsTableContextProvider(props) {
   );
 
   const onTreeSelect = (selectedKeys, info) => {
-      //console.log('onTreeSelect.info=', info);
-      //console.log('onTreeSelect.selectedKeys=', selectedKeys);
+      // console.log('onTreeSelect.info=', info);
+      // console.log('onTreeSelect.selectedKeys=', selectedKeys);
+      // console.log(rootElement);
 
       var query = detailsQuery.replace("###", selectedKeys[0]);
       //console.log('onTreeSelect.query=', query);
@@ -156,7 +161,32 @@ export function ElementsTreeAndDetailsTableContextProvider(props) {
       )
   }
 
-  const value = { elementsTreeData, onTreeSelect, detailsColumns, detailsData }
+  const getExpandedKeys = (value, node, parentKey) => {
+    var keys = []
+    if (node.title.toLowerCase().indexOf(value) > -1) {
+      keys.push(parentKey);
+    }
+    node.children && node.children.forEach((child) => {
+      keys = keys.concat(getExpandedKeys(value, child, node.key));
+    });
+    return keys;
+  }
+
+  const onSearchInputChanged = (e) => {
+    const value = e.target.value.toLowerCase();
+    const expandedKeys = getExpandedKeys(value, rootElement[0], rootElement[0].key)
+      .filter((item, i, self) => item && self.indexOf(item) === i);
+    setExpandedKeys(expandedKeys);
+    setSearchValue(value);
+  }
+
+  const onExpandKeys = (expandedKeys) => {
+    setExpandedKeys(expandedKeys);
+  }
+
+  const value = { elementsTreeData, onTreeSelect, 
+                  detailsColumns, detailsData, 
+                  expandedKeys, onSearchInputChanged, searchValue, onExpandKeys }
 
   return <ElementsTreeAndDetailsTableContext.Provider value={value}>{props.children}</ElementsTreeAndDetailsTableContext.Provider>
 }
@@ -226,6 +256,9 @@ storiesOf('Редактор атрибутов классов', module)
         key: 'rdfs:Property',
         children: [{}]
       }]} >
-      <ElementsTreeAndDetailsTable elementsTreeData={elementsTreeData} detailsColumns={detailsColumns} detailsData={detailsData} />
+      <ElementsTreeAndDetailsTable 
+          elementsTreeData={elementsTreeData} 
+          detailsColumns={detailsColumns} 
+          detailsData={detailsData}  />
     </ElementsTreeAndDetailsTableContextProvider>
   );
