@@ -26,7 +26,8 @@ const renderTreeNodes = data => data.map((item) => {
 
 
 const divStyle = {
-  padding: "5px"
+  padding: "5px",
+  overflow: "auto"
 };
 
 const ElementsTreeAndDetailsTable = (props) => {
@@ -37,7 +38,7 @@ const ElementsTreeAndDetailsTable = (props) => {
   return (
     <SplitPane split="vertical" defaultSize="20%" style={{position: "relative"}} size="small">
       <div style={divStyle}>
-        <Card title={props.elementsHeader} className="gx-card" size="small" >
+        <Card title={props.elementsHeader} className="gx-card" size="small" style={{ minWidth: "fit-content" }}>
           <Search style={{marginBottom: 8}} size="small" placeholder="Search" />
           <Tree size="small" onSelect={onTreeSelect}>
             {elementsTreeData && renderTreeNodes(elementsTreeData)}
