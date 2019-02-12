@@ -1,4 +1,4 @@
-import { configure, addDecorator } from '@storybook/react';
+import { configure, addDecorator, addParameters } from '@storybook/react';
 import { withNotes } from '@storybook/addon-notes';
 import { withInfo } from "@storybook/addon-info";
 import { withOptions } from '@storybook/addon-options';
@@ -19,8 +19,8 @@ addDecorator(
   })
 );
 
-addDecorator(
-  withOptions({
+addParameters ({
+  options: {
     /**
      * name to display in the top left corner
      * @type {String}
@@ -94,8 +94,8 @@ addDecorator(
      * @type {Boolean}
      */
     enableShortcuts: true, // true by default
-  })
-);
+  },
+});
 
 addDecorator(withI18next({
   i18n,
