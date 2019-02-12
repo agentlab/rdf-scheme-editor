@@ -1,6 +1,6 @@
 import i18n from "i18next";
-import { reactI18nextModule } from "react-i18next";
-import Backend from 'i18next-xhr-backend';
+import { initReactI18next } from "react-i18next";
+import XHR from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import moment from 'moment';
 
@@ -18,12 +18,15 @@ const resources = {
 };
 
 i18n
-  .use(Backend)
+  .use(XHR)
   .use(LanguageDetector)
-  .use(reactI18nextModule) // passes i18n down to react-i18next
+  .use(initReactI18next) // passes i18n down to react-i18next
   .init({
-    resources,
+    whitelist: ['en', 'ru-RU'],
     lng: "ru",
+    fallbackLng: 'en',
+    debug: true,
+    resources,
     interpolation: {
       escapeValue: false // react already safes from xss
     }
