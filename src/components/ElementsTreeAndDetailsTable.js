@@ -13,15 +13,27 @@ const Search = Input.Search;
 // все тестовые данные должны быть вынесены в Story и тут их быть не должно
 
 
-const renderTreeNodes = data => data.map((item) => {
+const renderTreeNodes = (data, searchValue) => data.map((item) => {
+  const index = item.title.toLowerCase().indexOf(searchValue);
+  const beforeStr = item.title.substr(0, index);
+  const middleStr = item.title.substr(index, searchValue.length);
+  const afterStr = item.title.substr(index + searchValue.length);
+  const title = index > -1 ? (
+    <span>
+      {beforeStr}
+      <span style={{color: '#f50'}}>{middleStr}</span>
+      {afterStr}
+    </span>
+  ) : <span>{item.title}</span>;
+
   if (item.children) {
     return (
-      <TreeNode title={item.title} key={item.key} dataRef={item}>
-        {renderTreeNodes(item.children)}
+      <TreeNode title={title} key={item.key} dataRef={item}>
+        {renderTreeNodes(item.children, searchValue)}
       </TreeNode>
     );
   }
-  return <TreeNode {...item} />;
+  return <TreeNode title={title} key={item.key} isLeaf={item.isLeaf} dataRef={item} />;
 })
 
 
@@ -33,15 +45,21 @@ const divStyle = {
 const ElementsTreeAndDetailsTable = (props) => {
   // это и есть все входные данные компонента из родительского контекста
   // пропсы почти не используются
-  const { elementsTreeData, onTreeSelect, detailsColumns, detailsData } = useContext(ElementsTreeAndDetailsTableContext);
+  const { elementsTreeData, onTreeSelect, 
+          detailsColumns, detailsData, 
+          expandedKeys, searchValue, onSearchInputChanged, onExpandKeys, autoExpandParent } = useContext(ElementsTreeAndDetailsTableContext);
 
   return (
     <SplitPane split="vertical" defaultSize="20%" style={{position: "relative"}} size="small">
       <div style={divStyle}>
-        <Card title={props.elementsHeader} className="gx-card" size="small" style={{ minWidth: "fit-content" }}>
-          <Search style={{marginBottom: 8}} size="small" placeholder="Search" />
-          <Tree size="small" onSelect={onTreeSelect}>
-            {elementsTreeData && renderTreeNodes(elementsTreeData)}
+        <Card title={props.elementsHeader} className="gx-card" size="small" >
+          <Search style={{marginBottom: 8}} size="small" placeholder="Search" onChange={onSearchInputChanged} />
+          <Tree size="small" 
+            onSelect={onTreeSelect}  
+            expandedKeys={expandedKeys}
+            onExpand={onExpandKeys}
+            autoExpandParent={autoExpandParent}>
+            {elementsTreeData && renderTreeNodes(elementsTreeData, searchValue)}
           </Tree>
         </Card>
       </div>
