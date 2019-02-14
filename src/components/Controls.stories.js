@@ -71,35 +71,6 @@ const detailsData = [{
 
 const expandedKeys = [];
 
-// в отдельной функции маппинг изменения одного компонента на изменение состояния другого
-
-const detailsQuery = 
-`SELECT ?pred ?obj
-WHERE {
- <###> ?pred ?obj
-}`;
-
-
-// API search function
-function executeSparql(url, query, callback, onErr) {
-  var queryUrl = url + '?query=' + encodeURIComponent(query) + '&queryLn=sparql';
-  console.log("queryUrl=", queryUrl);
-
-  return fetch(queryUrl, 
-    { 
-      headers: {
-        Accept: 'application/sparql-results+json'
-      } 
-    })
-    .then(r => r.json())
-    .then(r => {
-      callback(r.results);
-    })
-    .catch(error => {
-      onErr(error);
-      return [];
-    });
-}
 
 
 storiesOf('Редактор атрибутов классов', module)
