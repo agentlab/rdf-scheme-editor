@@ -72,6 +72,15 @@ const detailsData = [{
 const expandedKeys = [];
 
 
+// в отдельной функции маппинг изменения одного компонента на изменение состояния другого
+
+const detailsQuery = 
+`SELECT ?pred ?obj
+WHERE {
+ <###> ?pred ?obj
+}`;
+
+
 
 storiesOf('Редактор атрибутов классов', module)
 //  .add('Без данных', () => <ElementsTreeAndDetailsTable />) // эта штука без контекста не работает и не факт, что должна
@@ -91,6 +100,7 @@ storiesOf('Редактор атрибутов классов', module)
          FILTER (lang(?label) = "" || lang(?label) = "en")
        }
       }`}
+      detailsQuery={detailsQuery}
       detailsColumns={[{
         title: 'Параметр',
         dataIndex: 'pred',
@@ -123,6 +133,7 @@ storiesOf('Редактор атрибутов классов', module)
         FILTER (lang(?label) = "" || lang(?label) = "en")
        }
       }`}
+      detailsQuery={detailsQuery}
       detailsColumns={[{
         title: 'Параметр',
         dataIndex: 'pred',

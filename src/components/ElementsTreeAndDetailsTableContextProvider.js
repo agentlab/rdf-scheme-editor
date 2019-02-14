@@ -3,13 +3,6 @@ import React, { useEffect, useState } from 'react';
 import ElementsTreeAndDetailsTable from "./ElementsTreeAndDetailsTable";
 import {ElementsTreeAndDetailsTableContext} from "./ElementsTreeAndDetailsTableContext";
 
-// в отдельной функции маппинг изменения одного компонента на изменение состояния другого
-
-const detailsQuery = 
-`SELECT ?pred ?obj
-WHERE {
- <###> ?pred ?obj
-}`;
 
 
 // API search function
@@ -35,7 +28,7 @@ function executeSparql(url, query, callback, onErr) {
 
 
 export function ElementsTreeAndDetailsTableContextProvider(props) {
-  const {url, query, detailsColumns, rootElement} = props;
+  const {url, query, detailsQuery, detailsColumns, rootElement} = props;
 
   const [elementsTreeData, setElementsTreeData] = useState([]);
   const [detailsData, setDetailsData] = useState([]);
