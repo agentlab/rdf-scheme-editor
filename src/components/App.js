@@ -2,7 +2,7 @@
 import React, {Component}  from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
-import './index.css';
+import '../index.css';
 import { Menu, Icon } from 'antd';
 
 const SubMenu = Menu.SubMenu;
@@ -29,7 +29,7 @@ class App extends Component {
             <Menu.Item key="2">Delete repository</Menu.Item>
           </MenuItemGroup>
 
-          <MenuItemGroup key="g2" title="Explore">
+          <MenuItemGroup key="g2" title="Анзор">
             <Menu.Item key="3">Summery</Menu.Item>
             <Menu.Item key="4">Namespace</Menu.Item>
             <Menu.Item key="5">Contexts</Menu.Item>
