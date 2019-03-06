@@ -1,7 +1,6 @@
 
 import { storiesOf } from '@storybook/react';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import './index.css';
 import {
@@ -16,9 +15,6 @@ class FormLayoutDemo extends React.Component {
     };
   }
 
-  handleFormLayoutChange = (e) => {
-    this.setState({ formLayout: e.target.value });
-  }
 
   render() {
     const { formLayout } = this.state;
