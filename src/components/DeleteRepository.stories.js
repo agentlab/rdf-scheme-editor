@@ -1,86 +1,105 @@
-import React from 'react';
-import { storiesOf } from '@storybook/react';
-import {
-    Form, Select, Button,
-  } from 'antd';
-  
+import React from "react";
+import { storiesOf } from "@storybook/react";
+import { Form, Select, Button } from "antd";
+
 const Option = Select.Option;
 const FormItem = Form.Item;
 
-storiesOf('Delete Repository', module)
-  .add('Select', () => (      
-    <Form inline>
-        <FormItem>
-        <Select
-            showSearch
-            style={{ width: 500 }} 
-            placeholder="Repository:"
-            filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-            >
-            <Option value="adms-catalog">adms-catalog
-										-
-										ADMS Catalog</Option>
-            <Option value="reqs">reqs
-										-
-										Requirements</Option>
-            <Option value="jhgf">jhgf
-										-
-										jh</Option>
-            <Option value="configurations">configurations
-										-
-										Portal Configurations</Option>
-                                        <Option value="adms-catalog">adms-catalog
-										-
-										ADMS Catalog</Option>
-            <Option value="eurovoc_ru">eurovoc_ru
-										-
-										EuroVoc (russian edition) in SKOS Core Concepts</Option>
-            <Option value="onem2m">onem2m
-										-
-										OneM2M IoT Repository</Option>
-            <Option value="onem2m2">onem2m2
-										-
-										OneM2M IoT Repository</Option>
-                                        <Option value="adms-catalog">adms-catalog
-										-
-										ADMS Catalog</Option>
-            <Option value="datasets">datasets
-										-
-										Datasets configuration fot portal</Option>
-            <Option value="23">23
-										-
-										Native store with RDF Schema and direct type inferencing</Option>
-            <Option value="mappings">mappings
-										-
-										Portal CVS Mappings</Option>
-            <Option value="adms3">adms3
-										-
-										Native store with RDF Schema and direct type inferencing</Option>
-            <Option value="adms4">adms4
-										-
-										ADMS 4 Native Java</Option>
-            <Option value="users">users
-										-
-										Portal Users</Option>
-            <Option value="eurovoc_core">eurovoc_core
-										-
-										EuroVoc in SKOS Core Concepts</Option> 
-                                        <Option value="23">23
-										-
-										Native store with RDF Schema and direct type inferencing</Option>
-            <Option value="rere">rere
-										-
-										test_feature</Option>
-            <Option value="lov">lov
-										-
-										Linked Open Vocabularies</Option>
-            <Option value="adms2">adms2
-										-
-										ADMS 2.01 Catalog</Option>                
-        </Select>
-        </FormItem>
-        <FormItem>
-        <Button type="danger" ghost>Delete</Button>
-        </FormItem>
-    </Form>
-  ));
+const options = [
+  {
+    value: "adms-catalog",
+    text: "adms-catalog - ADMS Catalog"
+  },
+  {
+    value: "reqs",
+    text: "reqs - Requirements"
+  },
+  {
+    value: "jhgf",
+    text: "jhgf - jh"
+  },
+  {
+    value: "configurations",
+    text: "configurations - Portal Configurations"
+  },
+  {
+    value: "adms-catalog",
+    text: "adms-catalog - ADMS Catalog"
+  },
+  {
+    value: "eurovoc_ru",
+    text: "eurovoc_ru - EuroVoc (russian edition) in SKOS Core Concepts"
+  },
+  {
+    value: "onem2m",
+    text: "onem2m - OneM2M IoT Repository"
+  },
+  {
+    value: "onem2m2",
+    text: "onem2m2 - OneM2M IoT Repository"
+  },
+  {
+    value: "datasets",
+    text: "datasets - Datasets configuration fot portal"
+  },
+  {
+    value: "23",
+    text: "23 - Native store with RDF Schema and direct type inferencing"
+  },
+  {
+    value: "mappings",
+    text: "mappings - Portal CVS Mappings"
+  },
+  {
+    value: "adms3",
+    text: "adms3 - Native store with RDF Schema and direct type inferencing"
+  },
+  {
+    value: "adms4",
+    text: "adms4 - ADMS 4 Native Java"
+  },
+  {
+    value: "users",
+    text: "users - Portal Users"
+  },
+  {
+    value: "eurovoc_core",
+    text: "eurovoc_core - EuroVoc in SKOS Core Concepts"
+  },
+  {
+    value: "rere",
+    text: "rere - test_feature"
+  },
+  {
+    value: "lov",
+    text: "lov - Linked Open Vocabularies"
+  },
+  {
+    value: "adms2",
+    text: "adms2 - ADMS 2.01 Catalog"
+  }
+];
+
+storiesOf("Delete Repository", module).add("Select", () => (
+  <Form inline>
+    <FormItem>
+      <Select
+        showSearch
+        style={{ width: 500 }}
+        placeholder="Repository:"
+        filterOption={(input, option) =>
+          option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+        }
+      >
+        {options.map((option, i) => (
+          <Option value={option.value}>{option.text}</Option>
+        ))}
+      </Select>
+    </FormItem>
+    <FormItem>
+      <Button type="danger" ghost>
+        Delete
+      </Button>
+    </FormItem>
+  </Form>
+));
