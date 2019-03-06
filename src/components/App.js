@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, {Component}  from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import './index.css';
@@ -8,7 +8,7 @@ import { Menu, Icon } from 'antd';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
-class Sider extends React.Component {
+class App extends Component {
   handleClick = (e) => {
     console.log('click ', e);
   }
@@ -57,5 +57,5 @@ class Sider extends React.Component {
   }
 }
 
-ReactDOM.render(<Sider />, document.getElementById('container'));
+export default App;
           
