@@ -1,57 +1,59 @@
-import React, {Component} from 'react'; //Добавлено Component
+import React, {Component} from 'react'; 
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import '../index.css';
-import {
-  Form, Icon, Input, Button, Checkbox,
-} from 'antd';
+import { Menu, Icon } from 'antd';
 
-class App extends Component {
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-      }
-    });
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
+
+class App extends Component { 
+  handleClick = (e) => {
+    console.log('click ', e);
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
     return (
-      <Form onSubmit={this.handleSubmit} className="login-form">
-        <Form.Item>
-          {getFieldDecorator('userName', {
-            rules: [{ required: true, message: 'Please input your username!' }],
-          })(
-            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
-          )}
-        </Form.Item>
-        <Form.Item>
-          {getFieldDecorator('password', {
-            rules: [{ required: true, message: 'Please input your Password!' }],
-          })(
-            <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
-          )}
-        </Form.Item>
-        <Form.Item>
-          {getFieldDecorator('remember', {
-            valuePropName: 'checked',
-            initialValue: true,
-          })(
-            <Checkbox>Remember me</Checkbox>
-          )}
-          <a className="login-form-forgot" href="">Forgot password</a>
-          <Button type="primary" htmlType="submit" className="login-form-button">
-            Log in
-          </Button>
-          Or <a href="">register now!</a>
-        </Form.Item>
-      </Form>
+      <Menu
+        onClick={this.handleClick}
+        style={{ width: 256 }}
+        defaultSelectedKeys={['1']}
+        defaultOpenKeys={['sub1']}
+        mode="inline"
+      >
+        <MenuItemGroup key="g1" title="RDF4J Server">
+        </MenuItemGroup>
+          <MenuItemGroup key="g1" title="Repositories">
+            <Menu.Item key="1">New repository </Menu.Item>
+            <Menu.Item key="2">Delete repository</Menu.Item>
+          </MenuItemGroup>
+
+          <MenuItemGroup key="g2" title="Explore">
+            <Menu.Item key="3">Summery</Menu.Item>
+            <Menu.Item key="4">Namespace</Menu.Item>
+            <Menu.Item key="5">Contexts</Menu.Item>
+            <Menu.Item key="6">Types</Menu.Item>
+            <Menu.Item key="7">Explore</Menu.Item>
+            <Menu.Item key="8">Query</Menu.Item>
+            <Menu.Item key="9">Saved Querles</Menu.Item>
+            <Menu.Item key="10">Export</Menu.Item>
+          </MenuItemGroup>
+       
+        <MenuItemGroup key="g2" title="Modify">
+          <Menu.Item key="11">SPARQL Update</Menu.Item>
+          <Menu.Item key="12">Add</Menu.Item>
+          <Menu.Item key="13">Remove</Menu.Item>
+          <Menu.Item key="14">Clear</Menu.Item>
+        </MenuItemGroup>
+
+        <MenuItemGroup key="g2" title="Information">
+            <Menu.Item key="15">Information</Menu.Item>
+        </MenuItemGroup>
+       
+
+      </Menu>
     );
   }
 }
 
-const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(App);
-
-export default App; 
+export default App;  
