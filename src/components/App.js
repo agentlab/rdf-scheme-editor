@@ -52,6 +52,6 @@ class App extends Component {
   }
 }
 
-const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(NormalLoginForm);
+const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(App);
 
 export default App; 
