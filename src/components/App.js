@@ -1,8 +1,12 @@
+import React, {Component} from 'react'; //Добавлено Component
+import ReactDOM from 'react-dom';
+import 'antd/dist/antd.css';
+import '../index.css';
 import {
   Form, Icon, Input, Button, Checkbox,
 } from 'antd';
 
-class NormalLoginForm extends React.Component {
+class App extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
