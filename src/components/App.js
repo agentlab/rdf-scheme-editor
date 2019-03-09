@@ -1,5 +1,7 @@
 import React from 'react'
 //import {Col, Row} from "antd";
+
+//
 import {
 	Layout, Menu, Breadcrumb,Button,Dropdown, Icon,message,Pagination, AutoComplete,Checkbox, Input, Table, Divider, Tag
 } from 'antd';
@@ -237,7 +239,7 @@ const App = () => {
 
 
 
-	
+
 <Table columns={columns} dataSource={data}   />
 
 
