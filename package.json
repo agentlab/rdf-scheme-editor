@@ -54,6 +54,7 @@
     "@storybook/addons": "4.1.11",
     "@storybook/client-logger": "4.1.11",
     "@storybook/react": "4.1.11",
+    "babel-loader": "^8.0.5",
     "react-test-renderer": "^16.8.1",
     "require-context.macro": "^1.0.4",
     "storybook-addon-i18next": "^0.1.2",
