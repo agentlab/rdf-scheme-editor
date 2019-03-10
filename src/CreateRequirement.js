@@ -76,6 +76,4 @@ class FormLayoutDemo extends React.Component {
 storiesOf('Lab1', module)
   .add('Summary', () => (
     <FormLayoutDemo />
-  ))
-
-       
+  )) 
