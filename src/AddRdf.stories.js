@@ -106,8 +106,8 @@ class FormLayoutDemo extends React.Component {
 }
 
 
-storiesOf('Lab1', module)
-  .add('Add RDF', () => (
+storiesOf('Forms', module)
+  .add('Add RDF form', () => (
     <FormLayoutDemo />
   ))
           
