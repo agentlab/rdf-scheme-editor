@@ -1,4 +1,3 @@
-
 import { storiesOf } from '@storybook/react';
 import React from 'react';
 import 'antd/dist/antd.css';
@@ -17,7 +16,6 @@ class FormLayoutDemo extends React.Component {
     };
   }
 
-
   render() {
     const { formLayout } = this.state;
     const formItemLayout = formLayout === 'horizontal' ? {
@@ -28,39 +26,32 @@ class FormLayoutDemo extends React.Component {
 	 const formItemLayout2 = formLayout === 'horizontal' ? {
       labelCol: { span: 4 },
       wrapperCol: { span: 12 },
-	  
-	  
-	  
-    } : null;
+	} : null;
 
     return (
       <div>
         <Form layout={formLayout}>
         <h1 align="center"> Add RDF </h1>
         
-
-          <Form.Item
-            label="Base URl: "
+		<Form.Item
+			label="Base URl: "
             {...formItemLayout}
-          >
-            <Input readOnly defaultValue="Base" />
-			
-			{(
-            <Checkbox>use base URl as cintext identifier</Checkbox>
-          )}
-          </Form.Item>
+        >
+			<Input readOnly defaultValue="Base" />
+			<Checkbox>use base URl as cintext identifier</Checkbox>
+        </Form.Item>
 		
-          <Form.Item
-            label="Context: "
+        <Form.Item
+			label="Context: "
             {...formItemLayout}
-          >
-            <Input readOnly defaultValue="Context" />
-          </Form.Item>
+        >
+			<Input readOnly defaultValue="Context" />
+        </Form.Item>
 		  
-		     <Form.Item
-          label="Data format: "
-		  {...formItemLayout}
-          hasFeedback
+		<Form.Item
+			label="Data format: "
+			{...formItemLayout}
+			hasFeedback
         >
           {(
             <Select placeholder="(autodetect)">
@@ -77,26 +68,20 @@ class FormLayoutDemo extends React.Component {
 			  <Option value="">JSON-LD</Option>
             </Select>
           )}
-		  
-		  {(
-            <Checkbox>Location of the RDF data you wish to upload</Checkbox>
-          )}
+		  <Checkbox>Location of the RDF data you wish to upload</Checkbox>
         </Form.Item>
 		  
 		<Form.Item
             label="RDF Data URL: "
             {...formItemLayout}
-          >
-            <Input readOnly defaultValue="" />
-			{(
-            <Checkbox>Select the file containing the RDF data you wish to upload</Checkbox>
-          )}
-          </Form.Item>		  
+        >
+			<Input readOnly defaultValue="" />
+			<Checkbox>Select the file containing the RDF data you wish to upload</Checkbox>
+        </Form.Item>		  
 		  
-		  <Form.Item
+		<Form.Item
           label="RDF Data File: "
 		  {...formItemLayout}
-          
         >
           {(
             <Upload name="logo" action="/upload.do" listType="picture">
@@ -105,15 +90,13 @@ class FormLayoutDemo extends React.Component {
               </Button>
             </Upload>
           )}	  
-		  {(
-            <Checkbox>Enter the RDF data you wish to upload</Checkbox>
-          )}
+		  <Checkbox>Enter the RDF data you wish to upload</Checkbox>
         </Form.Item>
 
         <Form.Item
             label="RDF Content: "
             {...formItemLayout2}
-          >
+        >
             <Input readOnly defaultValue="" />
         </Form.Item>
         </Form>
