@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://agentlab.ru/rdf-scheme-editor",
   "dependencies": {
-    "antd": "^3.12.3",
+    "antd": "^3.14.1",
     "i18next": "^15.0.2",
     "i18next-browser-languagedetector": "^3.0.0",
     "i18next-xhr-backend": "^2.0.0",
