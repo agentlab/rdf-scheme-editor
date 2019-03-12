@@ -116,6 +116,11 @@ code {
   height: 3rem;
   line-height: 3rem;
 }
+.content {
+  flex: 1;
+  background-color: red; /* Цвет фона под текстом параграфа */
+  color: white;
+}
 .wrapper {
   background: #ffa;
   margin: 5rem;
