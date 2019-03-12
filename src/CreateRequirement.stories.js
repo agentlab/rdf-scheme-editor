@@ -41,17 +41,17 @@ class LockedLayout extends React.Component {
                         <Input />
                     </Form.Item>
 
-                    <Form.Item required label="Тип требования: " {...formItemLayout}><Icon type="bars" />
-                    
-                        <select name="Форма документа">
+                    <Form.Item required label="Тип требования" {...formItemLayout}><Icon style={{ fontSize: '20px' }} type="bars" />
+
+                        <select class="selector"> name="Форма документа" >
                             <option>Форма документа</option>
                             <option>Форма документа2</option>
                             <option>Форма документа3</option>
                         </select>
                     </Form.Item>
 
-                    <Form.Item required label="Формат требования: " {...formItemLayout}><Icon type="file-text" />
-                        <select name="Формат требования">
+                    <Form.Item required label="Формат требования" {...formItemLayout}><Icon style={{ fontSize: '20px' }} type="file-text" />
+                        <select class="selector" name="Формат требования">
                             <option>Текст</option>
                             <option>Голосовое</option>
                             <option>Какое нибудь</option>
@@ -65,25 +65,26 @@ class LockedLayout extends React.Component {
                     <h2>Расположение </h2>
                     <Form.Item label="Папка: " {...formItemLayout}>
                         <Input defaultValue="Базовые понятия" />
-                        <button class = "button-location-right" name="chooseFolder">Выбрать папку</button>
+                        <button class="button-location-right" name="chooseFolder">Выбрать папку</button>
                     </Form.Item>
 
                     <Form.Item label="Теги: " {...formItemLayout}>
                         <Input />
-                        <button class = "button-location-right" name="addTags">Добавить теги</button>
+                        <button class="button-location-right" name="addTags">Добавить теги</button>
                     </Form.Item>
                     <h1><b class="text-shadow-2">Начальное значение требования </b> </h1>
                     <Form.Item label="Шаблон: " {...formItemLayout}>
-                        <select name="Шаблон">
+                        <select class="selector-pattern" name="Шаблон">
                             <option>Нет</option>
                             <option>Да</option>
                         </select>
                     </Form.Item>
-                    <Checkbox onChange={onChange} >< b class="text-shadow-2">Открыть требование </b></Checkbox>
+                    <Checkbox onChange={onChange} >Открыть требование </Checkbox>
                 </Form>
-                <button name="ready">Готово</button>
-                <button name="cancel">Отмена</button>
-                
+                <div><button class="button-location1" name="ready">Готово</button>
+                <button class="button-location2" name="cancel">Отмена</button></div>
+               
+
             </div>
         );
     }
