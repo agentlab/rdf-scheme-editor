@@ -4,35 +4,11 @@ import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import './index.css';
 import {
-  Form, Select, Button, Table, Input, Checkbox
+  Select, Button, Table, Input, Checkbox
 } from 'antd';
 
 
-const { Option } = Select;
-
-const columns = [{
-  title: 'Subject',
-  dataIndex: 'subject',
-}, {
-    title: 'Predicate',
-    dataIndex: 'predicate',
-}, {
-    title: 'Object',
-    dataIndex: 'object',
-}, {
-    title: 'Context',
-    dataIndex: 'context'
-}];
-
-const data = [{
-  key: '1',
-  subject: 'oslc:',
-  predicate: 'rdf:type',
-  object: 'yest:Ontology',
-  context: 'oslc:',
-}];
-
-class Demo extends React.Component {
+class QueryRepository extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -109,5 +85,5 @@ class Demo extends React.Component {
 //const WrappedDemo = Form.create({ name: 'validate_other' })(Demo);
 
 //ReactDOM.render(<WrappedDemo />, document.getElementById('container'));
-storiesOf("Export Repository", module).add("info", () => <Demo />);
+storiesOf("Query Repository", module).add("info", () => <QueryRepository />);
 
