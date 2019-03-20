@@ -75,8 +75,9 @@ class PrefixInput extends React.Component {
           style={{ width: '32%' }}
           onChange={this.handleCurrencyChange}
         >
-          <Option value="Mike">Mike</Option>
-          <Option value="John">John</Option>
+         {dataSource.map((option, i) => (
+          <Option value={option.namespace}>{option.prefix}</Option>
+        ))}
         </Select>
       </span>
     );
