@@ -82,7 +82,7 @@ WHERE {
 
 
 
-storiesOf('Редактор атрибутов классов', module)
+storiesOf('Редактор атрибутов classov', module)
 //  .add('Без данных', () => <ElementsTreeAndDetailsTable />) // эта штука без контекста не работает и не факт, что должна
   .add('С корректными данными иерархии классов', () => 
     <ElementsTreeAndDetailsTableContextProvider
