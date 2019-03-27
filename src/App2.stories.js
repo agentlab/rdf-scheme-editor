@@ -1,10 +1,8 @@
 import { storiesOf } from '@storybook/react';
 import React from 'react'
-
 import {
 	Layout, Menu, Breadcrumb, Button, Dropdown, Icon, message, Pagination, AutoComplete, Checkbox, Input, Table, Divider, Tag
 } from 'antd';
-
 import 'antd/dist/antd.css';
 
 const { Header, Content, Sider } = Layout;
@@ -49,9 +47,7 @@ const columns = [{
 			})}
 		</span>
 	),
-
 }];
-
 
 const data = [{
 	key: '1',
@@ -61,27 +57,20 @@ const data = [{
 }, {
 	key: '2',
 	name: '',
-
 	address: '',
 	tags: [],
 }, {
 	key: '',
 	name: '',
-
 	address: '',
 	tags: [],
 }];
-
-
 
 class Explore extends React.Component {
 	render() {
 		return (
 			<Layout>
-
-
 				<Layout >
-
 					<Layout style={{ marginLeft: 200, padding: '0 24px 24px' }}>
 						<Breadcrumb style={{ margin: '16px 0' }}>
 							<Breadcrumb.Item>Explore</Breadcrumb.Item>
@@ -110,7 +99,6 @@ class Explore extends React.Component {
 					</Layout>
 				</Layout>
 			</Layout>
-
 		);
 	}
 }
