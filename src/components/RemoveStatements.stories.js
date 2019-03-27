@@ -6,7 +6,7 @@ import FormItem from "antd/lib/form/FormItem";
 
 const { TextArea } = Input;
 
-class FormLayoutDemo extends React.Component {
+class FormRemoveStatements extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -53,5 +53,5 @@ class FormLayoutDemo extends React.Component {
 }
 
 storiesOf("RemoveStatements", module).add("RemoveStatements", () => (
-  <FormLayoutDemo />
+  <FormRemoveStatements />
 ));
