@@ -78,7 +78,7 @@ class RemoveStatForm extends React.Component {
 const WrappedRemoveStatForm = Form.create({ name: "remove" })(RemoveStatForm);
 
 storiesOf('Remove Statements', module)
-  .add('', () => (
+  .add('Remove', () => (
     <RemoveStatForm />
   ))
 
