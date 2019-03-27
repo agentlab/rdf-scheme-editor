@@ -8,43 +8,19 @@ import {
 
 import 'antd/dist/antd.css';
 
-
-
-  function handleMenuClick(e) {
-	message.info('Click on menu item.');
-	console.log('click', e);
-  }
- 
-  function onShowSizeChange(current, pageSize) {
-	console.log(current, pageSize);
-  }
-
-  function onSelect(value) {
-	console.log('onSelect', value);
-  }
-
-  function onChange(e) {
-	console.log(`checked = ${e.target.checked}`);
-  }
-
-
-
 const { Header, Content, Sider } = Layout;
 const MenuItemGroup = Menu.ItemGroup;
 const SubMenu = Menu.SubMenu;
 
 const menu2 = (
-	<Menu onClick={handleMenuClick}>
+	<Menu>
 	  <Menu.Item key="1"><Icon type="user" />All</Menu.Item>
 	  <Menu.Item key="2"><Icon type="user" />10</Menu.Item>
 	  <Menu.Item key="3"><Icon type="user" />50</Menu.Item>
 	  <Menu.Item key="3"><Icon type="user" />100</Menu.Item>
-	  <Menu.Item key="3"><Icon type="user" />200</Menu.Item>
-	 
-	</Menu>
-		
+	  <Menu.Item key="3"><Icon type="user" />200</Menu.Item>	 
+	</Menu>		
 	);
-
 
 	const columns = [{
 		title: 'Subject',
@@ -121,7 +97,7 @@ const menu2 = (
 					</Breadcrumb>
 
 
-					<Checkbox onChange={onChange} >Show data types & language tags</Checkbox>
+					<Checkbox>Show data types & language tags</Checkbox>
 
    
 
