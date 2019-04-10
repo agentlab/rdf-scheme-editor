@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import 'antd/dist/antd.css';
 import './index.css';
 
-import { Form, Input, Button, Checkbox,Select, Radio, Layout } from 'antd';
+import { Form, Input, Button, Upload, Checkbox,Select, Radio, Layout, Icon } from 'antd';
   
 
   const { TextArea } = Input;
@@ -62,12 +62,15 @@ import { Form, Input, Button, Checkbox,Select, Radio, Layout } from 'antd';
             </Form.Item> 
 
 
-            <Form.Item id = "RDFdataFile" {...formItemLayout} label="RDF Data File:">
-                <Layout>
-                <Button style={{ width:  '30%' }} >Выберете файл</Button> 
-                <Radio>Enter the RDF data you wish to upload</Radio>
-                </Layout>
-            </Form.Item> 
+            <Form.Item label="RDF Data File: " {...formItemLayout}>{(
+				<Upload name="logo" action="/upload.do" listType="picture">
+				<Button>
+					<Icon type="upload" /> Click to upload
+				</Button>
+				</Upload>
+				)}	  
+				<Checkbox>Enter the RDF data you wish to upload</Checkbox>
+			</Form.Item>
 
 
             <Form.Item id = "RDFcontent" {...formItemLayout} label="RDF Content:">
