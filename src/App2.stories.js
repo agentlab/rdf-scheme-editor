@@ -20,51 +20,34 @@ const menu2 = (
 );
 
 const columns = [{
-	title: 'Subject',
-	dataIndex: 'name',
-	key: 'name',
-	render: text => <a href="javascript:;">{text}</a>,
+  title: 'Subject',
+  dataIndex: 'name_1',
+  render: text => <a href="javascript:;">{text}</a>,
 }, {
-	title: 'Predicate',
-	dataIndex: 'age',
-	key: 'age',
+  title: 'Predicate',
+  dataIndex: 'name_2',
+  render: text => <a href="javascript:;">{text}</a>,
 }, {
-	title: 'Object',
-	dataIndex: 'address',
-	key: 'address',
+  title: 'Object',
+  dataIndex: 'name_3',
+  render: text => <a href="javascript:;">{text}</a>,
 }, {
-	title: 'Context',
-	key: 'tags',
-	dataIndex: 'tags',
-	render: tags => (
-		<span>
-			{tags.map(tag => {
-				let color = tag.length > 5 ? 'geekblue' : 'green';
-				if (tag === 'loser') {
-					color = 'volcano';
-				}
-				return <Tag color={color} key={tag}>{tag.toUpperCase()}</Tag>;
-			})}
-		</span>
-	),
-}];
+  title: 'Context',
+  dataIndex: 'name_4',
+  render: text => <a href="javascript:;">{text}</a>,
+}
+];
 
-const data = [{
-	key: '1',
-	name: '',
-	address: '',
-	tags: [],
-}, {
-	key: '2',
-	name: '',
-	address: '',
-	tags: [],
-}, {
-	key: '',
-	name: '',
-	address: '',
-	tags: [],
-}];
+const data = [];
+for (let i = 0; i < 100; i++) {
+  data.push({
+    key: i,
+	name_1: `reqs-collection:567Rno8wjrwxiXoozHsFva${i}`,
+	name_2: `rdf:type${i}`,
+	name_3: `folders:folder1${i}`,
+	name_4: `<https://agentlab.ru/expert/rm/expert/reqs-test#>`
+  });
+}
 
 class Explore extends React.Component {
 	render() {
@@ -94,7 +77,7 @@ class Explore extends React.Component {
 							</div>
 
 							<Table columns={columns} dataSource={data} />
-
+		
 						</Content>
 					</Layout>
 				</Layout>
