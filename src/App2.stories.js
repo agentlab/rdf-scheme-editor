@@ -1,7 +1,7 @@
 import { storiesOf } from '@storybook/react';
 import React from 'react'
 import {
-	Layout, Menu, Breadcrumb, Button, Dropdown, Icon, message, Pagination, AutoComplete, Checkbox, Input, Table, Divider, Tag
+	Layout, Menu, Breadcrumb, Button, Dropdown, Icon, message, Pagination,  Checkbox, Input, Table, Divider, Tag
 } from 'antd';
 import 'antd/dist/antd.css';
 
