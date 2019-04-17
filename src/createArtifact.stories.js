@@ -58,7 +58,7 @@ class Sider extends React.Component {
 
 
 storiesOf('Explore', module)
-  .add('Query', () => (
+  .add('CreateArtifact', () => (
    <Sider/>
   ));
 
