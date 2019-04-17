@@ -1,4 +1,4 @@
-import { executeGet } from "./sparql";
+import { executeGet } from "../sparql";
 
 const url = "https://agentlab.ru/rdf4j-workbench/repositories/reqs/namespaces";
 const expected_data = [

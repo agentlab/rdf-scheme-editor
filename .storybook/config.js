@@ -7,6 +7,7 @@ import { withI18next } from 'storybook-addon-i18next';
 
 import i18n from '../src/i18n';
 
+import 'antd/dist/antd.css';
 import '../src/index.css';
 
 addDecorator(withNotes);
