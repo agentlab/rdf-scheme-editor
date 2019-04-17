@@ -1,10 +1,8 @@
 import { storiesOf } from "@storybook/react";
 import React, { useEffect, useState } from "react";
-import "antd/dist/antd.css";
-import "./index.css";
 import { Table } from "antd";
 
-import { executeGet, executeSelect, executeUpdate } from './sparql';
+import { executeGet, executeSelect, executeUpdate } from './../sparql';
 
 const columns = [{
   title: 'Id',

@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://agentlab.ru/rdf-scheme-editor",
   "dependencies": {
+    "aphrodite": "^2.3.1",
     "antd": "^3.14.1",
     "i18next": "^15.0.2",
     "i18next-browser-languagedetector": "^3.0.0",

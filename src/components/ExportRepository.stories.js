@@ -2,8 +2,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import ReactDOM from 'react-dom';
-import 'antd/dist/antd.css';
-import './index.css';
 import {
   Form, Input, Select, Button, Table
 } from 'antd';

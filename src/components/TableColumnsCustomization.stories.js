@@ -1,7 +1,5 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import 'antd/dist/antd.css';
-import './index.css';
 import { StyleSheet, css } from 'aphrodite';
 import {
       Form, Icon, Input, Button, Checkbox, 
