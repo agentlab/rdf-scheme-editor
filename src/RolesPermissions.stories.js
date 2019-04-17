@@ -10,19 +10,6 @@ class Sider extends React.Component {
 	}
 }
 
-class App extends React.Component {
-	state = {
-		value: 1,
-	}
-
-	onChange = (e) => {
-		console.log('radio checked', e.target.value);
-		this.setState({
-			value: e.target.value,
-		});
-	}
-}
-
 class FormLayoutDemo extends React.Component {
   constructor() {
     super();
@@ -161,6 +148,6 @@ class FormLayoutDemo extends React.Component {
 
 
 storiesOf('Form', module)
-  .add('Hello', () => (
+  .add('RolesPermissions', () => (
     <FormLayoutDemo />
   ))
