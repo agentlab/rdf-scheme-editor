@@ -10,12 +10,28 @@ import {
 const { Option } = Select;
 const { Title } = Typography;
 
-class App extends React.Component {
+class NewRepository extends React.Component {
 
-    _formOptions = [
+    FormOptions = [
         'In Memory Store',
         'In Memory Store RDF Schema',
-        'In Memory Store RDF Schema and Direct Type Heirarchy'
+        'In Memory Store RDF Schema and Direct Type Hierarchy',
+        'In Memory Java Store with basic SPIN support',
+        'In Memory Store with Lucene support',
+        'In Memory Store with RDFS+SPIN support',
+        'In Memory Store with RDFS+SPIN+Lucene support',
+        'In Memory Store Custom Graph Query Inference',
+        'Native Java Store',
+        'Native Java Store RDF Schema',
+        'Native Java Store RDF Schema and Direct Type Hierarchy',
+        'Native Java Store Custom Graph Query Inference',
+        'Native Java Store with basic SPIN support',
+        'Native Java Store with Lucene support',
+        'Native Java Store with RDFS+SPIN support',
+        'Native Java Storewith RDFS+SPIN+Lucene support',
+        'Remote RDF Store',
+        'SPARQL endpoint proxy',
+        'Federation Store'
     ];
 
     render() {
@@ -28,7 +44,7 @@ class App extends React.Component {
                 </Row>
                 <Form.Item label="Type" hasFeedback>
                     <Select defaultValue="0">
-                        {this._formOptions.map((option, index) => (
+                        {this.FormOptions.map((option, index) => (
                             <Option value={index.toString()}> {option} </Option>
                         ))}
                     </Select>
@@ -60,7 +76,7 @@ class App extends React.Component {
     }
 }
 
-const WrappedApp = Form.create({ name: 'coordinated' })(App);
+const WrappedApp = Form.create({ name: 'coordinated' })(NewRepository);
 
 storiesOf('Form', module)
     .add('New Repository Form', () => (
