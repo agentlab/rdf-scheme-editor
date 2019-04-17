@@ -92,5 +92,3 @@ storiesOf('Issue #5', module)
 	))
 
 
-//, right: 100, top: -100, bottom: 0 
-	//style={/*{ marginLeft: 8, right: 100, top: -60, bottom: 0 }*/}
