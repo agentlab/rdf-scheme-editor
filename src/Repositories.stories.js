@@ -77,3 +77,5 @@ storiesOf("Repositories", module)
   .add("Info", () =>
     <RepositoriesTable/>
   );
+
+module.exports.RepositoriesTable.selectRequirementsModule = selectRequirementsModule;
