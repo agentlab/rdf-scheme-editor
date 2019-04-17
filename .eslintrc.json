@@ -1,0 +1,88 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "extends": ["react-app", "airbnb", "prettier", "prettier/react"],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": ["import", "prettier", "react"],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "printWidth": 120,
+        "tabWidth": 2,
+        "useTabs": false,
+        "semi": true,
+        "singleQuote": true,
+        "arrowParens": "always",
+        "trailingComma": "all",
+        "jsxBracketSameLine": true,
+        "jsxSingleQuote": true
+      }
+    ],
+    "class-methods-use-this": [
+      "warn",
+      {
+        "exceptMethods": [
+          "componentDidCatch",
+          "componentDidMount",
+          "componentDidUpdate",
+          "componentWillMount",
+          "componentWillReceiveProps",
+          "componentWillUnmount",
+          "componentWillUpdate",
+          "render",
+          "shouldComponentUpdate"
+        ]
+      }
+    ],
+    "no-alert": "error",
+    "no-await-in-loop": "warn",
+    "no-console": "off",
+    "no-continue": "off",
+    "no-param-reassign": "off",
+    "no-plusplus": "off",
+    "no-restricted-syntax": ["off", "ForOfStatement"],
+    "no-underscore-dangle": "off",
+    "no-nested-ternary": "off",
+    "no-use-before-define": ["error", "nofunc"],
+    "guard-for-in": "off",
+    "global-require": "off",
+    "arrow-body-style": "off",
+    "prefer-template": "off",
+    "spaced-comment": "off",
+    "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
+    "react/destructuring-assignment": "off",
+    "react/no-multi-comp": "off",
+    "react/no-array-index-key": "off",
+    "react/no-did-update-set-state": "off",
+    "import/prefer-default-export": "off",
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"],
+        "specialLink": ["to"]
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["node_modules", "src/"]
+      }
+    }
+  }
+}
