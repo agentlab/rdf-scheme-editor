@@ -9,7 +9,7 @@ const ButtonGroup = Button.Group;
 class Demo extends React.Component {
   state = {
     mockData: [],
-    targetKeys: []
+    targetKeys: [],
   };
 
   componentDidMount() {
@@ -20,7 +20,7 @@ class Demo extends React.Component {
     const targetKeys = [];
     const mockData = [];
     const data1 = {
-      key: "1",
+      key: '1',
       title: `Администратор`,
     };
     if (data1.chosen) {
@@ -28,7 +28,7 @@ class Demo extends React.Component {
     }
     mockData.push(data1);
     const data2 = {
-      key: "2",
+      key: '2',
       title: `Автор`,
     };
     if (data2.chosen) {
@@ -36,7 +36,7 @@ class Demo extends React.Component {
     }
     mockData.push(data2);
     const data3 = {
-      key: "3",
+      key: '3',
       title: `Администратор моментальных копий`,
     };
     if (data3.chosen) {
@@ -44,7 +44,7 @@ class Demo extends React.Component {
     }
     mockData.push(data3);
     const data4 = {
-      key: "4",
+      key: '4',
       title: `Комментатор`,
     };
     if (data4.chosen) {
@@ -59,12 +59,12 @@ class Demo extends React.Component {
     this.setState({ targetKeys });
   };
 
-  renderItem = item => {
-    const customLabel = <span className="custom-item">{item.title}</span>;
+  renderItem = (item) => {
+    const customLabel = <span className='custom-item'>{item.title}</span>;
 
     return {
       label: customLabel, // for displayed item
-      value: item.title // for title and filter matching
+      value: item.title, // for title and filter matching
     };
   };
 
@@ -74,37 +74,39 @@ class Demo extends React.Component {
         <h2>Роли в процессе</h2>
         <h3>Назначить роли для следующих участников: Специалист</h3>
         <Transfer
-        titles={["Доступные роли:", "Выбранные роли:"]}
-        dataSource={this.state.mockData}
-        listStyle={{
-          width: 300,
-          height: 200
-        }}
-        targetKeys={this.state.targetKeys}
-        onChange={this.handleChange}
-        render={this.renderItem}
-      />
-      <p><b>Примечание:</b>Упорядочение ролей, назначенных пользователю, отражает их относительный приоритет.<br></br>
-      Если поведение настроено для нескольких ролей, будет выполнено поведение, связанное<br></br>
-       с ролью пользователя, которая имеет высший приоритет. Приоритет не влияет на права доступа.<br></br>
-        Среда выполнения процесса позволит пользователю выполнить действия, разрешенные для любой<br></br>
-         из назначенных ему ролей.</p>
-      <div class="button"><ButtonGroup>
-      <Button>Cancel</Button>
-      <Button>OK</Button>
-    </ButtonGroup>
-    </div>
-     </div>
-
+          titles={['Доступные роли:', 'Выбранные роли:']}
+          dataSource={this.state.mockData}
+          listStyle={{
+            width: 300,
+            height: 200,
+          }}
+          targetKeys={this.state.targetKeys}
+          onChange={this.handleChange}
+          render={this.renderItem}
+        />
+        <p>
+          <b>Примечание:</b>Упорядочение ролей, назначенных пользователю, отражает их относительный приоритет.
+          <br />
+          Если поведение настроено для нескольких ролей, будет выполнено поведение, связанное
+          <br />с ролью пользователя, которая имеет высший приоритет. Приоритет не влияет на права доступа.
+          <br />
+          Среда выполнения процесса позволит пользователю выполнить действия, разрешенные для любой
+          <br />
+          из назначенных ему ролей.
+        </p>
+        <div class='button'>
+          <ButtonGroup>
+            <Button>Cancel</Button>
+            <Button>OK</Button>
+          </ButtonGroup>
+        </div>
+      </div>
     );
   }
 }
 
-ReactDOM.render(<Demo />, document.getElementById("root"));
+ReactDOM.render(<Demo />, document.getElementById('root'));
 
-       
 const WrappedDemo = Form.create({ name: 'customized_form_controls' })(Demo);
 
-storiesOf('Forms', module)
-.add('Roles Assignments', () => (
-  <WrappedDemo /> )); 
+storiesOf('Forms', module).add('Roles Assignments', () => <WrappedDemo />);
