@@ -4,9 +4,16 @@ import { Table } from 'antd';
 import "antd/dist/antd.css";
 import "../index.css";
 
+<<<<<<< HEAD
 import { executeGet, executeSelect, executeUpdate } from '../sparql';
 
 const urlTemplate = 'https://agentlab.ru/rdf4j-workbench/repositories/reqs/explore?resource=';
+||||||| merged common ancestors
+
+const urlTemplate = "https://agentlab.ru/rdf4j-workbench/repositories/reqs/explore?resource=";
+=======
+const urlTemplate = 'https://agentlab.ru/rdf4j-workbench/repositories/reqs/explore?resource=';
+>>>>>>> origin/master
 
 function constUrlHref(url, template = urlTemplate) {
   return `${urlTemplate}${url}`;
@@ -69,6 +76,7 @@ const columns = [
   {
     title: 'Context',
     dataIndex: 'context',
+<<<<<<< HEAD
 <<<<<<< HEAD
     key: 'contextID',
     render: (text, record) => <a href={constUrlHref(record.url)}>{record.prefix}</a>,
@@ -176,4 +184,21 @@ storiesOf('Contexts in Repository', module)
     render: (text, record) => <a href={constUrlHref(record.url)}>{record.context}</a>,
   },
 ];
+||||||| merged common ancestors
+    key: 'context',
+    render: (text, record) => <a href={constUrlHref(record.url)}>{record.context}</a>,
+  }];
 
+  
+storiesOf('Contexts in Repository', module)
+  .add('Context', () => (      
+      <Table dataSource={dataSource} columns={columns} />
+  ));
+=======
+    key: 'context',
+    render: (text, record) => <a href={constUrlHref(record.url)}>{record.context}</a>,
+  },
+];
+>>>>>>> origin/master
+
+storiesOf('Contexts in Repository', module).add('Context', () => <Table dataSource={dataSource} columns={columns} />);
