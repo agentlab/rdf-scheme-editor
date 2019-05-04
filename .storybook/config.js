@@ -1,6 +1,6 @@
 import { configure, addDecorator, addParameters } from '@storybook/react';
 import { withNotes } from '@storybook/addon-notes';
-import { withInfo } from "@storybook/addon-info";
+import { withInfo } from '@storybook/addon-info';
 import { withOptions } from '@storybook/addon-options';
 import requireContext from 'require-context.macro';
 import { withI18next } from 'storybook-addon-i18next';
@@ -17,10 +17,10 @@ addDecorator(
     inline: true,
     source: true,
     propTables: false,
-  })
+  }),
 );
 
-addParameters ({
+addParameters({
   options: {
     /**
      * name to display in the top left corner
@@ -98,19 +98,20 @@ addParameters ({
   },
 });
 
-addDecorator(withI18next({
-  i18n,
-  languages: {
-    en: 'English',
-    ru: 'Русский',
-  }
-}));
-
+addDecorator(
+  withI18next({
+    i18n,
+    languages: {
+      en: 'English',
+      ru: 'Русский',
+    },
+  }),
+);
 
 const req = requireContext('../src', true, /\.stories\.js$/);
 
 function loadStories() {
-  req.keys().forEach(filename => req(filename));
+  req.keys().forEach((filename) => req(filename));
 }
 
 configure(loadStories, module);
