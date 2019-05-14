@@ -1,8 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Form, Input, Button, Upload, Checkbox, Select, Radio, Layout, Icon, List } from 'antd';
-
-const { TextArea } = Input;
+import { Form, Input, Select, Radio, Layout, List } from 'antd';
 
 const testData = {
   linkTypes: ['Тип 1', 'Тип 2', 'Тип 3'],
@@ -43,7 +41,7 @@ class CreateLinks extends React.Component {
             </Layout>
           </Form.Item>
 
-          <Form.Item id='target' {...formItemLayout} label='Целевой объект ссылки: '>
+          <Form.Item id='linkTarget' {...formItemLayout} label='Целевой объект ссылки: '>
             <Layout>
               <Radio defaultChecked='true'>Ссылка на требование в:</Radio>
               <Select defaultValue='req0' style={{ width: 200 }}>
@@ -55,7 +53,7 @@ class CreateLinks extends React.Component {
             </Layout>
           </Form.Item>
 
-          <Form.Item id='target' {...formItemLayout} label='Найти: '>
+          <Form.Item id='searchType' {...formItemLayout} label='Найти: '>
             <Layout>
               <Radio defaultChecked='true'>Требования</Radio>
               <Radio>Строки в модуле:</Radio>
@@ -67,7 +65,7 @@ class CreateLinks extends React.Component {
             </Layout>
           </Form.Item>
 
-          <Form.Item id='search' {...formItemLayout} label='Поиск требований по ID:'>
+          <Form.Item id='searchByID' {...formItemLayout} label='Поиск требований по ID:'>
             <Layout>
               <Input />
             </Layout>
@@ -87,7 +85,5 @@ class CreateLinks extends React.Component {
     );
   }
 }
-
-//const WrappedApp = Form.create({ name: 'coordinated' })(App);
 
 storiesOf('Link', module).add('Create', () => <CreateLinks />);
