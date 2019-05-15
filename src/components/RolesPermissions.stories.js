@@ -1,7 +1,7 @@
 import { storiesOf } from '@storybook/react';
 import React from 'react';
 import 'antd/dist/antd.css';
-import './index.css';
+import './../index.css';
 import { Form, Input, Table, Icon, Radio, Layout, List, Typography } from 'antd';
 
 class Sider extends React.Component {
