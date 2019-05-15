@@ -1,5 +1,5 @@
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
 import XHR from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import moment from 'moment';
@@ -23,13 +23,13 @@ i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     whitelist: ['en', 'ru-RU'],
-    lng: "ru",
+    lng: 'ru',
     fallbackLng: 'en',
     debug: true,
     resources,
     interpolation: {
-      escapeValue: false // react already safes from xss
-    }
+      escapeValue: false, // react already safes from xss
+    },
   });
 
 // i18n.on('languageChanged', function(lng) {
