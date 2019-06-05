@@ -1,8 +1,8 @@
 import { storiesOf } from '@storybook/react';
 import React from 'react';
 import 'antd/dist/antd.css';
-import './index.css';
-import { Table, Button,Icon } from 'antd';
+import '../index.css';
+import { Table, Button, Icon } from 'antd';
 
 const data = [
   {
@@ -48,16 +48,14 @@ class App extends React.Component {
 
   clearSort = () => {
     this.setState({
-      sortedInfo: null
+      sortedInfo: null,
     });
   };
 
   setRefresh = () => {
     this.setState({
-      
-        filteredInfo: null,
-        sortedInfo: null,
-      
+      filteredInfo: null,
+      sortedInfo: null,
     });
   };
 
@@ -70,28 +68,25 @@ class App extends React.Component {
         title: 'Action',
         dataIndex: 'Action',
         key: 'Action',
-      render: () => (
-        <div>
-         <Button shape="circle" icon="search" />
-         <Button  shape="circle" icon="play-circle" />
-         <Button  shape="circle" icon="printer"/>
-      </div>
+        render: () => (
+          <div>
+            <Button shape='circle' icon='search' />
+            <Button shape='circle' icon='play-circle' />
+            <Button shape='circle' icon='printer' />
+          </div>
         ),
       },
       {
         title: 'Status',
-      dataIndex: 'Status',
-      key: 'Status',
-      render: () => (
-       <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-      ),
-    },
-    {
-      title: 'Pipeline',
-      dataIndex: 'Pipeline',
-      key: 'Pipeline',
-    
-     },
+        dataIndex: 'Status',
+        key: 'Status',
+        render: () => <Icon type='check-circle' theme='twoTone' twoToneColor='#52c41a' />,
+      },
+      {
+        title: 'Pipeline',
+        dataIndex: 'Pipeline',
+        key: 'Pipeline',
+      },
       {
         title: 'Started',
         type: 'datetime-local',
@@ -104,39 +99,38 @@ class App extends React.Component {
         title: 'Duration',
         type: 'time',
         dataIndex: 'Duration',
-       key: 'Duration',
-
-    },
-    {
-      title: 'Debug',
-      dataIndex: 'Debug',
-     key: 'Debug',
-     render: () => (
-     <Icon type="eye-invisible" />
-     ),
-  },
-  {
-    title: 'Sch.',
-    dataIndex: 'Sch.',
-   key: 'Sch.',
-   render: () => (
-    <Icon type="disconnect" />
-    ),
-},
-{
-  title: 'Execute',
-  dataIndex: 'Execute',
- key: 'Execute',
-},
+        key: 'Duration',
+      },
+      {
+        title: 'Debug',
+        dataIndex: 'Debug',
+        key: 'Debug',
+        render: () => <Icon type='eye-invisible' />,
+      },
+      {
+        title: 'Sch.',
+        dataIndex: 'Sch.',
+        key: 'Sch.',
+        render: () => <Icon type='disconnect' />,
+      },
+      {
+        title: 'Execute',
+        dataIndex: 'Execute',
+        key: 'Execute',
+      },
     ];
     return (
       <div>
-        <div className="table-operations">
-          <Button onClick={this.setRefresh} type="primary">Refresh</Button>
-          <Button onClick={this.clearFilters} type="primary">Clear filters</Button>
-          <Button onClick={this.clearSort} type="primary">Clear sort</Button>
-          
-  
+        <div className='table-operations'>
+          <Button onClick={this.setRefresh} type='primary'>
+            Refresh
+          </Button>
+          <Button onClick={this.clearFilters} type='primary'>
+            Clear filters
+          </Button>
+          <Button onClick={this.clearSort} type='primary'>
+            Clear sort
+          </Button>
         </div>
         <Table columns={columns} dataSource={data} onChange={this.handleChange} />
       </div>

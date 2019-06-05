@@ -5,7 +5,7 @@
     "node": true,
     "jest": true
   },
-  "extends": ["react-app", "airbnb", "prettier", "prettier/react"],
+  "extends": ["react-app", "plugin:import/errors", "plugin:import/warnings", "airbnb", "prettier", "prettier/react"],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
@@ -17,7 +17,7 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": ["import", "prettier", "react"],
+  "plugins": ["import", "prettier", "react", "react-hooks"],
   "rules": {
     "prettier/prettier": [
       "error",
@@ -30,7 +30,8 @@
         "arrowParens": "always",
         "trailingComma": "all",
         "jsxBracketSameLine": true,
-        "jsxSingleQuote": true
+        "jsxSingleQuote": true,
+        "endOfLine": "lf"
       }
     ],
     "class-methods-use-this": [
@@ -49,6 +50,8 @@
         ]
       }
     ],
+    "import/no-default-export": "warn",
+    "import/prefer-default-export": "off",
     "no-alert": "error",
     "no-await-in-loop": "warn",
     "no-console": "off",
@@ -69,7 +72,8 @@
     "react/no-multi-comp": "off",
     "react/no-array-index-key": "off",
     "react/no-did-update-set-state": "off",
-    "import/prefer-default-export": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
     "jsx-a11y/anchor-is-valid": [
       "error",
       {
