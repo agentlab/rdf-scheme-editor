@@ -2,8 +2,7 @@ import { storiesOf } from '@storybook/react';
 import React, { useEffect, useState } from 'react';
 import { Table } from 'antd';
 
-import { executeGet, executeSelect, executeUpdate } from './../sparql';
-
+const repositories_URL = 'https://agentlab.ru/rdf4j-server/repositories';
 const columns = [
   {
     title: 'Id',
@@ -33,16 +32,16 @@ const columns = [
 ];
 
 function RepositoriesTable(props) {
-  //такой код не работает, тк fetch возвращает не результат, а Promise
-  //const dataSource = selectRequirementsModule('https://agentlab.ru/rdf4j-server/repositories');
-  //console.log("EXECUTE GET RESULTS=", props.dataSource);
-
-  //React Hooks API
   const [dataSource, setDataSource] = useState([]);
 
   function selectRequirementsModule(url) {
-    console.log('EXECUTE GET URL=', url);
-    return executeGet(url)
+    return fetch(url, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/sparql-results+json',
+      },
+    })
+      .then((r) => r.json())
       .then(
         (res) =>
           res.results.bindings.map((binding) => ({
@@ -58,17 +57,19 @@ function RepositoriesTable(props) {
         },
       )
       .then((data) => {
-        console.log('EXECUTE GET RESULTS=', data);
-        setDataSource(data);
+        setDataSource(
+          data.sort((a, b) => {
+            return a.key > b.key;
+          }),
+        );
       });
   }
 
-  // React Hooks API
   useEffect(() => {
-    selectRequirementsModule('https://agentlab.ru/rdf4j-server/repositories'); //http://localhost:8080/rdf4j-server/repositories
+    selectRequirementsModule(repositories_URL);
   }, []);
 
   return <Table size='small' bordered pagination={false} dataSource={dataSource} columns={columns} />;
 }
 
-storiesOf('Repositories', module).add('Info', () => <RepositoriesTable />);
+storiesOf('Repositories', module).add('List', () => <RepositoriesTable />);
