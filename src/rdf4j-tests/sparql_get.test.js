@@ -1,31 +1,126 @@
-test('insert data - statement - to rdf repository without context', () => {
-  const urlprefix = 'https://agentlab.ru/rdf4j-server/repositories/qqqqqq/statements';
-  const query =
-    '?update=PREFIX%20dc%3A%20%3Chttp%3A%2F%2Fld-r.org%2Fconfig%2Ffacetproperty_creator_adms3%3E%20INSERT%20DATA%7B%20GRAPH%20%3Chttp%3A%2F%2Fexample%2Fbooks%3E%20%7B%3Chttp%3A%2F%2Fexample%2Fbook0%2F%3E%20dc%3Atitle%20%22C%20book%22%7D%20%7D';
-  return fetch(urlprefix + query, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-  }).then((r) => {
-    expect(r).toBeInstanceOf(Response);
-    expect(r['status']).toEqual(200);
-    return r;
-  });
-});
+describe('test Get', function() {
+  const data = '<http://exampleSub> <http://exampleSub> 103';
+  var params =
+    'action=exec&' +
+    'queryLn=SPARQL&' +
+    'query=' +
+    encodeURIComponent(
+      'PREFIX foaf: <https://agentlab.ru/rdf4j-workbench/repositories> ' + 'SELECT ?Subject ' + 'WHERE{ ' + data + '}',
+    ) +
+    '&' +
+    'limit_query=100&' +
+    'infer=true&';
 
-test('delete data - statement - to rdf repository without context', () => {
-  const urlprefix = 'https://agentlab.ru/rdf4j-server/repositories/qqqqqq/statements';
-  const query =
-    '?update=PREFIX%20dc%3A%20%3Chttp%3A%2F%2Fld-r.org%2Fconfig%2Ffacetproperty_creator_adms3%3E%20DELETE%20DATA%7B%20GRAPH%20%3Chttp%3A%2F%2Fexample%2Fbooks%3E%20%7B%3Chttp%3A%2F%2Fexample%2Fbook0%2F%3E%20dc%3Atitle%20%22C%20book%22%7D%20%7D';
-  return fetch(urlprefix + query, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-  }).then((r) => {
-    expect(r).toBeInstanceOf(Response);
-    expect(r['status']).toEqual(200);
-    return r;
+  it('insert data to rdf repository with context', async () => {
+    var urlprefix = 'https://agentlab.ru/rdf4j-workbench/repositories/qqqqqq/query' + '?' + params;
+    //проверка до добавления
+    var dataSel = await fetch(urlprefix, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Accept: 'application/sparql-results+json',
+      },
+    }).then((r) => r.json());
+    expect(dataSel.results.bindings.length).toEqual(0);
+
+    //добавление
+    var paramsGet = 'query=' + encodeURIComponent('INSERT DATA' + '{' + data + '}');
+    urlprefix = 'https://agentlab.ru/rdf4j-workbench/repositories/qqqqqq' + '?' + paramsGet;
+    var result = await fetch(urlprefix, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Accept: 'application/sparql-results+json',
+      },
+    }).then((r) => {
+      console.log(r);
+      expect(r).toBeInstanceOf(Response);
+      expect(r['status']).toEqual(200);
+      return r;
+    });
+  });
+
+  it('check data after insert to rdf repository with context', async () => {
+    //проверка после
+    var urlprefix = 'https://agentlab.ru/rdf4j-workbench/repositories/qqqqqq/query' + '?' + params;
+    var dataSel = await fetch(urlprefix, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Accept: 'application/sparql-results+json',
+      },
+    }).then((r) => r.json());
+    //console.log('===================== ' + Object.keys(dataSel.results.bindings));
+    expect(dataSel.results.bindings.length).toEqual(0);
+  });
+
+  it('delete data to rdf repository with context', async () => {
+    //добавление
+    urlprefix = 'https://agentlab.ru/rdf4j-workbench/repositories/qqqqqq/update';
+    var result = await fetch(urlprefix, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Accept: 'application/sparql-results+json',
+      },
+      body: 'update=' + encodeURIComponent('INSERT DATA' + '{' + data + '}'),
+    }).then((r) => {
+      console.log(r);
+      expect(r).toBeInstanceOf(Response);
+      expect(r['status']).toEqual(200);
+      return r;
+    });
+    var urlprefix = 'https://agentlab.ru/rdf4j-workbench/repositories/qqqqqq/query' + '?' + params;
+    //проверка до
+    var dataSel = await fetch(urlprefix, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Accept: 'application/sparql-results+json',
+      },
+    }).then((r) => r.json());
+    expect(dataSel.results.bindings.length).toBeGreaterThan(0);
+
+    //удаление
+    var paramsGet = 'query=' + encodeURIComponent('DELETE DATA' + '{' + data + '}');
+    urlprefix = 'https://agentlab.ru/rdf4j-workbench/repositories/qqqqqq' + '?' + paramsGet;
+    var result = await fetch(urlprefix, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Accept: 'application/sparql-results+json',
+      },
+    }).then((r) => {
+      console.log(r);
+      expect(r).toBeInstanceOf(Response);
+      expect(r['status']).toEqual(200);
+      return r;
+    });
+
+    //проверка после
+    dataSel = await fetch(urlprefix, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Accept: 'application/sparql-results+json',
+      },
+    }).then((r) => r.json());
+    //console.log('===================== ' + Object.keys(dataSel.results.bindings));
+    expect(dataSel.results.bindings.length).toBeGreaterThan(0);
+    //реальное удаление
+    urlprefix = 'https://agentlab.ru/rdf4j-workbench/repositories/qqqqqq/update';
+    var result2 = await fetch(urlprefix, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Accept: 'application/sparql-results+json',
+      },
+      body: 'update=' + encodeURIComponent('DELETE DATA' + '{' + data + '}'),
+    }).then((r) => {
+      console.log(r);
+      expect(r).toBeInstanceOf(Response);
+      expect(r['status']).toEqual(200);
+      return r;
+    });
   });
 });
