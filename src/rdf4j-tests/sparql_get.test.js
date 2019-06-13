@@ -11,7 +11,7 @@ describe('test Get', function() {
     'limit_query=100&' +
     'infer=true&';
 
-  it('insert data to rdf repository with context', async () => {
+  it('insert data to rdf repository without context', async () => {
     var urlprefix = 'https://agentlab.ru/rdf4j-workbench/repositories/qqqqqq/query' + '?' + params;
     //проверка до добавления
     var dataSel = await fetch(urlprefix, {
@@ -40,7 +40,7 @@ describe('test Get', function() {
     });
   });
 
-  it('check data after insert to rdf repository with context', async () => {
+  it('check data after insert to rdf repository without context', async () => {
     //проверка после
     var urlprefix = 'https://agentlab.ru/rdf4j-workbench/repositories/qqqqqq/query' + '?' + params;
     var dataSel = await fetch(urlprefix, {
@@ -54,7 +54,7 @@ describe('test Get', function() {
     expect(dataSel.results.bindings.length).toEqual(0);
   });
 
-  it('delete data to rdf repository with context', async () => {
+  it('delete data to rdf repository without context', async () => {
     //добавление
     urlprefix = 'https://agentlab.ru/rdf4j-workbench/repositories/qqqqqq/update';
     var result = await fetch(urlprefix, {
