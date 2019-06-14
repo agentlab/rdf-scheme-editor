@@ -1,23 +1,28 @@
-const url = 'https://agentlab.ru/rdf4j-server/repositories';
+const server_URL = 'https://agentlab.ru/rdf4j-server';
+const repositories_prefix = '/repositories';
+const props = ['id', 'title', 'uri', 'readable', 'writable'];
 
-test('the data is peanut butter', async () => {
-  expect.assertions(1);
-  const data = await fetch(url, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/sparql-results+json',
-    },
-  }).then((r) => r.json());
+let webData = fetch(server_URL.concat(repositories_prefix), {
+  method: 'GET',
+  headers: {
+    Accept: 'application/sparql-results+json',
+  },
+});
 
-  //console.log(data);
-  const repositories = data.results.bindings.map((binding) => ({
-    key: binding.id.value,
-    id: binding.id.value,
-    title: binding.title.value,
-    uri: binding.uri.value,
-    readable: binding.readable.value,
-    writable: binding.writable.value,
-  }));
+test('Web request is made correctly', async () => {
+  await webData.then((r) => {
+    expect(r.status).toEqual(200);
+  });
+});
 
-  expect(repositories.length).toBeGreaterThan(0);
+test('The repositories information is correct', async () => {
+  const data = await webData.then((r) => r.json());
+
+  expect(data).not.toBeUndefined();
+
+  data.results.bindings.forEach((dataElement) => {
+    props.forEach((property) => {
+      expect(dataElement).toHaveProperty(property);
+    });
+  });
 });
