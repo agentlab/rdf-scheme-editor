@@ -17,7 +17,7 @@ const dataSource = [
   },
 ];
 
-var dat = [];
+var data = [];
 
 const columns = [
   {
@@ -77,7 +77,7 @@ class PrefixInput extends React.Component {
           style={{ width: '65%', marginRight: '3%' }}
         />
         <Select value={state.currency} size={size} style={{ width: '32%' }} onChange={this.handleCurrencyChange}>
-          {dat.map((option, i) => (
+          {data.map((option, i) => (
             <Option value={option.namespace}>{option.prefix}</Option>
           ))}
         </Select>
@@ -104,8 +104,8 @@ class Demo extends React.Component {
   };
 
   async execut() {
+    var dat = [];
     const url = 'https://agentlab.ru/rdf4j-workbench/repositories/rpo-tests/namespaces';
-
     const res = await fetch(url, {
       method: 'GET',
       headers: {
@@ -114,10 +114,12 @@ class Demo extends React.Component {
     }).then((r) => r.json());
     res.results.bindings.forEach((quer) => {
       const binding = {
+        key: quer.prefix.value,
         prefix: quer.prefix.value,
         namespace: quer.namespace.value,
       };
       dat.push(binding);
+      data = dat;
     });
 
     /*const repositories = res.results.bindings.map((binding) => ({
@@ -141,15 +143,7 @@ class Demo extends React.Component {
         };
         dat.push(binding);
       }); */
-
-    /*  const mapa = chlen.results.bindings.map((binding) => ({
-        prefix: binding.prefix.value,
-        namespace: binding.namespace.value,
-      })); 
-
-      dvachlena.push(mapa); */
-
-    console.log(dat);
+    console.log(data);
   }
 
   render() {
@@ -172,7 +166,7 @@ class Demo extends React.Component {
             Delete
           </Button>
         </Form.Item>
-        <Table dataSource={dat} columns={columns} />
+        <Table dataSource={data} columns={columns} />
       </Form>
     );
   }
