@@ -2,7 +2,8 @@ import { storiesOf } from '@storybook/react';
 import React, { useEffect, useState } from 'react';
 import { Table } from 'antd';
 
-const repositories_URL = 'https://agentlab.ru/rdf4j-server/repositories';
+const server_URL = 'https://agentlab.ru/rdf4j-server';
+const repositories_prefix = '/repositories';
 const columns = [
   {
     title: 'Id',
@@ -41,10 +42,10 @@ function RepositoriesTable(props) {
         Accept: 'application/sparql-results+json',
       },
     })
-      .then((r) => r.json())
+      .then((data) => data.json())
       .then(
-        (res) =>
-          res.results.bindings.map((binding) => ({
+        (data) =>
+          data.results.bindings.map((binding) => ({
             key: binding.id.value,
             id: binding.id.value,
             title: binding.title.value,
@@ -59,6 +60,7 @@ function RepositoriesTable(props) {
       .then((data) => {
         setDataSource(
           data.sort((a, b) => {
+            // sort data in alphabetical order
             return a.key > b.key;
           }),
         );
@@ -66,7 +68,7 @@ function RepositoriesTable(props) {
   }
 
   useEffect(() => {
-    selectRequirementsModule(repositories_URL);
+    selectRequirementsModule(server_URL.concat(repositories_prefix));
   }, []);
 
   return <Table size='small' bordered pagination={false} dataSource={dataSource} columns={columns} />;
