@@ -104,7 +104,7 @@ class Demo extends React.Component {
   };
 
   async execut() {
-    const url = 'https://agentlab.ru/rdf4j-server/repositories';
+    const url = 'https://agentlab.ru/rdf4j-workbench/repositories/rpo-tests/namespaces';
 
     const res = await fetch(url, {
       method: 'GET',
@@ -112,8 +112,15 @@ class Demo extends React.Component {
         Accept: 'application/sparql-results+json',
       },
     }).then((r) => r.json());
+    res.results.bindings.forEach((quer) => {
+      const binding = {
+        prefix: quer.prefix.value,
+        namespace: quer.namespace.value,
+      };
+      dat.push(binding);
+    });
 
-    const repositories = res.results.bindings.map((binding) => ({
+    /*const repositories = res.results.bindings.map((binding) => ({
       key: binding.id.value,
     }));
 
@@ -133,16 +140,14 @@ class Demo extends React.Component {
           namespace: quer.namespace.value,
         };
         dat.push(binding);
-      });
+      }); */
 
-      /*  const mapa = chlen.results.bindings.map((binding) => ({
+    /*  const mapa = chlen.results.bindings.map((binding) => ({
         prefix: binding.prefix.value,
         namespace: binding.namespace.value,
       })); 
 
       dvachlena.push(mapa); */
-    });
-    f;
 
     console.log(dat);
   }
