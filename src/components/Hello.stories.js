@@ -1,108 +1,127 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Button } from '@storybook/react/demo';
-import { Table, Input, Select, Checkbox } from 'antd';
-import { Z_BLOCK } from 'zlib';
+import { Select, Checkbox, Input } from 'antd';
 
 const Option = Select.Option;
 const { TextArea } = Input;
 
-function handleChange(value) {
-  console.log(`selected ${value}`);
+class QueryForm extends React.Component {
+  state = {
+    language: 'sparql',
+    resultPerPage: 0,
+    result: '',
+  };
+
+  query = '';
+
+  handleLanguageChange = (e) => {
+    this.state.language = e;
+  };
+
+  handleResultsChange = (e) => {
+    this.state.resultPerPage = e;
+    console.log(this.state.resultPerPage);
+  };
+
+  handleExecute = async () => {
+    console.log(this.query);
+    console.log(this.query.props.value);
+    const q = encodeURIComponent(this.query.state.value);
+    console.log('query', q);
+    const url = 'https://agentlab.ru/rdf4j-workbench/repositories/rpo-tests/?query=';
+    const lan = '&queryLn=' + this.state.language;
+    console.log(lan);
+
+    const res = await fetch(url + q + lan, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/sparql-results+json',
+      },
+    }).then((r) => r.json());
+
+    console.log(res);
+
+    var resultsToDisplay = [];
+    if (this.state.resultPerPage != 0) resultsToDisplay = res.results.bindings.slice(0, this.state.resultPerPage);
+    else resultsToDisplay = res.results.bindings;
+    console.log(resultsToDisplay);
+    this.state.result = JSON.stringify(resultsToDisplay);
+
+    console.log(this.state.result);
+    alert(this.state.result);
+  };
+
+  render() {
+    return (
+      <div>
+        <table cellSpacing={0}>
+          <tbody>
+            <tr>
+              <th>
+                <h1>Query Language</h1>
+              </th>
+              <td>
+                <Select
+                  showSearch
+                  style={{ width: 200 }}
+                  placeholder='Select a language'
+                  optionFilterProp=''
+                  onChange={this.handleLanguageChange}
+                  filterOption={(input, option) =>
+                    option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  }>
+                  <Option value='sparql'>SPARQL</Option>
+                  <Option value='serql'>SERQL</Option>
+                </Select>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <h1>Query</h1>
+              </th>
+              <td>
+                <TextArea
+                  type='text'
+                  style={{ width: 400 }}
+                  autosize={{ minRows: 5, maxRows: 50 }}
+                  inputRef={(el) => (this.query = el)}
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <h1>Result per page</h1>
+              </th>
+              <td>
+                <Select
+                  showSearch
+                  style={{ width: 100 }}
+                  optionFilterProp=''
+                  onChange={this.handleResultsChange}
+                  filterOption={(input, option) =>
+                    option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  }>
+                  <Option value={0}>All</Option>
+                  <Option value={2}>2</Option>
+                  <Option value={5}>5</Option>
+                  <Option value={10}>10</Option>
+                  <Option value={20}>20</Option>
+                </Select>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <div style={{ display: 'inline-block' }}>
+                  <Button onClick={this.handleExecute}>Execute</Button>
+                </div>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
+  }
 }
 
-function handleBlur() {
-  console.log('blur');
-}
-
-function handleFocus() {
-  console.log('focus');
-}
-
-storiesOf('Explore', module).add('Query', () => (
-  <div>
-    <table cellSpacing={0}>
-      <tbody>
-        <tr>
-          <th>
-            <text>Query Language:</text>
-          </th>
-          <td>
-            <Select
-              showSearch
-              style={{ width: 200 }}
-              placeholder='Select a language'
-              optionFilterProp=''
-              onChange={handleChange}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
-              <Option value='firstL'>SPARQL</Option>
-              <Option value='secondL'>SeRQL</Option>
-            </Select>
-          </td>
-        </tr>
-        <tr>
-          <th>
-            <text>Query:</text>
-          </th>
-          <td>
-            <TextArea cols={100} rows={4} />
-          </td>
-        </tr>
-        <tr>
-          <th>
-            <text>Result per page:</text>
-          </th>
-          <td>
-            <Select
-              showSearch
-              style={{ width: 100 }}
-              optionFilterProp=''
-              onChange={handleChange}
-              onBlur={handleBlur}
-              filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
-              <Option value='firstN' selected>
-                All
-              </Option>
-              <Option value='secondN'>10</Option>
-              <Option value='3N'>50</Option>
-              <Option value='4N'>100</Option>
-              <Option value='5N'>200</Option>
-            </Select>
-          </td>
-        </tr>
-        <tr>
-          <th>
-            <text>Actions Options:</text>
-          </th>
-          <td>
-            <Checkbox checked='checked'>Include inferred statements</Checkbox>
-          </td>
-          <td>
-            <Checkbox>Save privately(do not share)</Checkbox>
-          </td>
-        </tr>
-        <tr>
-          <th>
-            <text>Actions:</text>
-          </th>
-          <th>
-            <div style={{ display: 'inline-block' }}>
-              <Button>Clear</Button>
-              <Button>Execute</Button>
-              <Button>Save query</Button>
-              <TextArea cols={10} rows={1} />
-            </div>
-          </th>
-        </tr>
-      </tbody>
-    </table>
-
-    <h1>
-      <a>
-        <text>Copyright © 2015 Eclipse RDF4J Contributors</text>
-      </a>
-    </h1>
-  </div>
-));
+storiesOf('Explore', module).add('Query', () => <QueryForm />);
