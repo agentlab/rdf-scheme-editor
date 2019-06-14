@@ -4,8 +4,9 @@ import { StyleSheet, css } from 'aphrodite';
 import { Form, Icon, Input, Button, Checkbox, Select, Menu, Layout, Row, Col, InputNumber } from 'antd';
 
 const { Content, Sider } = Layout;
+const { Option } = Select;
 
-var requirements = {
+const requirements = {
   URL: 'border',
   xsdtype: 'border',
   'Альтернативные варианты написания': 'interation',

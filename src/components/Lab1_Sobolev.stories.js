@@ -4,8 +4,9 @@ import { StyleSheet, css } from 'aphrodite';
 import { Form, Icon, Input, Button, Checkbox, Select, Menu, Layout, Row, Col, InputNumber } from 'antd';
 
 const { Content, Sider } = Layout;
+const { Option } = Select;
 
-var requirements = {
+const requirements = {
   URL: 'border',
   xsdtype: 'border',
   'Альтернативные варианты написания': 'interation',
@@ -64,20 +65,20 @@ const styles = StyleSheet.create({
   center: { textAlign: 'center' },
 });
 
-const mySelect = [],
-  container = [];
+const mySelect = [];
+const container = [];
 
-for (var requirement in requirements) {
+for (const requirement in requirements) {
   mySelect.push(<Option value={requirement}>{requirement}</Option>);
 
-  if (requirements[requirement] == 'disconnect')
+  if (requirements[requirement] === 'disconnect')
     container.push(
       <div>
         {' '}
         <Icon type={requirements[requirement]} className={css(styles.orange)} /> {requirement}
       </div>,
     );
-  else if (requirements[requirement] == 'interation')
+  else if (requirements[requirement] === 'interation')
     container.push(
       <div>
         {' '}

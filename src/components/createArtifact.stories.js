@@ -1,18 +1,12 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Button } from '@storybook/react/demo';
-import { Table, Input, Select, Checkbox } from 'antd';
-import { Z_BLOCK } from 'zlib';
+import { Menu, Icon, Checkbox } from 'antd';
 
-const Option = Select.Option;
-const { TextArea } = Input;
-import { Menu, Icon } from 'antd';
+const { SubMenu } = Menu.SubMenu;
+
 function onChange(e) {
   console.log(`checked = ${e.target.checked}`);
 }
-
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
 
 class Sider extends React.Component {
   handleClick = (e) => {
@@ -28,7 +22,7 @@ class Sider extends React.Component {
           defaultSelectedKeys={['1']}
           defaultOpenKeys={['sub1']}
           mode='inline'>
-          <SubMenu
+          {/*<SubMenu
             key='sub1'
             title={
               <span>
@@ -36,7 +30,7 @@ class Sider extends React.Component {
                 <span>Создать требование</span>
               </span>
             }>
-            <Menu.Item key='1'>
+              <Menu.Item key='1'>
               <Icon type='switcher' /> Веб-сервис
             </Menu.Item>
             <Menu.Item key='2'>
@@ -73,7 +67,7 @@ class Sider extends React.Component {
               <Icon type='upload' />
               Импортировать
             </Menu.Item>
-          </SubMenu>
+          </SubMenu>*/}
         </Menu>
       </div>
     );

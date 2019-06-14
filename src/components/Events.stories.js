@@ -72,4 +72,10 @@ const data = [
   },
 ];
 
+class EventForm extends React.Component {
+  render() {
+    return <div>Спасите меня, я не работаю!!!</div>;
+  }
+}
+
 storiesOf('Events', module).add('Events', () => <EventForm />);

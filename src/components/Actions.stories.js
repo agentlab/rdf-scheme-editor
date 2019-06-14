@@ -28,7 +28,7 @@ const data = [
   },
 ];
 
-class App extends React.Component {
+class ActionForm extends React.Component {
   state = {
     filteredInfo: null,
     sortedInfo: null,

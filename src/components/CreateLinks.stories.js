@@ -2,6 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Form, Input, Select, Radio, Layout, List } from 'antd';
 
+const { Option } = Select;
+
 const testData = {
   linkTypes: ['Тип 1', 'Тип 2', 'Тип 3'],
   requirements: ['Требование 1', 'Требование 2', 'Требование 3'],

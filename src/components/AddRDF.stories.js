@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { Form, Input, Button, Upload, Checkbox, Select, Radio, Layout, Icon } from 'antd';
 
 const { TextArea } = Input;
+const { Option } = Select;
 
 class AddRDFForm extends React.Component {
   constructor() {

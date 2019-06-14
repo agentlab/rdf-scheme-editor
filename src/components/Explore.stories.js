@@ -3,6 +3,8 @@ import React from 'react';
 
 import { Form, Select, Input, Button, Table, Checkbox } from 'antd';
 
+const { Option } = Select;
+
 const dataSource = [{}];
 
 const columns = [

@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Table, Input, Select, Checkbox, Button, Divider, Tree } from 'antd';
+import { Menu, Input, Checkbox, Button, Tree } from 'antd';
 //import { Z_BLOCK } from 'zlib';
 const { TreeNode } = Tree;
 
@@ -36,7 +36,6 @@ const treeData = [
 
 //const Option = Select.Option;
 //const { TextArea } = Input;
-import { Menu, Icon } from 'antd';
 function onChange(e) {
   console.log(`checked = ${e.target.checked}`);
 }
