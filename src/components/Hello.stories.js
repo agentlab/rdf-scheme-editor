@@ -24,10 +24,13 @@ class QueryForm extends React.Component {
     console.log(this.state.resultPerPage);
   };
 
-  handleExecute = async () => {
+  handleQueryChange = (e) => {
+    this.query = e.target.value;
     console.log(this.query);
-    console.log(this.query.props.value);
-    const q = encodeURIComponent(this.query.state.value);
+  };
+
+  handleExecute = async () => {
+    const q = encodeURIComponent(this.query);
     console.log('query', q);
     const url = 'https://agentlab.ru/rdf4j-workbench/repositories/rpo-tests/?query=';
     const lan = '&queryLn=' + this.state.language;
@@ -85,7 +88,7 @@ class QueryForm extends React.Component {
                   type='text'
                   style={{ width: 400 }}
                   autosize={{ minRows: 5, maxRows: 50 }}
-                  inputRef={(el) => (this.query = el)}
+                  onChange={this.handleQueryChange}
                 />
               </td>
             </tr>
