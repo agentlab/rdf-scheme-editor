@@ -38,9 +38,6 @@ describe('test GET INSERT/DELETE x-www-form-urlencoded without context', functio
       expect(r['status']).toEqual(200);
       return r;
     });
-  });
-
-  it('check data after insert to rdf repository without context', async () => {
     //проверка после
     var urlprefix = 'https://agentlab.ru/rdf4j-workbench/repositories/qqqqqq/query' + '?' + params;
     var dataSel = await fetch(urlprefix, {
