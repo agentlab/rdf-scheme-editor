@@ -1,6 +1,6 @@
 describe('test POST INSERT/DELETE sparql-query without context', function() {
-  const data = '<http://exampleSub> <http://exampleSub> 68';
-  const datareq = '<http://exampleSub> <http://exampleSub> 68 . ?s ?p ?o .';
+  const data = '<http://exampleSub> <http://exampleSub> 70';
+  const datareq = '<http://exampleSub> <http://exampleSub> 70 . ?s ?p ?o .';
   var params =
     'action=exec&' +
     'queryLn=SPARQL&' +
@@ -35,7 +35,7 @@ describe('test POST INSERT/DELETE sparql-query without context', function() {
     expect(contexts).not.toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          obj: '68',
+          obj: '70',
           pred: 'http://exampleSub',
           sub: 'http://exampleSub',
         }),
@@ -80,7 +80,7 @@ describe('test POST INSERT/DELETE sparql-query without context', function() {
     expect(contexts).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          obj: '68',
+          obj: '70',
           pred: 'http://exampleSub',
           sub: 'http://exampleSub',
         }),
@@ -109,7 +109,7 @@ describe('test POST INSERT/DELETE sparql-query without context', function() {
     expect(contexts).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          obj: '68',
+          obj: '70',
           pred: 'http://exampleSub',
           sub: 'http://exampleSub',
         }),
@@ -151,7 +151,7 @@ describe('test POST INSERT/DELETE sparql-query without context', function() {
     expect(contexts).not.toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          obj: '68',
+          obj: '70',
           pred: 'http://exampleSub',
           sub: 'http://exampleSub',
         }),
