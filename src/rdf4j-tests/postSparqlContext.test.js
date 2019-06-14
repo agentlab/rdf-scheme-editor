@@ -1,11 +1,17 @@
 describe('test POST INSERT/DELETE sparql-query with context', function() {
-  const data = 'GRAPH <urn:sparql:tests:insert:data> {' + '<http://exampleSub> <http://exampleSub> 69} ';
+  const data = 'GRAPH <urn:sparql:tests:insert:data> {' + '<http://exampleSub> <http://exampleSub> 68} ';
+  const datareq =
+    'GRAPH <urn:sparql:tests:insert:data> {' + '<http://exampleSub> <http://exampleSub> 68 . ?s ?p ?o .} ';
   var params =
     'action=exec&' +
     'queryLn=SPARQL&' +
     'query=' +
     encodeURIComponent(
-      'PREFIX foaf: <https://agentlab.ru/rdf4j-workbench/repositories> ' + 'SELECT ?Subject ' + 'WHERE{ ' + data + '}',
+      'PREFIX foaf: <https://agentlab.ru/rdf4j-workbench/repositories> ' +
+        'SELECT ?s ?p ?o  ' +
+        'WHERE{ ' +
+        datareq +
+        '}',
     ) +
     '&' +
     'limit_query=100&' +
@@ -21,7 +27,21 @@ describe('test POST INSERT/DELETE sparql-query with context', function() {
         Accept: 'application/sparql-results+json',
       },
     }).then((r) => r.json());
-    expect(dataSel.results.bindings.length).toEqual(0);
+    const contexts = dataSel.results.bindings.map((binding) => ({
+      sub: binding.s.value,
+      obj: binding.o.value,
+      pred: binding.p.value,
+    }));
+
+    expect(contexts).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          obj: '68',
+          pred: 'http://exampleSub',
+          sub: 'http://exampleSub',
+        }),
+      ]),
+    );
 
     //добавление
     urlprefix = 'https://agentlab.ru/rdf4j-workbench/repositories/rtrtrtr/update';
@@ -50,12 +70,27 @@ describe('test POST INSERT/DELETE sparql-query with context', function() {
         Accept: 'application/sparql-results+json',
       },
     }).then((r) => r.json());
+
     expect(dataSel.results.bindings.length).toBeGreaterThan(0);
+    const contexts = dataSel.results.bindings.map((binding) => ({
+      sub: binding.s.value,
+      obj: binding.o.value,
+      pred: binding.p.value,
+    }));
+
+    expect(contexts).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          obj: '68',
+          pred: 'http://exampleSub',
+          sub: 'http://exampleSub',
+        }),
+      ]),
+    );
   });
 
   it('delete data to rdf repository with context', async () => {
     var urlprefix = 'https://agentlab.ru/rdf4j-workbench/repositories/rtrtrtr/query' + '?' + params;
-    //проверка до
     var dataSel = await fetch(urlprefix, {
       method: 'GET',
       headers: {
@@ -63,7 +98,24 @@ describe('test POST INSERT/DELETE sparql-query with context', function() {
         Accept: 'application/sparql-results+json',
       },
     }).then((r) => r.json());
+    console.log(dataSel);
     expect(dataSel.results.bindings.length).toBeGreaterThan(0);
+    var contexts = dataSel.results.bindings.map((binding) => ({
+      sub: binding.s.value,
+      obj: binding.o.value,
+      pred: binding.p.value,
+    }));
+    console.log(contexts);
+
+    expect(contexts).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          obj: '68',
+          pred: 'http://exampleSub',
+          sub: 'http://exampleSub',
+        }),
+      ]),
+    );
 
     //удаление
     urlprefix = 'https://agentlab.ru/rdf4j-workbench/repositories/rtrtrtr/update';
@@ -82,6 +134,7 @@ describe('test POST INSERT/DELETE sparql-query with context', function() {
     });
 
     //проверка после
+    urlprefix = 'https://agentlab.ru/rdf4j-workbench/repositories/rtrtrtr/query' + '?' + params;
     dataSel = await fetch(urlprefix, {
       method: 'GET',
       headers: {
@@ -89,6 +142,21 @@ describe('test POST INSERT/DELETE sparql-query with context', function() {
         Accept: 'application/sparql-results+json',
       },
     }).then((r) => r.json());
-    expect(dataSel.results.bindings.length).toEqual(0);
+
+    contexts = dataSel.results.bindings.map((binding) => ({
+      sub: binding.s.value,
+      obj: binding.o.value,
+      pred: binding.p.value,
+    }));
+
+    expect(contexts).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          obj: '68',
+          pred: 'http://exampleSub',
+          sub: 'http://exampleSub',
+        }),
+      ]),
+    );
   });
 });
