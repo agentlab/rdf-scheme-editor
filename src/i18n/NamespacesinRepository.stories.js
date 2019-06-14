@@ -1,7 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Table } from 'antd';
+import { Table, message } from 'antd';
 import { Form, Input, Select, Button } from 'antd';
+import { async } from 'q';
 
 const dataSource = [
   {
@@ -15,6 +16,8 @@ const dataSource = [
     namespace: 42,
   },
 ];
+
+var dat = [];
 
 const columns = [
   {
@@ -74,7 +77,7 @@ class PrefixInput extends React.Component {
           style={{ width: '65%', marginRight: '3%' }}
         />
         <Select value={state.currency} size={size} style={{ width: '32%' }} onChange={this.handleCurrencyChange}>
-          {dataSource.map((option, i) => (
+          {dat.map((option, i) => (
             <Option value={option.namespace}>{option.prefix}</Option>
           ))}
         </Select>
@@ -100,6 +103,50 @@ class Demo extends React.Component {
     }
   };
 
+  async execut() {
+    const url = 'https://agentlab.ru/rdf4j-server/repositories';
+
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/sparql-results+json',
+      },
+    }).then((r) => r.json());
+
+    const repositories = res.results.bindings.map((binding) => ({
+      key: binding.id.value,
+    }));
+
+    repositories.forEach(async (element) => {
+      const qu = await fetch(url + '/' + element.key + '/namespaces', {
+        method: 'GET',
+        headers: {
+          Accept: 'application/sparql-results+json',
+        },
+      }).then((r) => r.json());
+
+      console.log(qu);
+
+      qu.results.bindings.forEach((quer) => {
+        const binding = {
+          prefix: quer.prefix.value,
+          namespace: quer.namespace.value,
+        };
+        dat.push(binding);
+      });
+
+      /*  const mapa = chlen.results.bindings.map((binding) => ({
+        prefix: binding.prefix.value,
+        namespace: binding.namespace.value,
+      })); 
+
+      dvachlena.push(mapa); */
+    });
+    f;
+
+    console.log(dat);
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -111,7 +158,7 @@ class Demo extends React.Component {
           })(<PrefixInput />)}
         </Form.Item>
         <Form.Item>
-          <Button type='primary' htmlType='submit'>
+          <Button type='primary' htmlType='submit' onClick={this.execut}>
             Update
           </Button>
         </Form.Item>
@@ -120,7 +167,7 @@ class Demo extends React.Component {
             Delete
           </Button>
         </Form.Item>
-        <Table dataSource={dataSource} columns={columns} />
+        <Table dataSource={dat} columns={columns} />
       </Form>
     );
   }
