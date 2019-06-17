@@ -3,10 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { Table, message } from 'antd';
 import { Form, Input, Select, Button, Popconfirm } from 'antd';
 import { async } from 'q';
-
 const EditableContext = React.createContext();
 
-var data = [];
+var f = false;
 
 const EditableRow = ({ form, index, ...props }) => (
   <EditableContext.Provider value={form}>
@@ -77,7 +76,6 @@ class EditableCell extends React.Component {
 class EditableTable extends React.Component {
   constructor(props) {
     super(props);
-    this.execut();
     this.columns = [
       {
         title: 'prefix',
@@ -86,24 +84,33 @@ class EditableTable extends React.Component {
         editable: true,
       },
       {
-        title: 'Namespace',
-        dataIndex: 'Namespace',
+        title: 'namespace',
+        dataIndex: 'namespace',
       },
       {
         title: 'operation',
         dataIndex: 'operation',
         render: (text, record) =>
-          data.length >= 1 ? (
+          this.state.dataSource.length >= 1 ? (
             <Popconfirm title='Sure to delete?' onConfirm={() => this.handleDelete(record.key)}>
               <a href='javascript:;'>Delete</a>
             </Popconfirm>
           ) : null,
       },
     ];
+    this.state = {
+      dataSource: {
+        key: 'xuy',
+        prefix: 'xuy',
+        namespace: 'chlen',
+      },
+      count: 0,
+    };
   }
 
   async execut() {
-    var dat = [];
+    console.log('executing');
+    var dat = new Array();
     const url = 'https://agentlab.ru/rdf4j-workbench/repositories/rpo-tests/namespaces';
     const res = await fetch(url, {
       method: 'GET',
@@ -118,24 +125,28 @@ class EditableTable extends React.Component {
         namespace: quer.namespace.value,
       };
       dat.push(binding);
-      data = dat;
     });
+    console.log(dat);
+    return dat;
   }
 
   handleDelete = (key) => {
-    const dataSource = [...data];
-    data = dataSource.filter((item) => item.key !== key);
+    const dataSource = [...this.state.dataSource];
+    this.setState({ dataSource: dataSource.filter((item) => item.key !== key) });
   };
 
   handleAdd = () => {
+    const { count, dataSource } = this.state;
     const newData = {
-      key: data.length,
-      prefix: `Edward King ${data.length}`,
-      Namespace: 32,
+      key: count,
+      name: `Edward King ${count}`,
+      age: 32,
+      address: `London, Park Lane no. ${count}`,
     };
-    data.push(newData);
-    console.log(data);
-    this.render();
+    this.setState({
+      dataSource: [...dataSource, newData],
+      count: count + 1,
+    });
   };
 
   handleSave = (row) => {
@@ -150,6 +161,9 @@ class EditableTable extends React.Component {
   };
 
   render() {
+    var data = this.execut();
+    const { dataSource } = this.state;
+    console.log(this.state);
     const components = {
       body: {
         row: EditableFormRow,
@@ -180,12 +194,11 @@ class EditableTable extends React.Component {
           components={components}
           rowClassName={() => 'editable-row'}
           bordered
-          dataSource={data}
+          dataSource={dataSource}
           columns={columns}
         />
       </div>
     );
   }
 }
-
 storiesOf('Namespaces', module).add('prefix', () => <EditableTable />);
