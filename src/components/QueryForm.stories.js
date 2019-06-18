@@ -6,7 +6,7 @@ import { Select, Checkbox, Input } from 'antd';
 const Option = Select.Option;
 const { TextArea } = Input;
 
-class QueryForm extends React.Component {
+export default class QueryForm extends React.Component {
   state = {
     language: 'sparql',
     resultPerPage: 0,
@@ -30,29 +30,31 @@ class QueryForm extends React.Component {
   };
 
   handleExecute = async () => {
-    const q = encodeURIComponent(this.query);
-    console.log('query', q);
-    const url = 'https://agentlab.ru/rdf4j-workbench/repositories/rpo-tests/?query=';
-    const lan = '&queryLn=' + this.state.language;
-    console.log(lan);
+    if (!(this.query === '')) {
+      const q = encodeURIComponent(this.query);
+      console.log('query', q);
+      const url = 'https://agentlab.ru/rdf4j-workbench/repositories/rpo-tests/?query=';
+      const lan = '&queryLn=' + this.state.language;
+      console.log(lan);
 
-    const res = await fetch(url + q + lan, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/sparql-results+json',
-      },
-    }).then((r) => r.json());
+      const res = await fetch(url + q + lan, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/sparql-results+json',
+        },
+      }).then((r) => r.json());
 
-    console.log(res);
+      console.log(res);
 
-    var resultsToDisplay = [];
-    if (this.state.resultPerPage != 0) resultsToDisplay = res.results.bindings.slice(0, this.state.resultPerPage);
-    else resultsToDisplay = res.results.bindings;
-    console.log(resultsToDisplay);
-    this.state.result = JSON.stringify(resultsToDisplay);
+      var resultsToDisplay = [];
+      if (this.state.resultPerPage != 0) resultsToDisplay = res.results.bindings.slice(0, this.state.resultPerPage);
+      else resultsToDisplay = res.results.bindings;
+      console.log(resultsToDisplay);
+      this.state.result = JSON.stringify(resultsToDisplay);
 
-    console.log(this.state.result);
-    alert(this.state.result);
+      console.log(this.state.result);
+      alert(this.state.result);
+    }
   };
 
   render() {
