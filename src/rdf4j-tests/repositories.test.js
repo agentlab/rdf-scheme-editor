@@ -9,9 +9,22 @@ let webData = fetch(server_URL.concat(repositories_prefix), {
   },
 });
 
+let wrongWebData = fetch(server_URL.concat(repositories_prefix).concat('WRONG_POSTFIX'), {
+  method: 'GET',
+  headers: {
+    Accept: 'application/sparql-results+json',
+  },
+});
+
 test('Web request is made correctly', async () => {
   await webData.then((r) => {
     expect(r.status).toEqual(200);
+  });
+});
+
+test('Web request to a wrong address is caught', async () => {
+  await wrongWebData.then((r) => {
+    expect(r.status).not.toEqual(200);
   });
 });
 

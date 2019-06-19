@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Table } from 'antd';
 
 const server_URL = 'https://agentlab.ru/rdf4j-server';
+const server_wrong_URL = 'https://agentlab.ru/WRONG-rdf4j-server'; //example
 const repositories_prefix = '/repositories';
 const columns = [
   {
@@ -68,10 +69,11 @@ function RepositoriesTable(props) {
   }
 
   useEffect(() => {
-    selectRequirementsModule(server_URL.concat(repositories_prefix));
+    selectRequirementsModule(props.props.concat(repositories_prefix));
   }, []);
 
   return <Table size='small' bordered pagination={false} dataSource={dataSource} columns={columns} />;
 }
 
-storiesOf('Repositories', module).add('List', () => <RepositoriesTable />);
+storiesOf('Repositories', module).add('List', () => <RepositoriesTable props={server_URL} />);
+storiesOf('Repositories', module).add('Wrong list', () => <RepositoriesTable props={server_wrong_URL} />);
