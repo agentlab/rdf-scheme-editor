@@ -1,131 +1,238 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Table } from 'antd';
-import { Form, Input, Select, Button } from 'antd';
+import { Table, message } from 'antd';
+import { Form, Input, Select, Button, Popconfirm } from 'antd';
+import { async } from 'q';
 
-const dataSource = [
-  {
-    key: '1',
-    prefix: 'Mike',
-    namespace: 32,
-  },
-  {
-    key: '2',
-    prefix: 'John',
-    namespace: 42,
-  },
-];
+const EditableContext = React.createContext();
 
-const columns = [
-  {
-    title: 'Prefix',
-    dataIndex: 'prefix',
-    key: 'prefix',
-  },
-  {
-    title: 'Namespace',
-    dataIndex: 'namespace',
-    key: 'namespace',
-  },
-];
+const EditableRow = ({ form, index, ...props }) => (
+  <EditableContext.Provider value={form}>
+    <tr {...props} />
+  </EditableContext.Provider>
+);
 
-const { Option } = Select;
+const EditableFormRow = Form.create()(EditableRow);
 
-class PrefixInput extends React.Component {
-  static getDerivedStateFromProps(nextProps) {
-    // Should be a controlled component.
-    if ('value' in nextProps) {
-      return {
-        ...(nextProps.value || {}),
-      };
-    }
-    return null;
-  }
-
-  handleNumberChange = (e) => {
-    const number = parseInt(e.target.value, 10);
-    if (Number.isNaN(number)) {
-      return;
-    }
-    if (!('value' in this.props)) {
-      this.setState({ number });
-    }
-    this.triggerChange({ number });
+class EditableCell extends React.Component {
+  state = {
+    editing: false,
   };
 
-  triggerChange = (changedValue) => {
-    // Should provide an event to pass value to Form.
-    const onChange = this.props.onChange;
-    if (onChange) {
-      onChange(Object.assign({}, this.state, changedValue));
-    }
-  };
-
-  render() {
-    const { size } = this.props;
-    const state = this.state;
-    return (
-      <span>
-        <Input
-          type='text'
-          size={size}
-          value={state.number}
-          onChange={this.handleNumberChange}
-          style={{ width: '65%', marginRight: '3%' }}
-        />
-        <Select value={state.currency} size={size} style={{ width: '32%' }} onChange={this.handleCurrencyChange}>
-          {dataSource.map((option, i) => (
-            <Option value={option.namespace}>{option.prefix}</Option>
-          ))}
-        </Select>
-      </span>
-    );
-  }
-}
-
-class Demo extends React.Component {
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
+  toggleEdit = () => {
+    const editing = !this.state.editing;
+    this.setState({ editing }, () => {
+      if (editing) {
+        this.input.focus();
       }
     });
   };
 
-  checkPrefix = (rule, value, callback) => {
-    if (value.number > 0) {
-      callback();
-      return;
-    }
+  save = (e) => {
+    const { record, handleSave } = this.props;
+    this.form.validateFields((error, values) => {
+      if (error && error[e.currentTarget.id]) {
+        return;
+      }
+      this.toggleEdit();
+      handleSave({ ...record, ...values });
+    });
+  };
+
+  renderCell = (form) => {
+    this.form = form;
+    const { children, dataIndex, record, title } = this.props;
+    const { editing } = this.state;
+    return editing ? (
+      <Form.Item style={{ margin: 0 }}>
+        {form.getFieldDecorator(dataIndex, {
+          rules: [
+            {
+              required: true,
+              message: `${title} is required.`,
+            },
+          ],
+          initialValue: record[dataIndex],
+        })(<Input ref={(node) => (this.input = node)} onPressEnter={this.save} onBlur={this.save} />)}
+      </Form.Item>
+    ) : (
+      <div className='editable-cell-value-wrap' style={{ paddingRight: 24 }} onClick={this.toggleEdit}>
+        {children}
+      </div>
+    );
   };
 
   render() {
-    const { getFieldDecorator } = this.props.form;
+    const { editable, dataIndex, title, record, index, handleSave, children, ...restProps } = this.props;
     return (
-      <Form layout='inline' onSubmit={this.handleSubmit}>
-        <Form.Item label='Prefix'>
-          {getFieldDecorator('prefix', {
-            initialValue: { currency: 'Mike' },
-            rules: [{ validator: this.checkPrefix }],
-          })(<PrefixInput />)}
-        </Form.Item>
-        <Form.Item>
-          <Button type='primary' htmlType='submit'>
-            Update
-          </Button>
-        </Form.Item>
-        <Form.Item>
-          <Button type='primary' htmlType='submit'>
-            Delete
-          </Button>
-        </Form.Item>
-        <Table dataSource={dataSource} columns={columns} />
-      </Form>
+      <td {...restProps}>
+        {editable ? <EditableContext.Consumer>{this.renderCell}</EditableContext.Consumer> : children}
+      </td>
     );
   }
 }
 
-const WrappedDemo = Form.create({ name: 'customized_form_controls' })(Demo);
+class EditableTable extends React.Component {
+  constructor(props) {
+    super(props);
+    this.columns = [
+      {
+        title: 'prefix',
+        dataIndex: 'prefix',
+        width: '30%',
+        editable: true,
+      },
+      {
+        title: 'namespace',
+        dataIndex: 'namespace',
+        editable: true,
+      },
+      {
+        title: 'operation',
+        dataIndex: 'operation',
+        render: (text, record) =>
+          this.state.dataSource.length >= 1 ? (
+            <Popconfirm title='Sure to delete?' onConfirm={() => this.handleDelete(record.key)}>
+              <a href='javascript:;'>Delete</a>
+            </Popconfirm>
+          ) : null,
+      },
+    ];
 
-storiesOf('Namespaces', module).add('prefix', () => <WrappedDemo />);
+    this.state = {
+      dataSource: [
+        {
+          key: '0',
+          prefix: '',
+          namespace: '',
+        },
+        {
+          key: '1',
+          prefix: '',
+          namespace: '',
+        },
+      ],
+      count: 2,
+    };
+  }
+
+  handleDelete = async (key) => {
+    const dataSource = [...this.state.dataSource];
+    this.setState({ dataSource: dataSource.filter((item) => item.key !== key) });
+    const it = dataSource.filter((item) => item.key == key);
+    console.log(it);
+    const delurl =
+      'https://agentlab.ru/rdf4j-workbench/repositories/rpo-tests/namespaces?prefix=' + it[0].prefix + '&namespace=';
+    const res1 = await fetch(delurl, {
+      method: 'POST',
+    });
+  };
+
+  async componentDidMount() {
+    this.setState({ dataSource: [], count: 0 });
+    var dat = [];
+    const url = 'https://agentlab.ru/rdf4j-workbench/repositories/rpo-tests/namespaces';
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/sparql-results+json',
+      },
+    }).then((r) => r.json());
+    res.results.bindings.forEach((quer) => {
+      const binding = {
+        key: quer.prefix.value,
+        prefix: quer.prefix.value,
+        namespace: quer.namespace.value,
+      };
+      dat.push(binding);
+    });
+    this.setState({ dataSource: dat, count: dat.length });
+  }
+
+  /*async componentDidUpdate(prevProps) {
+    console.log(prevProps);
+    const url = 'https://agentlab.ru/rdf4j-workbench/repositories/rpo-tests/namespaces?prefix=ololo&namespace=hahaha';
+    const res = await fetch(url, {
+      method: 'POST',
+    }
+    );
+  }*/
+
+  handleAdd = () => {
+    const { count, dataSource } = this.state;
+    const newData = {
+      key: dataSource.length,
+      prefix: `<empty>`,
+      namespace: '<empty>',
+    };
+    this.setState({
+      dataSource: [...dataSource, newData],
+      count: dataSource.length,
+    });
+  };
+
+  handleSave = async (row) => {
+    const newData = [...this.state.dataSource];
+    const index = newData.findIndex((item) => row.key === item.key);
+    const item = newData[index];
+    newData.splice(index, 1, {
+      ...item,
+      ...row,
+    });
+    const delurl =
+      'https://agentlab.ru/rdf4j-workbench/repositories/rpo-tests/namespaces?prefix=' + item.prefix + '&namespace=';
+    const res1 = await fetch(delurl, {
+      method: 'POST',
+    });
+    this.setState({ dataSource: newData });
+    const url =
+      'https://agentlab.ru/rdf4j-workbench/repositories/rpo-tests/namespaces?prefix=' +
+      newData[index].prefix +
+      '&namespace=' +
+      newData[index].namespace;
+    const res = await fetch(url, {
+      method: 'POST',
+    });
+  };
+
+  render() {
+    const { dataSource } = this.state;
+    const components = {
+      body: {
+        row: EditableFormRow,
+        cell: EditableCell,
+      },
+    };
+    const columns = this.columns.map((col) => {
+      if (!col.editable) {
+        return col;
+      }
+      return {
+        ...col,
+        onCell: (record) => ({
+          record,
+          editable: col.editable,
+          dataIndex: col.dataIndex,
+          title: col.title,
+          handleSave: this.handleSave,
+        }),
+      };
+    });
+    return (
+      <div>
+        <Button onClick={this.handleAdd} type='primary' style={{ marginBottom: 16 }}>
+          Add a row
+        </Button>
+        <Table
+          components={components}
+          rowClassName={() => 'editable-row'}
+          bordered
+          dataSource={dataSource}
+          columns={columns}
+        />
+      </div>
+    );
+  }
+}
+
+storiesOf('Namespaces', module).add('prefix', () => <EditableTable />);
