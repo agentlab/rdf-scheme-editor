@@ -9,8 +9,23 @@ class FormLayoutDemo extends React.Component {
       formLayout: 'horizontal',
     };
   }
+  handleExecute = async () => {
+    const url = 'https://agentlab.ru/rdf4j-workbench/repositories/rpo-tests/summary';
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/sparql-results+json',
+      },
+    })
+      .then((r) => r.json())
+      .catch((ex) => console.error(ex));
+
+    this.setState({ bindings: res.results.bindings });
+    console.log(this.state);
+  };
 
   render() {
+    this.handleExecute();
     const { formLayout } = this.state;
     const formItemLayout =
       formLayout === 'horizontal'
