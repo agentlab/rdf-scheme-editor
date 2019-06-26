@@ -4,11 +4,8 @@ import { Layout, Breadcrumb, Button, Checkbox, Input, Table, Select } from 'antd
 import 'antd/dist/antd.css';
 
 const Option = Select.Option;
-const { TextArea } = Input;
-
 const { Content } = Layout;
 
-const dataSource = [{}];
 const columns = [
   {
     title: 'Subject',
@@ -37,16 +34,17 @@ export default class Explore extends React.Component {
   state = {
     resultPerPage: 0,
     result: '',
+    data: null,
   };
   resource = '';
 
-  //TUT
+  // Читывание значения all-10-50-100
   handleResultsChange = (e) => {
     this.state.resultPerPage = e;
     console.log(this.state.resultPerPage);
   };
 
-  //TUT
+  //Считывание поля repository
   handleQueryChange = (e) => {
     this.resource = e.target.value;
     console.log(this.resource);
@@ -68,16 +66,32 @@ export default class Explore extends React.Component {
           Accept: 'application/sparql-results+json',
         },
       }).then((r) => r.json());
-
-      console.log(res);
+      console.log(this.state.resultPerPage); //вывести текущее значение all-10-50-100
+      console.log(res); //переменная res со всеми массивами результатов и шапки таблицы (2 массивы отдельных в массиве)
+      console.log('-----------------------------------------');
       var resultsToDisplay = [];
+      /*
+      Если не указан парамер all-10-50-100, то все вывести, а иначе срезать .slice-ом хвост за пределами 10-50-100
+      */
       if (this.state.resultPerPage != 0) resultsToDisplay = res.results.bindings.slice(0, this.state.resultPerPage);
       else resultsToDisplay = res.results.bindings;
-      console.log(resultsToDisplay);
-      this.state.result = JSON.stringify(resultsToDisplay);
-
-      console.log(this.state.result);
-      alert(this.state.result);
+      console.log(resultsToDisplay); //Вывод биндов в виде массива
+      this.state.result = JSON.stringify(resultsToDisplay); //переводит весь массив биндов(данных таблицы) в строку
+      console.log(resultsToDisplay[0].subject.value);
+      console.log('-----------------------------------------');
+      const data = [];
+      for (let i = 0; i < resultsToDisplay.length; i++) {
+        let current_subject = resultsToDisplay[i].subject.value;
+        data.push({
+          key: i,
+          subject: current_subject,
+          predicate: resultsToDisplay[i].predicate.value,
+          object: resultsToDisplay[i].object.value,
+          context: resultsToDisplay[i].context.value,
+        });
+      }
+      this.setState({ data: data });
+      console.log(this.state.data);
     }
   };
 
@@ -98,7 +112,7 @@ export default class Explore extends React.Component {
                 overflow: 'initial',
               }}>
               <Input
-                onChange={this.handleResultsChange}
+                onChange={this.handleQueryChange}
                 placeholder='Resource'
                 style={{ marginLeft: 7, margin: '10px 0 ', width: '45%' }}
               />
@@ -134,7 +148,7 @@ export default class Explore extends React.Component {
                 </Button>
               </div>
 
-              <Table dataSource={dataSource} columns={columns} onChange={this.handleExecute} />
+              <Table dataSource={this.state.data} columns={columns} onChange={this.handleExecute} />
             </Content>
           </Layout>
         </Layout>
