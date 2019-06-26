@@ -2,50 +2,73 @@ import { storiesOf } from '@storybook/react';
 import React, { useEffect, useState } from 'react';
 import { Table } from 'antd';
 
-import { executeGet, executeSelect, executeUpdate } from './../sparql';
+const server_URL = 'https://agentlab.ru/rdf4j-server';
+const server_wrong_URL = 'https://agentlab.ru/WRONG-rdf4j-server'; //example
+const repositories_prefix = '/repositories';
+const url_prefix = 'https://agentlab.ru/rdf4j-workbench';
 
-const columns = [
-  {
-    title: 'Id',
-    dataIndex: 'id',
-    key: 'id',
-  },
-  {
-    title: 'Title',
-    dataIndex: 'title',
-    key: 'title',
-  },
-  {
-    title: 'URI',
-    dataIndex: 'uri',
-    key: 'uri',
-  },
-  {
-    title: 'Readable',
-    dataIndex: 'readable',
-    key: 'readable',
-  },
-  {
-    title: 'Writable',
-    dataIndex: 'writable',
-    key: 'writable',
-  },
-];
 
-function RepositoriesTable(props) {
-  //такой код не работает, тк fetch возвращает не результат, а Promise
-  //const dataSource = selectRequirementsModule('https://agentlab.ru/rdf4j-server/repositories');
-  //console.log("EXECUTE GET RESULTS=", props.dataSource);
-
-  //React Hooks API
+const RepositoriesTable = (props) => {
   const [dataSource, setDataSource] = useState([]);
+  const columns = [
+    {
+      title: 'Id',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
+      title: 'Title',
+      dataIndex: 'title',
+      key: 'title',
+    },
+    {
+      title: 'URI',
+      dataIndex: 'uri',
+      key: 'uri',
+    },
+    {
+      title: 'Readable',
+      dataIndex: 'readable',
+      key: 'readable',
+    },
+    {
+      title: 'Writable',
+      dataIndex: 'writable',
+      key: 'writable',
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (text, record) => <button onClick={() => deleteClickHandler(record.key)}>Delete</button>
+    },
+  ]
 
-  function selectRequirementsModule(url) {
-    console.log('EXECUTE GET URL=', url);
-    return executeGet(url)
+  const deleteClickHandler = (key) => {
+    deleteRepository(key)
+    console.log(key)
+    alert('ready')
+  }
+
+  const deleteRepository = async (repID) => {
+    //return fetch(`${url_prefix}/repositories/${repID}/update`, {
+    await fetch(`${url_prefix}/repositories/NONE/delete?id=${repID}`, {
+      method: 'POST',
+      //body: 'update=' + encodeURIComponent('DELETE DATA' + '{' + '<http://exampleSub> <http://exampleSub> 103' + '}'),
+    })
+  }
+
+
+  const selectRequirementsModule = (url) => {
+    return fetch(url, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/sparql-results+json',
+      },
+    })
+      .then((data) => data.json())
       .then(
-        (res) =>
-          res.results.bindings.map((binding) => ({
+        (data) =>
+          data.results.bindings.map((binding) => ({
             key: binding.id.value,
             id: binding.id.value,
             title: binding.title.value,
@@ -58,17 +81,21 @@ function RepositoriesTable(props) {
         },
       )
       .then((data) => {
-        console.log('EXECUTE GET RESULTS=', data);
-        setDataSource(data);
+        setDataSource(
+          data.sort((a, b) => {
+            // sort data in alphabetical order
+            return a.key > b.key;
+          }),
+        );
       });
   }
 
-  // React Hooks API
   useEffect(() => {
-    selectRequirementsModule('https://agentlab.ru/rdf4j-server/repositories'); //http://localhost:8080/rdf4j-server/repositories
+    selectRequirementsModule(props.props.concat(repositories_prefix));
   }, []);
 
   return <Table size='small' bordered pagination={false} dataSource={dataSource} columns={columns} />;
 }
 
-storiesOf('Repositories', module).add('Info', () => <RepositoriesTable />);
+storiesOf('Repositories', module).add('List', () => <RepositoriesTable props={server_URL} />);
+storiesOf('Repositories', module).add('Wrong list', () => <RepositoriesTable props={server_wrong_URL} />);
