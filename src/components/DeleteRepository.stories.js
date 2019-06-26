@@ -1,95 +1,102 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Form, Select, Button } from 'antd';
 
 const Option = Select.Option;
 const FormItem = Form.Item;
 
-const server_URL = 'https://agentlab.ru/rdf4j-server';
-const url_prefix = 'https://agentlab.ru/rdf4j-workbench';
+const options = [
+  {
+    value: 'adms-catalog',
+    text: 'adms-catalog - ADMS Catalog',
+  },
+  {
+    value: 'reqs',
+    text: 'reqs - Requirements',
+  },
+  {
+    value: 'jhgf',
+    text: 'jhgf - jh',
+  },
+  {
+    value: 'configurations',
+    text: 'configurations - Portal Configurations',
+  },
+  {
+    value: 'adms-catalog',
+    text: 'adms-catalog - ADMS Catalog',
+  },
+  {
+    value: 'eurovoc_ru',
+    text: 'eurovoc_ru - EuroVoc (russian edition) in SKOS Core Concepts',
+  },
+  {
+    value: 'onem2m',
+    text: 'onem2m - OneM2M IoT Repository',
+  },
+  {
+    value: 'onem2m2',
+    text: 'onem2m2 - OneM2M IoT Repository',
+  },
+  {
+    value: 'datasets',
+    text: 'datasets - Datasets configuration fot portal',
+  },
+  {
+    value: '23',
+    text: '23 - Native store with RDF Schema and direct type inferencing',
+  },
+  {
+    value: 'mappings',
+    text: 'mappings - Portal CVS Mappings',
+  },
+  {
+    value: 'adms3',
+    text: 'adms3 - Native store with RDF Schema and direct type inferencing',
+  },
+  {
+    value: 'adms4',
+    text: 'adms4 - ADMS 4 Native Java',
+  },
+  {
+    value: 'users',
+    text: 'users - Portal Users',
+  },
+  {
+    value: 'eurovoc_core',
+    text: 'eurovoc_core - EuroVoc in SKOS Core Concepts',
+  },
+  {
+    value: 'rere',
+    text: 'rere - test_feature',
+  },
+  {
+    value: 'lov',
+    text: 'lov - Linked Open Vocabularies',
+  },
+  {
+    value: 'adms2',
+    text: 'adms2 - ADMS 2.01 Catalog',
+  },
+];
 
-
-const DeleteForm = () => {
-  const [options, setOptions] = useState([])
-  const [selectedOption, setSelectedOption] = useState({})
-
-  const getRepositories = async () => {
-    return await fetch(`${server_URL}/repositories`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/sparql-results+json',
-      },
-    })
-      .then((data) => data.json())
-      .then(
-        (data) =>
-          data.results.bindings.map((binding) => ({
-            id: binding.id.value,
-            title: binding.title.value,
-          })),
-        (error) => {
-          console.error(error);
-        },
-      )
-      .then((data) => {
-        setOptions(data);
-        data.length > 0 ? setSelectedOption(data[0]) : null;
-      });
-  }
-
-  const deleteRepository = async (repID) => {
-    //return fetch(`${url_prefix}/repositories/${repID}/update`, {
-    return await fetch(`${url_prefix}/repositories/NONE/delete?id=${repID}`, {
-      method: 'POST',
-      //body: 'update=' + encodeURIComponent('DELETE DATA' + '{' + '<http://exampleSub> <http://exampleSub> 103' + '}'),
-    })
-      .then(() => {
-        setOptions(options.filter((option) => option.id != repID))
-        alert('ready')
-      })
-      .catch((error) => console.error(error))
-  }
-
-  const changeOptionHandler = (option) => {
-    setSelectedOption(option)
-  }
-
-  const deleteClickHandler = () => {
-    deleteRepository(selectedOption)
-  }
-
-  useEffect(() => {
-    getRepositories();
-  }, []);
-
-  return (
-    <Form inline>
-      <FormItem>
-        <Select
-          showSearch
-          style={{ width: 500 }}
-          placeholder='Repository:'
-          filterOption={options}
-          onChange={changeOptionHandler}
-        >
-          {
-            options.map((option, i) => (
-              <Option value={option.id} key={i}>{option.id + "-" + option.title}</Option>
-            ))
-          }
-        </Select>
-      </FormItem>
-      <FormItem>
-        <Button
-          type='danger'
-          ghost
-          onClick={deleteClickHandler}
-        >
-          Delete
-</Button>
-      </FormItem>
-    </Form>
-  )
-}
-
-storiesOf('Delete Repository', module).add('Select', () => <DeleteForm />);
+storiesOf('Delete Repository', module).add('Select', () => (
+  <Form inline>
+    <FormItem>
+      <Select
+        showSearch
+        style={{ width: 500 }}
+        placeholder='Repository:'
+        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+        {options.map((option, i) => (
+          <Option value={option.value}>{option.text}</Option>
+        ))}
+      </Select>
+    </FormItem>
+    <FormItem>
+      <Button type='danger' ghost>
+        Delete
+      </Button>
+    </FormItem>
+  </Form>
+));
