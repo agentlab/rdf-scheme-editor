@@ -51,12 +51,6 @@ export default class Explore extends React.Component {
     console.log(this.state.resultPerPage);
   };
 
-  //Считывание input
-  handleQueryChange = (e) => {
-    this.resource = e.target.value;
-    console.log(this.resource);
-  };
-
   // <http://www.example.org/schemas/relationship/fatherOf>
   handleExecute = async (e) => {
     if (event.key === 'Enter') {
