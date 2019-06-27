@@ -16,4 +16,7 @@ setOptions({
   addonPanelInRight: true,
 });
 
-storiesOf('PAPA V ZDANII', module).add('Diagram Editor', Helper.makeDemo(require('./diagramEditor/index').default()));
+storiesOf('Редактор блочных диаграмм', module).add(
+  'Diagram Editor',
+  Helper.makeDemo(require('./diagramEditor/index').default()),
+);
