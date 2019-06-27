@@ -9,13 +9,6 @@ const server_URL = 'https://agentlab.ru/rdf4j-server';
 const repositories_prefix = '/repositories';
 const props = ['id', 'title', 'uri', 'readable', 'writable'];
 
-test('Renders corectly', () => {
-  configure({ adapter: new Adapter() });
-  const output = shallow(<RepositoriesTable />);
-  expect(shallowToJson(output)).toMatchSnapshot();
-});
-
-
 let webData = fetch(server_URL.concat(repositories_prefix), {
   method: 'GET',
   headers: {
@@ -28,6 +21,14 @@ let wrongWebData = fetch(server_URL.concat(repositories_prefix).concat('WRONG_PO
   headers: {
     Accept: 'application/sparql-results+json',
   },
+});
+
+test('Renders corectly', () => {
+  configure({ adapter: new Adapter() });
+  const output = shallow(<RepositoriesTable />);
+  expect(shallowToJson(output)).toMatchSnapshot({
+    dataSource: expect.any(Array),
+  });
 });
 
 test('Web request is made correctly', async () => {
