@@ -23,11 +23,19 @@ let wrongWebData = fetch(server_URL.concat(repositories_prefix).concat('WRONG_PO
   },
 });
 
-test('Renders corectly', () => {
+test('Renders correctly if data is correct', () => {
   configure({ adapter: new Adapter() });
-  const output = shallow(<RepositoriesTable />);
+  const output = shallow(<RepositoriesTable props={server_URL.concat(repositories_prefix)} />);
   expect(shallowToJson(output)).toMatchSnapshot({
     dataSource: expect.any(Array),
+  });
+});
+
+test('Render empty table if no data', () => {
+  configure({ adapter: new Adapter() });
+  const output = shallow(<RepositoriesTable props={server_URL.concat(repositories_prefix).concat('WRONG_POSTFIX')} />);
+  expect(shallowToJson(output)).toMatchSnapshot({
+    // empty table data
   });
 });
 
