@@ -43,7 +43,7 @@ export default class QueryForm extends React.Component {
     if (!(this.query === '')) {
       const q = encodeURIComponent(this.query);
       console.log('query', q);
-      const url = 'https://agentlab.ru/rdf4j-workbench/repositories/rpo-tests/?query=';
+      const url = 'https://agentlab.ru/rdf4j-server/repositories/rpo-tests?query=';
       const lan = '&queryLn=' + this.state.language;
       console.log(lan);
 
