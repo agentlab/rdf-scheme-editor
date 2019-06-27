@@ -84,21 +84,40 @@ class AddRDFForm extends React.Component {
 
   handleUpload = async () => {
     var content = '';
+    var cont = 'contents';
+    var con1 = '<' + this.base + '>';
+    var useCon = '&useForContext=';
+    var tr = 'on';
+    //if(this.useBase===false) con1='';
     if (this.state.value == 1) content = this.dataURL;
-    else if (this.state.value == 3) content = this.rdfCont;
+    else if (this.state.value == 3) content = encodeURIComponent(this.rdfCont);
     console.log(content);
 
-    const url = 'https://agentlab.ru/rdf4j-workbench/repositories/rpo-tests/add';
+    const url = 'https://agentlab.ru/rdf4j-server/repositories/rpo-tests';
     const result = await fetch(
-      url + '?baseURI=' + (this.useBase ? this.base : '') + '&dataFormat=' + this.dataFormat + '&rdfdata=' + content,
+      url /*+ '?baseURI=' + this.base  +(this.useBase?useCon+tr: '') +(this.useBase?'&context='+con1: '')+'&source='+ cont*/,
       {
         method: 'POST',
-        /*headers: {
-
-        'Content-Type': 'application/n-triples',
-      },*/
+        headers: {
+          'Content-Type': this.dataFormat,
+        },
+        body: content,
       },
     );
+    /* const url = 'https://agentlab.ru/rdf4j-server/repositories/rpo-tests';
+    const result = await fetch(
+    url /*+ '?baseURI=' + this.base  +(this.useBase?useCon+tr: '') +(this.useBase?'&context='+con1: '')+'&source='+ cont,
+    /*  {
+        
+        method: 'POST',
+    
+        cache: 'no-cache',
+        headers: {
+          'Content-Type': this.dataFormat,
+        },
+        body : content,
+      },
+    );*/
 
     alert('RDF added');
   };
@@ -158,8 +177,8 @@ class AddRDFForm extends React.Component {
               <Select defaultValue='(autodetect)' style={{ width: 120 }} onChange={this.handleDataFChange}>
                 <Option value='(autodetect)'>(autodetect)</Option>
                 <Option value='application/n-triples'>N-Triples</Option>
-                <Option value='RDF/XML'>RDF/XML</Option>
-                <Option value='Turtle'>Turtle</Option>
+                <Option value='application/rdf+xml'>RDF/XML</Option>
+                <Option value='text/turtle'>Turtle</Option>
               </Select>
             </Layout>
           </Form.Item>
