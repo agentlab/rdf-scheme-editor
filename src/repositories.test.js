@@ -1,6 +1,6 @@
 const repositories_url = 'https://agentlab.ru/rdf4j-server/repositories';
 
-test('add repository mem', async () => {
+test('add repository trang', async () => {
   const url = 'https://agentlab.ru/rdf4j-workbench/repositories/NONE/create';
   const data = await fetch(url, {
     method: 'POST',
@@ -8,7 +8,7 @@ test('add repository mem', async () => {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
     body:
-      'type=memory&Repository+ID=mem&Repository+title=memmem&Persist=true&Sync+delay=0&EvaluationStrategyFactory=org.eclipse.rdf4j.query.algebra.evaluation.impl.StrictEvaluationStrategyFactory',
+      'type=memory&Repository+ID=trang&Repository+title=BMSTU&Persist=true&Sync+delay=0&EvaluationStrategyFactory=org.eclipse.rdf4j.query.algebra.evaluation.impl.StrictEvaluationStrategyFactory',
   }).then((r) => {
     return r;
   });
@@ -30,20 +30,21 @@ test('add repository mem', async () => {
   expect(repositories).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        id: 'mem',
+        id: 'trang',
       }),
     ]),
   );
 });
 
-test('remove repository mem', async () => {
+/*
+test('remove repository trang', async () => {
   const url = 'https://agentlab.ru/rdf4j-workbench/repositories/NONE/delete';
   const data = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: 'id=mem',
+    body: 'id=trang',
   }).then((r) => {
     //console.log(r);
     return r;
@@ -67,8 +68,9 @@ test('remove repository mem', async () => {
   expect(repositories).toEqual(
     expect.arrayContaining([
       expect.not.objectContaining({
-        id: 'mem',
+        id: 'trang',
       }),
     ]),
   );
 });
+*/
