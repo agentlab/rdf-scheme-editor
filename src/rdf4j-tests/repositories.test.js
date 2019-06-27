@@ -1,3 +1,10 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import { configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import { shallowToJson } from 'enzyme-to-json';
+import RepositoriesTable from '../components/Repositories.stories';
+
 const server_URL = 'https://agentlab.ru/rdf4j-server';
 const repositories_prefix = '/repositories';
 const props = ['id', 'title', 'uri', 'readable', 'writable'];
@@ -14,6 +21,22 @@ let wrongWebData = fetch(server_URL.concat(repositories_prefix).concat('WRONG_PO
   headers: {
     Accept: 'application/sparql-results+json',
   },
+});
+
+test('Renders correctly if data is correct', () => {
+  configure({ adapter: new Adapter() });
+  const output = shallow(<RepositoriesTable props={server_URL.concat(repositories_prefix)} />);
+  expect(shallowToJson(output)).toMatchSnapshot({
+    dataSource: expect.any(Array),
+  });
+});
+
+test('Render empty table if no data', () => {
+  configure({ adapter: new Adapter() });
+  const output = shallow(<RepositoriesTable props={server_URL.concat(repositories_prefix).concat('WRONG_POSTFIX')} />);
+  expect(shallowToJson(output)).toMatchSnapshot({
+    // empty table data
+  });
 });
 
 test('Web request is made correctly', async () => {
