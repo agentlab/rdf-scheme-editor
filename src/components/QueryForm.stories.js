@@ -1,12 +1,20 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Button } from '@storybook/react/demo';
-import { Select, Checkbox, Input } from 'antd';
+import { Select, Input } from 'antd';
+//import 'index.css';
+import YASQE from 'yasgui-yasqe';
 
 const Option = Select.Option;
 const { TextArea } = Input;
 
 export default class QueryForm extends React.Component {
+  constructor(props) {
+    super(props);
+    var yasqe = null;
+    var yasr = null;
+  }
+
   state = {
     language: 'sparql',
     resultPerPage: 0,
@@ -57,6 +65,16 @@ export default class QueryForm extends React.Component {
     }
   };
 
+  componentDidMount() {
+    this.yasqe = YASQE.fromTextArea(document.getElementById('yasqe'), {
+      sparql: {
+        showQueryButton: true,
+      },
+    });
+    this.yasqe.on('change', this.handleQueryChange);
+    this.yasqe.refresh();
+  }
+
   render() {
     return (
       <div>
@@ -86,12 +104,14 @@ export default class QueryForm extends React.Component {
                 <h1>Query</h1>
               </th>
               <td>
-                <TextArea
-                  type='text'
-                  style={{ width: 400 }}
-                  autosize={{ minRows: 5, maxRows: 50 }}
-                  onChange={this.handleQueryChange}
-                />
+                <textarea id='yasqe' style={{ width: 400 }} autosize={{ minRows: 5, maxRows: 50 }} />
+                <div id='yasr' style={{ width: 400 }} />
+                {/*<TextArea*/}
+                {/*    type='text'*/}
+                {/*    style={{ width: 400 }}*/}
+                {/*    autosize={{ minRows: 5, maxRows: 50 }}*/}
+                {/*    onChange={this.handleQueryChange}*/}
+                {/*/>*/}
               </td>
             </tr>
             <tr>
