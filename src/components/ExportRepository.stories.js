@@ -1,73 +1,11 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import ReactDOM from 'react-dom';
-import { Form, Input, Select, Button, Table } from 'antd';
+import { Form, Input, Select, Button, Table, Layout } from 'antd';
 
 const InputGroup = Input.Group;
 const Option = Select.Option;
-
-class CompactDemo extends React.Component {
-  state = {
-    dataSource: [],
-  };
-
-  render() {
-    return (
-      <div>
-        <h1 align='left' margin-left='50px'>
-          {' '}
-          Export Repository{' '}
-        </h1>
-        <table>
-          <td>
-            <b>
-              <Form.Item label='Download format: ' />
-            </b>
-          </td>
-          <td>
-            <InputGroup compact>
-              <Select defaultValue='N-Triples'>
-                <Option value='N-Triples'>N-Triples</Option>
-                <Option value='RDF/XML'>RDF/XML</Option>
-                <Option value='Turtle'>Turtle</Option>
-                <Option value='N3'>N3</Option>
-                <Option value='TriG'>TriG</Option>
-                <Option value='TriX'>TriX</Option>
-              </Select>
-            </InputGroup>
-          </td>
-          <td>
-            <Form.Item>
-              <Button type='submit'> Download</Button>
-            </Form.Item>
-          </td>
-        </table>
-
-        <table>
-          <td>
-            <b>
-              <Form.Item label='Results per page: ' />
-            </b>
-          </td>
-          <td>
-            <InputGroup compact>
-              <Select defaultValue='All'>
-                <Option value='All'>All</Option>
-                <Option value='10'>10</Option>
-                <Option value='50'>50</Option>
-                <Option value='100'>100</Option>
-                <Option value='200G'>200</Option>
-              </Select>
-            </InputGroup>
-          </td>
-          <td>
-            <Form.Item label='The results shown maybe truncated' />
-          </td>
-        </table>
-      </div>
-    );
-  }
-}
+const dataSource = [{}];
+const { Content } = Layout;
 
 const columns = [
   {
@@ -96,33 +34,108 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    key: '1',
-    subject: 'oslc',
-    predicate: 'rdf:type',
-    object: 'owl:Ontology',
-    context: 'oslc',
-  },
-  {
-    key: '2',
-    subject: 'oslc',
-    predicate: 'rdf:type',
-    object: 'owl:label',
-    context: 'oslc',
-  },
-  {
-    key: '3',
-    subject: 'oslc',
-    predicate: 'rdf:type',
-    object: 'owl:descrision',
-    context: 'oslc',
-  },
-];
+export default class ExportRepository extends React.Component {
+  state = {
+    resultPerPage: 0,
+    result: '',
+  };
 
-storiesOf('Lab 2', module).add('Export Repository', () => (
-  <div>
-    <CompactDemo />
-    <Table columns={columns} dataSource={data} bordered size='small' />
-  </div>
-));
+  handleResultChange = (e) => {
+    this.resultPerPage = e;
+    console.log(this.resultPerPage);
+  };
+
+  handleExecute = async () => {
+    if (!(this.query === '')) {
+      const q = encodeURIComponent(this.query) + this.state.resultPerPage;
+      console.log('query', q);
+      const url = 'https://agentlab.ru/rdf4j-workbench/repositories/rpo-tests/export?limit_explore=';
+
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/sparql-results+json',
+        },
+      }).then((r) => r.json());
+
+      console.log(res);
+
+      var resultsToDisplay = [];
+      if (this.state.resultPerPage != 0) resultsToDisplay = res.results.bindings.slice(0, this.state.resultPerPage);
+      else resultsToDisplay = res.results.bindings;
+      console.log(resultsToDisplay);
+      this.state.result = JSON.stringify(resultsToDisplay);
+
+      console.log(this.state.result);
+      alert(this.state.result);
+    }
+  };
+
+  render() {
+    return (
+      <div>
+        <h1 align='left' margin-left='50px'>
+          {' '}
+          Export Repository{' '}
+        </h1>
+        <Content>
+          <div>
+            <div>
+              <b>
+                <Form.Item label='Download format: ' />
+              </b>
+            </div>
+            <div>
+              <InputGroup compact>
+                <Select defaultValue='N-Triples'>
+                  <Option value='N-Triples'>N-Triples</Option>
+                  <Option value='RDF/XML'>RDF/XML</Option>
+                  <Option value='Turtle'>Turtle</Option>
+                  <Option value='N3'>N3</Option>
+                  <Option value='TriG'>TriG</Option>
+                  <Option value='TriX'>TriX</Option>
+                </Select>
+              </InputGroup>
+            </div>
+            <div>
+              <Form.Item>
+                <Button type='submit'> Download</Button>
+                <div style={{ display: 'inline-block' }}>
+                  <Button onClick={this.handleExecute}>Refresh</Button>
+                </div>
+              </Form.Item>
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <b>
+                <Form.Item label='Results per page: ' />
+              </b>
+            </div>
+            <div>
+              <InputGroup compact>
+                <Select
+                  showSearch
+                  onChange={this.handleResultChange}
+                  optionFilterProp=''
+                  filterOption={(input, option) =>
+                    option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  }>
+                  <Option value='All'>All</Option>
+                  <Option value='10'>10</Option>
+                  <Option value='50'>50</Option>
+                  <Option value='100'>100</Option>
+                  <Option value='200G'>200</Option>
+                </Select>
+              </InputGroup>
+            </div>
+          </div>
+          <Table onChange={this.handleExecute} columns={columns} dataSource={dataSource} bordered size='small' />
+        </Content>
+      </div>
+    );
+  }
+}
+
+storiesOf('Lab 2', module).add('Export Repository', () => <ExportRepository />);
