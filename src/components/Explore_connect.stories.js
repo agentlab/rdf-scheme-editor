@@ -38,52 +38,48 @@ export default class Explore extends React.Component {
   };
   resource = '';
 
-  // Читывание значения all-10-50-100
+  // Читывание значения all
   handleResultsChange = (e) => {
     this.state.resultPerPage = e;
     console.log(this.state.resultPerPage);
+    this.handleResultsChange;
   };
 
-  //Считывание поля repository
+  //Next
+  handleNextChange = (e) => {
+    this.state.nextPerPage = e;
+    console.log(this.state.resultPerPage);
+  };
+
+  //Считывание input
   handleQueryChange = (e) => {
     this.resource = e.target.value;
     console.log(this.resource);
   };
 
-  //TUT  <http://www.example.org/schemas/relationship/fatherOf>
-  handleExecute = async () => {
-    if (!(this.query === '')) {
-      const q = encodeURIComponent(this.query) + this.state.resultPerPage;
-      console.log('query', q);
+  // <http://www.example.org/schemas/relationship/fatherOf>
+  handleExecute = async (e) => {
+    if (event.key === 'Enter') {
+      let resource = e.target.value;
+      console.log('resource', resource);
       const url = 'https://agentlab.ru/rdf4j-workbench/repositories/rpo-tests/explore?resource=';
       const lan =
         '%3Chttp%3A%2F%2Fwww.example.org%2Fschemas%2Frelationship%2FfatherOf%3E&limit_explore=' +
         this.state.resultPerPage +
-        '&show-datatypes=show-dataypes&know_total=3&query=&ref=';
+        '&show-datatypes=show-dataypes&offset=0';
       const res = await fetch(url + lan, {
         method: 'GET',
         headers: {
           Accept: 'application/sparql-results+json',
         },
       }).then((r) => r.json());
-      //вывести текущее значение all-10-50-100
-      console.log(this.state.resultPerPage);
-      //переменная res со всеми массивами результатов и шапки таблицы (2 массивы отдельных в массиве)
       console.log(res);
-      console.log('-----------------------------------------');
       var resultsToDisplay = [];
       const data = [];
-      //Если не указан парамер all-10-50-100, то все вывести,
-      //а иначе срезать .slice-ом хвост за пределами 10-50-100
-      //if (this.state.resultPerPage != 0) resultsToDisplay = res.results.bindings.slice(0, this.state.resultPerPage);
-      //else
       resultsToDisplay = res.results.bindings;
       //Вывод биндов в виде массива
       console.log(resultsToDisplay);
-      //переводит весь массив биндов(данных таблицы) в строку
       this.state.result = JSON.stringify(resultsToDisplay);
-      console.log(resultsToDisplay[0].subject.value);
-      console.log('-----------------------------------------');
       for (let i = 0; i < resultsToDisplay.length; i++) {
         let current_subject = resultsToDisplay[i].subject.value;
         let current_predicate = resultsToDisplay[i].predicate.value;
@@ -98,7 +94,6 @@ export default class Explore extends React.Component {
         });
       }
       this.setState({ data: data });
-      console.log(this.state.data);
     }
   };
 
@@ -111,52 +106,37 @@ export default class Explore extends React.Component {
               <Breadcrumb.Item>Explore</Breadcrumb.Item>
             </Breadcrumb>
 
-            <Checkbox style={{ clear: 'both', margin: '10px 0 ' }}>Show data types & language tags</Checkbox>
-
             <Content
               style={{
                 margin: '1px 1px 1px',
                 overflow: 'initial',
               }}>
               <Input
-                onChange={this.handleQueryChange}
+                onKeyDown={this.handleExecute}
                 placeholder='Resource'
                 style={{ marginLeft: 7, margin: '10px 0 ', width: '45%' }}
               />
 
-              <tr>
-                <th>
-                  <h1>Result per page</h1>
-                </th>
-                <td>
-                  <Select
-                    showSearch
-                    style={{ width: 100 }}
-                    optionFilterProp=''
-                    placeholder='All'
-                    onChange={this.handleResultsChange}
-                    filterOption={(input, option) =>
-                      option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                    }>
-                    <Option value={0}>All</Option>
-                    <Option value={10}>10</Option>
-                    <Option value={50}>50</Option>
-                    <Option value={100}>100</Option>
-                    <Option value={200}>200</Option>
-                  </Select>
-                </td>
-              </tr>
+              <h1>Result per page</h1>
+
+              <Select showSearch style={{ width: 100 }} placeholder='All' onChange={this.handleResultsChange}>
+                <Option value={0}>All</Option>
+                <Option value={10}>10</Option>
+                <Option value={50}>50</Option>
+                <Option value={100}>100</Option>
+                <Option value={200}>200</Option>
+              </Select>
 
               <div style={{ clear: 'both', margin: '10px 0 ' }}>
                 <Button type='primary' onClick={this.handleExecute}>
-                  Previous 100
+                  {'Previous ' + this.state.resultPerPage}
                 </Button>
                 <Button type='primary' onClick={this.handleExecute}>
-                  Next 100
+                  {'Next ' + this.state.resultPerPage}
                 </Button>
               </div>
 
-              <Table dataSource={this.state.data} columns={columns} onChange={this.handleExecute} />
+              <Table dataSource={this.state.data} columns={columns} />
             </Content>
           </Layout>
         </Layout>
