@@ -12,7 +12,6 @@ export default class QueryForm extends React.Component {
   constructor(props) {
     super(props);
     var yasqe = null;
-    var yasr = null;
   }
 
   state = {
@@ -111,13 +110,6 @@ export default class QueryForm extends React.Component {
               </th>
               <td>
                 <textarea id='yasqe' style={{ width: 400 }} autosize={{ minRows: 5, maxRows: 50 }} />
-                {/*<div id='yasr' style={{ width: 400 }} />*/}
-                {/*<TextArea*/}
-                {/*    type='text'*/}
-                {/*    style={{ width: 400 }}*/}
-                {/*    autosize={{ minRows: 5, maxRows: 50 }}*/}
-                {/*    onChange={this.handleQueryChange}*/}
-                {/*/>*/}
               </td>
             </tr>
             <tr>
