@@ -1,6 +1,6 @@
 import { storiesOf } from '@storybook/react';
 import React from 'react';
-import { Layout, Breadcrumb, Button, Checkbox, Input, Table, Select } from 'antd';
+import { Layout, Breadcrumb, Button, Input, Table, Select } from 'antd';
 import 'antd/dist/antd.css';
 
 const Option = Select.Option;
