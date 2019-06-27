@@ -1,12 +1,19 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Button } from '@storybook/react/demo';
-import { Select, Checkbox, Input } from 'antd';
+import { Select, Input } from 'antd';
+import YASQE from 'yasgui-yasqe';
+import 'yasgui-yasqe/dist/yasqe.css';
 
 const Option = Select.Option;
 const { TextArea } = Input;
 
 export default class QueryForm extends React.Component {
+  constructor(props) {
+    super(props);
+    var yasqe = null;
+  }
+
   state = {
     language: 'sparql',
     resultPerPage: 0,
@@ -14,7 +21,6 @@ export default class QueryForm extends React.Component {
   };
 
   query = '';
-
   handleLanguageChange = (e) => {
     this.state.language = e;
   };
@@ -25,7 +31,10 @@ export default class QueryForm extends React.Component {
   };
 
   handleQueryChange = (e) => {
-    this.query = e.target.value;
+    //console.log("e=", e);
+
+    this.query = e.doc.getValue();
+    //console.log('b=', this.yasqe.options.value);
     console.log(this.query);
   };
 
@@ -33,7 +42,7 @@ export default class QueryForm extends React.Component {
     if (!(this.query === '')) {
       const q = encodeURIComponent(this.query);
       console.log('query', q);
-      const url = 'https://agentlab.ru/rdf4j-workbench/repositories/rpo-tests/?query=';
+      const url = 'https://agentlab.ru/rdf4j-server/repositories/rpo-tests?query=';
       const lan = '&queryLn=' + this.state.language;
       console.log(lan);
 
@@ -56,6 +65,20 @@ export default class QueryForm extends React.Component {
       alert(this.state.result);
     }
   };
+
+  componentDidMount() {
+    this.yasqe = YASQE.fromTextArea(document.getElementById('yasqe'), {
+      sparql: {
+        showQueryButton: true,
+      },
+    });
+
+    //this.yasqe.on('change', this.handleQueryChange);
+    this.yasqe.setValue('');
+    this.yasqe.on('change', this.handleQueryChange);
+    this.yasqe.query(this.handleExecute);
+    this.yasqe.refresh();
+  }
 
   render() {
     return (
@@ -86,12 +109,7 @@ export default class QueryForm extends React.Component {
                 <h1>Query</h1>
               </th>
               <td>
-                <TextArea
-                  type='text'
-                  style={{ width: 400 }}
-                  autosize={{ minRows: 5, maxRows: 50 }}
-                  onChange={this.handleQueryChange}
-                />
+                <textarea id='yasqe' style={{ width: 400 }} autosize={{ minRows: 5, maxRows: 50 }} />
               </td>
             </tr>
             <tr>
