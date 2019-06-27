@@ -66,28 +66,35 @@ export default class Explore extends React.Component {
           Accept: 'application/sparql-results+json',
         },
       }).then((r) => r.json());
-      console.log(this.state.resultPerPage); //вывести текущее значение all-10-50-100
-      console.log(res); //переменная res со всеми массивами результатов и шапки таблицы (2 массивы отдельных в массиве)
+      //вывести текущее значение all-10-50-100
+      console.log(this.state.resultPerPage);
+      //переменная res со всеми массивами результатов и шапки таблицы (2 массивы отдельных в массиве)
+      console.log(res);
       console.log('-----------------------------------------');
       var resultsToDisplay = [];
-      /*
-      Если не указан парамер all-10-50-100, то все вывести, а иначе срезать .slice-ом хвост за пределами 10-50-100
-      */
-      if (this.state.resultPerPage != 0) resultsToDisplay = res.results.bindings.slice(0, this.state.resultPerPage);
-      else resultsToDisplay = res.results.bindings;
-      console.log(resultsToDisplay); //Вывод биндов в виде массива
-      this.state.result = JSON.stringify(resultsToDisplay); //переводит весь массив биндов(данных таблицы) в строку
+      const data = [];
+      //Если не указан парамер all-10-50-100, то все вывести,
+      //а иначе срезать .slice-ом хвост за пределами 10-50-100
+      //if (this.state.resultPerPage != 0) resultsToDisplay = res.results.bindings.slice(0, this.state.resultPerPage);
+      //else
+      resultsToDisplay = res.results.bindings;
+      //Вывод биндов в виде массива
+      console.log(resultsToDisplay);
+      //переводит весь массив биндов(данных таблицы) в строку
+      this.state.result = JSON.stringify(resultsToDisplay);
       console.log(resultsToDisplay[0].subject.value);
       console.log('-----------------------------------------');
-      const data = [];
       for (let i = 0; i < resultsToDisplay.length; i++) {
         let current_subject = resultsToDisplay[i].subject.value;
+        let current_predicate = resultsToDisplay[i].predicate.value;
+        let current_object = resultsToDisplay[i].object.value;
+        let current_context = resultsToDisplay[i].context.value;
         data.push({
           key: i,
           subject: current_subject,
-          predicate: resultsToDisplay[i].predicate.value,
-          object: resultsToDisplay[i].object.value,
-          context: resultsToDisplay[i].context.value,
+          predicate: current_predicate,
+          object: current_object,
+          context: current_context,
         });
       }
       this.setState({ data: data });
@@ -126,6 +133,7 @@ export default class Explore extends React.Component {
                     showSearch
                     style={{ width: 100 }}
                     optionFilterProp=''
+                    placeholder='All'
                     onChange={this.handleResultsChange}
                     filterOption={(input, option) =>
                       option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
