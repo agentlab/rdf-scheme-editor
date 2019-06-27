@@ -90,12 +90,13 @@ class AddRDFForm extends React.Component {
     var tr = 'on';
     //if(this.useBase===false) con1='';
     if (this.state.value == 1) content = this.dataURL;
-    else if (this.state.value == 3) content = encodeURIComponent(this.rdfCont);
+    else if (this.state.value == 3) content = this.rdfCont;
     console.log(content);
-
-    const url = 'https://agentlab.ru/rdf4j-server/repositories/rpo-tests';
+    const proxyurl = 'https://cors-anywhere.herokuapp.com/';
+    const url = 'https://agentlab.ru/rdf4j-server/repositories/rpo-tests/statements';
     const result = await fetch(
-      url /*+ '?baseURI=' + this.base  +(this.useBase?useCon+tr: '') +(this.useBase?'&context='+con1: '')+'&source='+ cont*/,
+      proxyurl +
+        url /*+ '?baseURI=' + this.base  +(this.useBase?useCon+tr: '') +(this.useBase?'&context='+con1: '')+'&source='+ cont*/,
       {
         method: 'POST',
         headers: {
@@ -104,20 +105,6 @@ class AddRDFForm extends React.Component {
         body: content,
       },
     );
-    /* const url = 'https://agentlab.ru/rdf4j-server/repositories/rpo-tests';
-    const result = await fetch(
-    url /*+ '?baseURI=' + this.base  +(this.useBase?useCon+tr: '') +(this.useBase?'&context='+con1: '')+'&source='+ cont,
-    /*  {
-        
-        method: 'POST',
-    
-        cache: 'no-cache',
-        headers: {
-          'Content-Type': this.dataFormat,
-        },
-        body : content,
-      },
-    );*/
 
     alert('RDF added');
   };
