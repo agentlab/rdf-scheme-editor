@@ -124,3 +124,28 @@ code {
   -ms-flex: 1;
   flex: 1;
 }
+.button-location-right{
+  position:absolute;
+  width: 120px;
+  height: 35px;
+}
+.text-shadow-2{
+	padding: 10px;
+	color: black;
+	font-size: 20px;
+	text-shadow: 1px 2px 0px rgb(66, 68, 70);
+  }
+.selector{
+  width:98%;
+}
+.selector-pattern{
+  width:100%
+}
+.button-location1{
+  position: absolute;
+  margin-left: 1500px;
+}
+.button-location2{
+  position: absolute;
+  margin-left: 1430px;
+}

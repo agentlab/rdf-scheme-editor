@@ -1,3 +1,4 @@
+
 import { storiesOf } from "@storybook/react";
 import React from "react";
 import "antd/dist/antd.css";
@@ -51,6 +52,7 @@ class ActionForm extends React.Component {
 
   clearSort = () => {
     this.setState({
+
       sortedInfo: null
     });
   };
@@ -278,3 +280,4 @@ class ActionForm extends React.Component {
 storiesOf("Actions", module).add("Actions", () => <ActionForm />);
 
 export default ActionForm;
+
