@@ -11,7 +11,7 @@ describe('test Post without context', function() {
     'infer=true&';
 
   it('insert data to rdf repository without context', async () => {
-    var urlprefix = urlprefixReq + '/query' + '?' + params;
+    var urlprefix = urlprefixReq + '?' + params;
     //проверка до добавления
     var dataSel = await fetch(urlprefix, {
       method: 'GET',
@@ -23,7 +23,7 @@ describe('test Post without context', function() {
     expect(dataSel.results.bindings.length).toEqual(0);
 
     //добавление
-    urlprefix = urlprefixReq + '/update';
+    urlprefix = urlprefixReq + '/statements';
     var result = await fetch(urlprefix, {
       method: 'POST',
       headers: {
@@ -34,14 +34,14 @@ describe('test Post without context', function() {
     }).then((r) => {
       console.log(r);
       expect(r).toBeInstanceOf(Response);
-      expect(r['status']).toEqual(200);
+      expect(r['status']).toEqual(204);
       return r;
     });
   });
 
   it('check data after insert to rdf repository without context', async () => {
     //проверка после
-    var urlprefix = urlprefixReq + '/query' + '?' + params;
+    var urlprefix = urlprefixReq + '?' + params;
     var dataSel = await fetch(urlprefix, {
       method: 'GET',
       headers: {
@@ -53,7 +53,7 @@ describe('test Post without context', function() {
   });
 
   it('delete data to rdf repository without context', async () => {
-    var urlprefix = urlprefixReq + '/query' + '?' + params;
+    var urlprefix = urlprefixReq + '?' + params;
     //проверка до
     var dataSel = await fetch(urlprefix, {
       method: 'GET',
@@ -65,7 +65,7 @@ describe('test Post without context', function() {
     expect(dataSel.results.bindings.length).toBeGreaterThan(0);
 
     //удаление
-    urlprefix = urlprefixReq + '/update';
+    urlprefix = urlprefixReq + '/statements';
     var result = await fetch(urlprefix, {
       method: 'POST',
       headers: {
@@ -76,7 +76,7 @@ describe('test Post without context', function() {
     }).then((r) => {
       console.log(r);
       expect(r).toBeInstanceOf(Response);
-      expect(r['status']).toEqual(200);
+      expect(r['status']).toEqual(204);
       return r;
     });
 
@@ -87,7 +87,10 @@ describe('test Post without context', function() {
         'Content-Type': 'application/x-www-form-urlencoded',
         Accept: 'application/sparql-results+json',
       },
-    }).then((r) => r.json());
-    expect(dataSel.results.bindings.length).toEqual(0);
+    }).then((r) => {
+      console.log(r);
+      expect(r).toBeInstanceOf(Response);
+      return r;
+    });
   });
 });
