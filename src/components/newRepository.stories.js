@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Form, Select, Row, Col, Input, Button, Typography } from 'antd';
+import { Form, Select, Row, Col, Input, Button, Typography, Alert } from 'antd';
 
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -23,6 +23,9 @@ class NewRepository extends React.Component {
     }).then((r) => {
       return r;
     });
+    if (this.props.form.getFieldValue('id') != undefined && this.props.form.getFieldValue('title') != undefined)
+      alert('Send successfull');
+    else alert('Send Error');
   };
 
   handleReset = (e) => {
