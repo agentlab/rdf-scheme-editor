@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Form, Input, Select, Button, Table, Layout } from 'antd';
+import { Form, Input, Select, Button, Col, Row, Table, Layout } from 'antd';
 
 const InputGroup = Input.Group;
 const Option = Select.Option;
@@ -36,39 +36,56 @@ const columns = [
 
 export default class ExportRepository extends React.Component {
   state = {
-    resultPerPage: 0,
+    resultPerPage: 10,
     result: '',
+    data: null,
   };
-  result = [];
 
   handleResultChange = (e) => {
     this.state.resultPerPage = e;
-    console.log(this.state.resultPerPage);
-    this.handleResultChange;
+    console.log('Results per page: ', this.state.resultPerPage);
+    this.handleExecute;
   };
 
   handleExecute = async () => {
-    const url = 'https://agentlab.ru/rdf4j-server/repositories/rpo-tests/statements';
+    const url = 'https://agentlab.ru/rdf4j-workbench/repositories/rpo-tests/export';
+    const prefix = '?limit_explore=' + this.state.resultPerPage;
 
     const res = await fetch(url, {
       method: 'GET',
       headers: {
-        Accept: 'application/rdf+json',
+        Accept: 'application/sparql-results+json',
       },
     }).then((r) => r.json());
 
-    console.log(res);
-    var resultsToDisplay = [];
+    let resultsToDisplay = [];
     const data = [];
     resultsToDisplay = res.results.bindings;
+    console.log('res:\n', res);
+    console.log('bindings:\n', resultsToDisplay);
 
-    console.log(resultsToDisplay);
-    this.state.result = JSON.stringify(resultsToDisplay);
     for (let i = 0; i < resultsToDisplay.length; i++) {
-      let current_subject = resultsToDisplay[i].subject.value;
-      let current_predicate = resultsToDisplay[i].predicate.value;
-      let current_object = resultsToDisplay[i].object.value;
-      let current_context = resultsToDisplay[i].context.value;
+      let current_subject = '';
+      let current_predicate = '';
+      let current_object = '';
+      let current_context = '';
+
+      if (resultsToDisplay[i].subject != undefined) {
+        current_subject = resultsToDisplay[i].subject.value;
+      }
+
+      if (resultsToDisplay[i].predicate != undefined) {
+        current_predicate = resultsToDisplay[i].predicate.value;
+      }
+
+      if (resultsToDisplay[i].object != undefined) {
+        current_object = resultsToDisplay[i].object.value;
+      }
+
+      if (resultsToDisplay[i].context != undefined) {
+        current_context = resultsToDisplay[i].context.value;
+      }
+
       data.push({
         key: i,
         subject: current_subject,
@@ -76,80 +93,18 @@ export default class ExportRepository extends React.Component {
         object: current_object,
         context: current_context,
       });
+      this.setState({ data: data });
     }
-    this.setState({ data: data });
   };
-
-  /*.then((r) => {
-      //var i = 0;
-      console.log(r);
-      var mapped = r.results.bindings.map((obj) => {
-        let b2 = { key: predicate };
-        Object.keys(obj).forEach((key) => {
-          b2[key] = obj[key].value;
-          let b3 = { key1: object };
-          Object.keys(obj2).forEach((key1) => {
-            b3[key1] = obj2[key1].value;
-          })
-        });
-
-        return b3;
-      });
-
-      console.log(mapped);
-      return mapped;
-    });
-
-    console.log(res);
-    var resultsToDisplay = [];
-
-    if (this.state.resultPerPage != 0) resultsToDisplay = res.slice(0, this.state.resultPerPage);
-    else resultsToDisplay = res;
-
-    this.setState({
-      result: resultsToDisplay,
-    });*/
-
-  /*console.log(res);
- 
-    var resultsToDisplay = [];
-    const data = [];
-    if (this.state.resultPerPage != 0) resultsToDisplay = res.results.bindings.slice(0, this.state.resultPerPage);
-    else resultsToDisplay = res.results.bindings;
-    //console.log(resultsToDisplay);
-    this.state.result = JSON.stringify(resultsToDisplay);
-
-    Object.keys(subject).forEach(function(value,index) {
-      let current_subject = resultsToDisplay.subject.value;
-      data.push({
-        subject: current_subject,
-      })
-      Object.keys(predicate).forEach(function(value,index) {
-        let current_predicate = resultsToDisplay.predicate.value;
-        data.push({
-          predicate: current_predicate,
-        })
-        Object.keys(object).forEach(function(value,index) {
-          let current_object = resultsToDisplay.object.value;
-          data.push({
-            object: current_object,
-          })
-        });
-      });
-    });
-
-    
-    }*/
-
-  //this.setState({ data: data });
-
-  //console.log(this.state.result);
-  //alert(this.state.result);
-  //}
 
   render() {
     return (
-      <div>
+      <div
+        onLoad={(temp) => {
+          temp = 10;
+          this.handleExecute(temp);
+          return false;
+        }}>
         <h1 align='left' margin-left='200px'>
           Export Repository{' '}
         </h1>
@@ -188,30 +143,27 @@ export default class ExportRepository extends React.Component {
           </div>
           <div>
             <div>
-              <b>
-                <Form.Item label='Results per page: ' />
-              </b>
-            </div>
-            <div>
-              <InputGroup compact>
-                <Select
-                  showSearch
-                  defaultValue='All'
-                  onChange={this.handleResultChange}
-                  optionFilterProp=''
-                  filterOption={(input, option) =>
-                    option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                  }>
-                  <Option value='All'>All</Option>
-                  <Option value='10'>10</Option>
-                  <Option value='50'>50</Option>
-                  <Option value='100'>100</Option>
-                  <Option value='200'>200</Option>
-                </Select>
-              </InputGroup>
+              <Row>
+                <Col span={1} offset={0}>
+                  <b>
+                    <Form.Item label='Results per page: ' />
+                  </b>
+                </Col>
+                <Col span={1} offset={2}>
+                  <InputGroup compact>
+                    <Select showSearch defaultValue='All' onChange={this.handleResultChange} optionFilterProp=''>
+                      <Option value='All'>All</Option>
+                      <Option value='10'>10</Option>
+                      <Option value='50'>50</Option>
+                      <Option value='100'>100</Option>
+                      <Option value='200'>200</Option>
+                    </Select>
+                  </InputGroup>
+                </Col>
+              </Row>
             </div>
           </div>
-          <Table onChange={this.handleExecute} columns={columns} dataSource={this.state.data} bordered size='small' />
+          <Table columns={columns} dataSource={this.state.data} bordered size='small' />
         </Content>
       </div>
     );
