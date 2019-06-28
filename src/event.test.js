@@ -1,6 +1,6 @@
 const crossAny = 'https://cors-anywhere.herokuapp.com/';
 const server_URL = 'http://82.202.226.30:8080';
-const prefix = '/master/api/1/pipelines/1/executions/5/events';
+const prefix = '/master/api/1/pipelines/1/executions/1/events';
 
 var username = 'master';
 var password = 'commander';
@@ -14,5 +14,6 @@ test('Events test', async () => {
     method: 'GET',
     headers: headers,
   }).then((r) => r.json());
+
   console.log(data);
 });

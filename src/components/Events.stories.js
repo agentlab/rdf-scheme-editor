@@ -3,26 +3,6 @@ import React from 'react';
 import { Table, Button } from 'antd';
 import 'antd/dist/antd.css';
 import '../index.css';
-const data1 = [
-  {
-    type: 'i',
-    timestamp: '21.03.2019 12:26:23',
-    dpuinstance: 'uv-e-filesDownload',
-    shortmessege: "Starting DPU developer's code for DPU: 18",
-  },
-  {
-    type: 'i',
-    timestamp: '21.03.2019 12:26:25',
-    dpuinstance: 'uv-t-unzipper',
-    shortmessege: 'DPU: 14 completed',
-  },
-  {
-    type: 'i',
-    timestamp: '21.03.2019 12:26:25',
-    dpuinstance: 'uv-t-filesToRdf',
-    shortmessege: 'Starting FilesToRdf',
-  },
-];
 
 class Events extends React.Component {
   state = {
@@ -30,7 +10,7 @@ class Events extends React.Component {
   };
 
   addEventsPerID = async () => {
-    let id = 5;
+    let id = 1;
     let current_data = await this.connectToServer(id).then((r) => r.json());
     let converted_data = this.makeTabelData(current_data);
     this.setState({
@@ -45,7 +25,7 @@ class Events extends React.Component {
         type: myData[i].type,
         time: myData[i].time,
         shortMessage: myData[i].shortMessage,
-        dpuInstance: myData[i].dpuInstance,
+        dpuInstance: myData[i].dpuInstance === null ? null : myData[i].dpuInstance.name,
       });
     }
     return data;
@@ -65,6 +45,7 @@ class Events extends React.Component {
       method: 'GET',
       headers: headers,
     });
+    console.log(webData);
     return webData;
   };
   render() {
@@ -84,15 +65,15 @@ class Events extends React.Component {
       {
         title: 'Timestamp',
         type: 'datetime-local',
-        dataIndex: 'timestamp',
-        key: 'timestamp',
+        dataIndex: 'time',
+        key: 'time',
         sorter: (a, b) => a.timestamp - b.timestamp,
         sortDirections: ['descend'],
       },
       {
         title: 'DPU Instance',
-        dataIndex: 'dpuinstance',
-        key: 'dpuinstance',
+        dataIndex: 'dpuInstance',
+        key: 'dpuInstance',
         filters: [
           {
             text: 'uv-t-filesToRdf',
@@ -110,9 +91,9 @@ class Events extends React.Component {
         onFilter: (value, record) => record.dpuinstance.indexOf(value) === 0,
       },
       {
-        title: 'Short messege',
-        dataIndex: 'shortmessege',
-        key: 'shortmessege',
+        title: 'Short message',
+        dataIndex: 'shortMessage',
+        key: 'shortMessage',
       },
     ];
     return (
