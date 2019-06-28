@@ -4,7 +4,6 @@ import { Form, Input, Select, Button, Col, Row, Table, Layout } from 'antd';
 
 const InputGroup = Input.Group;
 const Option = Select.Option;
-//const dataSource = [{}];
 const { Content } = Layout;
 
 const columns = [
@@ -34,7 +33,7 @@ const columns = [
   },
 ];
 
-export default class ExportRepository extends React.Component {
+class ExportRepository extends React.Component {
   state = {
     resultPerPage: 10,
     result: '',
