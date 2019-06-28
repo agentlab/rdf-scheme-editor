@@ -8,7 +8,7 @@ test('add repository mem', async () => {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
     body:
-      'type=memory&Repository+ID=mem&Repository+title=BMSTU&Persist=true&Sync+delay=0&EvaluationStrategyFactory=org.eclipse.rdf4j.query.algebra.evaluation.impl.StrictEvaluationStrategyFactory',
+      'type=memory&Repository+ID=mem&Repository+title=memmem&Persist=true&Sync+delay=0&EvaluationStrategyFactory=org.eclipse.rdf4j.query.algebra.evaluation.impl.StrictEvaluationStrategyFactory',
   }).then((r) => {
     return r;
   });
@@ -36,7 +36,6 @@ test('add repository mem', async () => {
   );
 });
 
-/*
 test('remove repository mem', async () => {
   const url = 'https://agentlab.ru/rdf4j-workbench/repositories/NONE/delete';
   const data = await fetch(url, {
@@ -73,4 +72,3 @@ test('remove repository mem', async () => {
     ]),
   );
 });
-*/
