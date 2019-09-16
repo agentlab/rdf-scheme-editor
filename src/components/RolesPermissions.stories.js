@@ -1,7 +1,7 @@
 import { storiesOf } from '@storybook/react';
 import React from 'react';
 import 'antd/dist/antd.css';
-import './index.css';
+import './../index.css';
 import { Form, Input, Table, Icon, Radio, Layout, List, Typography } from 'antd';
 
 class Sider extends React.Component {
@@ -51,20 +51,6 @@ class FormLayoutDemo extends React.Component {
         title: 'Доступ',
         dataIndex: 'permission',
         key: 'permission',
-        render: (permission) => {
-          if (permission == 'minus') {
-            return (
-              <a href='javascript:;'>
-                <Icon type='minus-circle' theme='filled' />
-              </a>
-            );
-          } else
-            return (
-              <a href='javascript:;'>
-                <Icon type='check-circle' theme='filled' />
-              </a>
-            );
-        },
       },
       {
         title: 'Действия',
@@ -94,45 +80,49 @@ class FormLayoutDemo extends React.Component {
       {
         key: '1',
         operation: 'Показать отчет',
-        permission: 'minus',
+        permission: <Icon type='minus-circle' theme='filled' />,
         description: ' ',
       },
       {
         key: '2',
         operation: 'Развернуть отчет',
-        permission: 'minus',
+        permission: <Icon type='minus-circle' theme='filled' />,
         description: ' ',
       },
       {
         key: '3',
         operation: 'Развернуть ресурс отчета',
-        permission: 'minus',
+        permission: <Icon type='minus-circle' theme='filled' />,
         description: ' ',
       },
       {
         key: '4',
         operation: 'Управлять папкой отчетов',
-        permission: 'minus',
+        permission: <Icon type='minus-circle' theme='filled' />,
         description: ' ',
       },
       {
         key: '5',
         operation: 'Сгенерировать приглашение в коллектив',
+        permission: <Icon type='check-circle' theme='filled' />,
         description: ' ',
       },
       {
         key: '6',
         operation: 'Сохранить область',
+        permission: <Icon type='check-circle' theme='filled' />,
         description: ' ',
       },
       {
         key: '7',
         operation: 'Сохранить область проекта',
+        permission: <Icon type='check-circle' theme='filled' />,
         description: ' ',
       },
       {
         key: '8',
         operation: 'Изменить блокировки',
+        permission: <Icon type='check-circle' theme='filled' />,
         description: ' ',
       },
     ];

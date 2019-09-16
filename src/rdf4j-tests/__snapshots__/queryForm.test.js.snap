@@ -1,0 +1,269 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QueryForm 1`] = `
+<div>
+  <table
+    cellSpacing={0}
+  >
+    <tbody>
+      <tr>
+        <th>
+          <h1>
+            Query Language
+          </h1>
+        </th>
+        <td>
+          <Select
+            choiceTransitionName="zoom"
+            filterOption={[Function]}
+            onChange={[Function]}
+            optionFilterProp=""
+            placeholder="Select a language"
+            showSearch={true}
+            style={
+              Object {
+                "width": 200,
+              }
+            }
+            transitionName="slide-up"
+          >
+            <Option
+              value="sparql"
+            >
+              SPARQL
+            </Option>
+            <Option
+              value="serql"
+            >
+              SERQL
+            </Option>
+          </Select>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          <h1>
+            Query
+          </h1>
+        </th>
+        <td>
+          <TextArea
+            autosize={
+              Object {
+                "maxRows": 50,
+                "minRows": 5,
+              }
+            }
+            onChange={[Function]}
+            style={
+              Object {
+                "width": 400,
+              }
+            }
+            type="text"
+          />
+        </td>
+      </tr>
+      <tr>
+        <th>
+          <h1>
+            Result per page
+          </h1>
+        </th>
+        <td>
+          <Select
+            choiceTransitionName="zoom"
+            filterOption={[Function]}
+            onChange={[Function]}
+            optionFilterProp=""
+            showSearch={true}
+            style={
+              Object {
+                "width": 100,
+              }
+            }
+            transitionName="slide-up"
+          >
+            <Option
+              value={0}
+            >
+              All
+            </Option>
+            <Option
+              value={2}
+            >
+              2
+            </Option>
+            <Option
+              value={5}
+            >
+              5
+            </Option>
+            <Option
+              value={10}
+            >
+              10
+            </Option>
+            <Option
+              value={20}
+            >
+              20
+            </Option>
+          </Select>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          <div
+            style={
+              Object {
+                "display": "inline-block",
+              }
+            }
+          >
+            <Button
+              onClick={[Function]}
+            >
+              Execute
+            </Button>
+          </div>
+        </th>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`QueryForm 2`] = `
+<div>
+  <table
+    cellSpacing={0}
+  >
+    <tbody>
+      <tr>
+        <th>
+          <h1>
+            Query Language
+          </h1>
+        </th>
+        <td>
+          <Select
+            choiceTransitionName="zoom"
+            filterOption={[Function]}
+            onChange={[Function]}
+            optionFilterProp=""
+            placeholder="Select a language"
+            showSearch={true}
+            style={
+              Object {
+                "width": 200,
+              }
+            }
+            transitionName="slide-up"
+          >
+            <Option
+              value="sparql"
+            >
+              SPARQL
+            </Option>
+            <Option
+              value="serql"
+            >
+              SERQL
+            </Option>
+          </Select>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          <h1>
+            Query
+          </h1>
+        </th>
+        <td>
+          <TextArea
+            autosize={
+              Object {
+                "maxRows": 50,
+                "minRows": 5,
+              }
+            }
+            onChange={[Function]}
+            style={
+              Object {
+                "width": 400,
+              }
+            }
+            type="text"
+          />
+        </td>
+      </tr>
+      <tr>
+        <th>
+          <h1>
+            Result per page
+          </h1>
+        </th>
+        <td>
+          <Select
+            choiceTransitionName="zoom"
+            filterOption={[Function]}
+            onChange={[Function]}
+            optionFilterProp=""
+            showSearch={true}
+            style={
+              Object {
+                "width": 100,
+              }
+            }
+            transitionName="slide-up"
+          >
+            <Option
+              value={0}
+            >
+              All
+            </Option>
+            <Option
+              value={2}
+            >
+              2
+            </Option>
+            <Option
+              value={5}
+            >
+              5
+            </Option>
+            <Option
+              value={10}
+            >
+              10
+            </Option>
+            <Option
+              value={20}
+            >
+              20
+            </Option>
+          </Select>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          <div
+            style={
+              Object {
+                "display": "inline-block",
+              }
+            }
+          >
+            <Button
+              onClick={[Function]}
+            >
+              Execute
+            </Button>
+          </div>
+        </th>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
