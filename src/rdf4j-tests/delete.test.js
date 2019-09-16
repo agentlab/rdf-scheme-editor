@@ -4,14 +4,6 @@ var urlDir = 'https://agentlab.ru/rdf4j-server/repositories/sdf';
 const data = '<http://exampleSub> <http://examplePred> <http://exampleObj>. ' +
   'GRAPH <urn:sparql:tests:insert:data> {' +
   '<http://exampleSub> <http://examplePred> 111} ';
-var params =
-  'action=exec&' +
-  'queryLn=SPARQL&' +
-  'query=' +
-  encodeURIComponent('PREFIX foaf: <' + urlDir + '> ' + 'SELECT ?Subject ' + 'WHERE{ ' + data + '}') +
-  '&' +
-  'limit_query=100&' +
-  'infer=true&';
 
 test('Add transaction', async () => {
   const url = 'https://agentlab.ru/rdf4j-server/repositories/sdf/transactions';
