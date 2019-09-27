@@ -5,38 +5,62 @@ import { Table } from 'antd';
 const server_URL = 'https://agentlab.ru/rdf4j-server';
 const server_wrong_URL = 'https://agentlab.ru/WRONG-rdf4j-server'; //example
 const repositories_prefix = '/repositories';
-const columns = [
-  {
-    title: 'Id',
-    dataIndex: 'id',
-    key: 'id',
-  },
-  {
-    title: 'Title',
-    dataIndex: 'title',
-    key: 'title',
-  },
-  {
-    title: 'URI',
-    dataIndex: 'uri',
-    key: 'uri',
-  },
-  {
-    title: 'Readable',
-    dataIndex: 'readable',
-    key: 'readable',
-  },
-  {
-    title: 'Writable',
-    dataIndex: 'writable',
-    key: 'writable',
-  },
-];
+const url_prefix = 'https://agentlab.ru/rdf4j-workbench';
 
-function RepositoriesTable(props) {
+
+const RepositoriesTable = (props) => {
   const [dataSource, setDataSource] = useState([]);
+  const columns = [
+    {
+      title: 'Id',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
+      title: 'Title',
+      dataIndex: 'title',
+      key: 'title',
+    },
+    {
+      title: 'URI',
+      dataIndex: 'uri',
+      key: 'uri',
+    },
+    {
+      title: 'Readable',
+      dataIndex: 'readable',
+      key: 'readable',
+    },
+    {
+      title: 'Writable',
+      dataIndex: 'writable',
+      key: 'writable',
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (text, record) => <button onClick={() => deleteClickHandler(record.key)}>Delete</button>
+    },
+  ]
 
-  function selectRequirementsModule(url) {
+  const deleteClickHandler = (key) => {
+    deleteRepository(key)
+    console.log(key)
+    alert('ready')
+  }
+
+    const deleteRepository = async (repID) => {
+    //return fetch(`${url_prefix}/repositories/${repID}/update`, {
+    await fetch(`${url_prefix}/repositories/NONE/delete?id=${repID}`, {
+      method: 'POST',
+      //body: 'update=' + encodeURIComponent('DELETE DATA' + '{' + '<http://exampleSub> <http://exampleSub> 103' + '}'),
+    }).then(() => {
+      setDataSource(dataSource.filter((data) => data.id != repID))
+    })
+  }
+
+
+  const selectRequirementsModule = (url) => {
     return fetch(url, {
       method: 'GET',
       headers: {

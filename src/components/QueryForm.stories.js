@@ -1,12 +1,21 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Button } from '@storybook/react/demo';
-import { Select, Checkbox, Input } from 'antd';
+import { Table, Button } from 'antd';
+import { Select, Input } from 'antd';
+import YASQE from 'yasgui-yasqe';
+import 'yasgui-yasqe/dist/yasqe.css';
 
 const Option = Select.Option;
 const { TextArea } = Input;
+const columns = []
+var resheader = []
 
 export default class QueryForm extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  //   var yasqe = null;
+  // }
+
   state = {
     language: 'sparql',
     resultPerPage: 0,
@@ -14,7 +23,6 @@ export default class QueryForm extends React.Component {
   };
 
   query = '';
-
   handleLanguageChange = (e) => {
     this.state.language = e;
   };
@@ -25,37 +33,86 @@ export default class QueryForm extends React.Component {
   };
 
   handleQueryChange = (e) => {
-    this.query = e.target.value;
+    //console.log("e=", e);
+
+    this.query = e.doc.getValue();
+    //console.log('b=', this.yasqe.options.value);
     console.log(this.query);
   };
 
-  handleExecute = async () => {
+   handleExecute = async () => {
     if (!(this.query === '')) {
       const q = encodeURIComponent(this.query);
-      console.log('query', q);
-      const url = 'https://agentlab.ru/rdf4j-workbench/repositories/rpo-tests/?query=';
+      //console.log('query', q);
+      const url = 'https://agentlab.ru/rdf4j-server/repositories/rpo-tests?query=';
       const lan = '&queryLn=' + this.state.language;
-      console.log(lan);
+      // console.log(lan);
 
       const res = await fetch(url + q + lan, {
         method: 'GET',
         headers: {
           Accept: 'application/sparql-results+json',
         },
-      }).then((r) => r.json());
+      })
 
+
+
+        .then((r) => r.json())
+        .then(
+          (r) => {
+            var i = 0;
+            resheader = r.head.vars
+            console.log(resheader);
+            while(columns.length > 0) {
+              columns.pop();
+          }
+            resheader.forEach(element => {
+              columns.push({
+                title: element,
+                dataIndex: element,
+                key: element
+              })
+            });
+            var mapped = r.results.bindings.map((binding) => {
+              let b2 = { key: i++ };
+              Object.keys(binding).forEach((key) => {
+                console.log(key, binding[key]);
+                b2[key] = binding[key].value;
+              });
+
+              return b2;
+
+            })
+            console.log(mapped);
+            return mapped;
+          }
+
+        );
       console.log(res);
 
       var resultsToDisplay = [];
-      if (this.state.resultPerPage != 0) resultsToDisplay = res.results.bindings.slice(0, this.state.resultPerPage);
-      else resultsToDisplay = res.results.bindings;
-      console.log(resultsToDisplay);
-      this.state.result = JSON.stringify(resultsToDisplay);
-
-      console.log(this.state.result);
-      alert(this.state.result);
+      if (this.state.resultPerPage != 0) resultsToDisplay = res.slice(0, this.state.resultPerPage);
+      else resultsToDisplay = res;
+      this.setState({
+        language: this.state.language,
+        result: resultsToDisplay,
+      });
     }
   };
+
+  componentDidMount() {
+    this.yasqe = YASQE.fromTextArea(document.getElementById('yasqe'), {
+      sparql: {
+        showQueryButton: true,
+      },
+    });
+
+    //this.yasqe.on('change', this.handleQueryChange);
+    this.yasqe.setValue('');
+    this.yasqe.on('change', this.handleQueryChange);
+    this.yasqe.query(this.handleExecute);
+    this.yasqe.refresh();
+  }
 
   render() {
     return (
@@ -86,12 +143,7 @@ export default class QueryForm extends React.Component {
                 <h1>Query</h1>
               </th>
               <td>
-                <TextArea
-                  type='text'
-                  style={{ width: 400 }}
-                  autosize={{ minRows: 5, maxRows: 50 }}
-                  onChange={this.handleQueryChange}
-                />
+                <textarea id='yasqe' style={{ width: 400 }} autosize={{ minRows: 5, maxRows: 50 }} />
               </td>
             </tr>
             <tr>
@@ -124,6 +176,11 @@ export default class QueryForm extends React.Component {
             </tr>
           </tbody>
         </table>
+		    <div style={{ display: 'inline-block' }}>
+          {this.state.result != 0 &&
+            <Table dataSource={this.state.result} columns={columns} style={{ clear: 'both', margin: '10px 0 ' }} />
+          }
+        </div>
       </div>
     );
   }
