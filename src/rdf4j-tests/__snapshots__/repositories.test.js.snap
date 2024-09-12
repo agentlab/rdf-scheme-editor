@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders corectly 1`] = `
+<Table
+  bordered={true}
+  className=""
+  dataSource={Array []}
+  indentSize={20}
+  loading={false}
+  locale={Object {}}
+  pagination={false}
+  rowKey="key"
+  showHeader={true}
+  size="small"
+  sortDirections={
+    Array [
+      "ascend",
+      "descend",
+    ]
+  }
+  useFixedHeader={false}
+/>
+`;

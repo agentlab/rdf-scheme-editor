@@ -26,4 +26,4 @@ export default {
       linkArtifacts_2: 'Слинковать {{ count }} артефактов',
     },
   },
-}
+};

@@ -2,7 +2,7 @@ export default {
   table: {
     columns: {
       id: 'ID',
-      name: "Name",
+      name: 'Name',
       artifactType: 'Artifact type',
       modifiedBy: 'Modified by',
       modifiedOn: 'Modified on',
@@ -14,4 +14,4 @@ export default {
       linkArtifacts: '',
     },
   },
-}
+};
